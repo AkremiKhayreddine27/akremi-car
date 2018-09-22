@@ -1,0 +1,217 @@
+// @nebular theming framework
+@import "~@nebular/theme/styles/theming";
+// @nebular out of the box themes
+@import "~@nebular/theme/styles/themes";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~@nebular/theme/styles/global/bootstrap/breakpoints";
+@import "./styles/tooltip";
+
+@import "./styles/toolbar.scss";
+@import "./styles/snackbar.scss";
+@import "./styles//dropdown.scss";
+@import "./styles/mobile-dropdown-menu.scss";
+@import "./styles/layout-column-header.scss";
+
+@include nb-install-component() {
+  .layout-padding {
+    padding-top: 68px !important;
+  }
+  .contacts-checkbox {
+    font-size: 14px;
+    padding-left: 2rem;
+  }
+
+  .btn-add-contact {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    color: white !important;
+    background-color: #40a497;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    cursor: pointer;
+  }
+
+  /deep/ .dt-table {
+    .table-row .material-icons {
+      font-size: 17px !important;
+      color: rgba(0, 0, 0, 0.6) !important;
+      margin-top: 2px;
+    }
+    .mobile-row-actions .material-icons {
+      font-size: 20px !important;
+      color: rgba(0, 0, 0, 0.4) !important;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .mobile-row-actions .material-icons:hover {
+      color: black !important;
+      background-color: rgba(0, 0, 0, 0.1) !important;
+    }
+    .dropdown-item {
+      align-items: center;
+    }
+    .action-dropdown {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .action-dropdown .material-icons {
+      width: 20px;
+      height: 20px;
+    }
+    .action-dropdown .material-icons:hover {
+      color: rgba(0, 0, 0, 0.6) !important;
+      background-color: transparent !important;
+    }
+  }
+  nb-sidebar.menu-sidebar {
+    margin-top: nb-theme(sidebar-header-gap);
+
+    @include nb-for-theme(corporate) {
+      margin-top: 0;
+    }
+
+    /deep/ .main-container {
+      height: calc(100vh - 4.75rem) !important;
+    }
+
+    /deep/ .scrollable {
+      @include nb-for-theme(corporate) {
+        padding-top: 0;
+
+        .menu-item:first-child {
+          border-top: none;
+        }
+      }
+    }
+
+    /deep/ nb-sidebar-header {
+      padding-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    background: transparent;
+
+    .main-btn {
+      padding: 0.75rem 2.5rem;
+      margin-top: -2rem;
+      font-weight: bold;
+      transition: padding 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.48);
+
+      @include nb-for-theme(corporate) {
+        border-radius: nb-theme(radius);
+      }
+
+      i {
+        font-size: 2rem;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+      }
+      span {
+        @include nb-ltr(padding-left, 0.25rem);
+        @include nb-rtl(padding-right, 0.25rem);
+      }
+
+      i,
+      span {
+        vertical-align: middle;
+      }
+    }
+
+    /deep/ nb-menu {
+      & > .menu-items {
+        & > .menu-item:first-child {
+          .menu-title {
+            &::after {
+              content: "new";
+              color: nb-theme(color-white);
+              margin-left: 1rem;
+              background: nb-theme(color-danger);
+              padding: 0 0.5rem;
+              border-radius: nb-theme(radius);
+              font-size: nb-theme(font-size-sm);
+            }
+          }
+        }
+      }
+
+      .nb-e-commerce {
+        font-size: 2rem;
+      }
+    }
+
+    &.compacted {
+      /deep/ nb-sidebar-header {
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      .main-btn {
+        width: 46px;
+        height: 44px;
+        padding: 0.375rem;
+        border-radius: 5px;
+        transition: none;
+
+        span {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+/deep/ .nb-theme-corporate nb-sidebar.custom-sidebar .main-container {
+  background: white !important;
+  box-shadow: 0 0 0 1px #dfe3eb !important;
+}
+
+/deep/
+  .nb-theme-corporate
+  nb-layout.custom-layout
+  .layout
+  .layout-container
+  .content
+  .columns
+  nb-layout-column {
+  height: calc(100vh - 4.75rem) !important;
+  overflow-y: auto;
+}
+
+/deep/ .nb-theme-corporate nb-layout.custom-layout .layout {
+  background-color: white !important;
+}
+/deep/
+  .nb-theme-corporate
+  nb-layout.custom-layout
+  .layout
+  nb-layout-header
+  nav {
+  //background-color: #f7f7f7 !important;
+  //color: black !important;
+  box-shadow: 0 1px 0 0 #ebeef2 !important;
+  i {
+    color: black !important;
+  }
+  nb-action {
+    border-left: none !important;
+  }
+}
+
+/deep/ .nb-theme-corporate nb-layout.custom-layout nb-menu {
+  background: white !important;
+  color: #707070 !important;
+  i {
+    color: #707070 !important;
+  }
+}

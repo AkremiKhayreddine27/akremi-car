@@ -1,0 +1,23 @@
+<nb-layout class="custom-layout">
+  <nb-layout-header fixed>
+    <dtl-header class="w-100"></dtl-header>
+  </nb-layout-header>
+  <nb-sidebar class="custom-sidebar menu-sidebar" tag="calendar-left" responsive>
+    <dtl-sidebar></dtl-sidebar>
+  </nb-sidebar>
+  <nb-layout-column class="p-0">
+    <div class="h-100" [ngSwitch]="view">
+      <locatus-calendar-month-view class="h-100" *ngSwitchCase="'Month'" [events]="[]" [viewDate]="currentDate">
+      </locatus-calendar-month-view>
+
+      <locatus-calendar-week-view class="h-100" *ngSwitchCase="'Week'" [events]="events" [viewDate]="currentDate">
+      </locatus-calendar-week-view>
+
+      <locatus-calendar-day-view class="h-100" *ngSwitchCase="'Day'" [events]="events" [viewDate]="currentDate">
+      </locatus-calendar-day-view>
+
+      <locatus-calendar-year-view class="h-100" *ngSwitchCase="'Year'" [events]="events" [viewDate]="currentDate">
+      </locatus-calendar-year-view>
+    </div>
+  </nb-layout-column>
+</nb-layout>

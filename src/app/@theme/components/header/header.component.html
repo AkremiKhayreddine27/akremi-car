@@ -1,0 +1,17 @@
+<div class="header-container" [class.left]="position === 'normal'" [class.right]="position === 'inverse'">
+  <div class="logo-containter">
+    <a (click)="toggleSidebar()" href="#" class="navigation"><i class="nb-menu"></i></a>
+    <img class="logo-img" src="assets/images/cars.svg" />
+    <div class="logo" (click)="goToHome()">easy-<span>car</span></div>
+  </div>
+</div>
+
+<div class="header-container">
+  <nb-actions size="medium" [class.right]="position === 'normal'" [class.left]="position === 'inverse'">
+    <nb-action class="control-item" icon="nb-grid-b"></nb-action>
+    <nb-action class="control-item" icon="nb-person"></nb-action>
+    <nb-action class="control-item">
+      <nb-search type="rotate-layout" (click)="startSearch()"></nb-search>
+    </nb-action>
+  </nb-actions>
+</div>

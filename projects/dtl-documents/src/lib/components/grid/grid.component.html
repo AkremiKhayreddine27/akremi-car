@@ -1,0 +1,19 @@
+<div class="row m-0 pt-2">
+  <div *ngFor="let document of documents" class="col-md-3 d-flex align-items-stretch">
+    <nb-card class="w-100">
+      <nb-card-header class="d-flex justify-content-between">
+        {{ document.title }}
+        <div class="d-flex flex-column">
+          <span class="badge document-badge mb-1">{{ document.type.name }}</span>
+          <span class="badge document-badge">{{ document.category.name }}</span>
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+        {{ document.description }}
+      </nb-card-body>
+      <nb-card-footer>
+        {{ document.createdAt | date: 'dd MMM yyyy' }}
+      </nb-card-footer>
+    </nb-card>
+  </div>
+</div>

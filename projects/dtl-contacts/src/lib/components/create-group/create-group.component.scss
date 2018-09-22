@@ -1,0 +1,27 @@
+.modal-header {
+  background-color: #f7f7f7;
+  position: relative;
+}
+
+.modal-header-actions {
+  position: absolute;
+  right: 5px;
+  top: 15px;
+}
+
+.modal-header .ion {
+  height: 30px;
+  width: 30px;
+  font-size: 20px;
+  font-weight: 400;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.4) !important;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.modal-header .ion:hover {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+}

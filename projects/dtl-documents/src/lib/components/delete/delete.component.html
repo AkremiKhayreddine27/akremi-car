@@ -1,0 +1,7 @@
+<div class="modal-body">
+    {{ documents.length === 1 ? 'Supprimer ce document ?' : 'Supprimer les documents sélèctionnés ?' }}
+  </div>
+  <div class="modal-footer">
+    <a (click)="activeModal.dismiss()" class="btn btn-sm btn-danger">Annuler</a>
+    <a (click)="delete()" class="btn btn-sm btn-primary">Supprimer</a>
+  </div>

@@ -1,0 +1,117 @@
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~@nebular/theme/styles/global/bootstrap/breakpoints";
+.modal-header {
+  background-color: #f7f7f7;
+  position: relative;
+}
+/deep/ .ng-select-container {
+  padding: 0 !important;
+  min-height: 30px !important;
+  height: 30px !important;
+  height: auto !important;
+  color: #2a2a2a !important;
+  background-color: #ffffff !important;
+  border: 2px solid #dadfe6 !important;
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  border-radius: 0.375rem !important;
+}
+
+.modal-header-actions {
+  position: absolute;
+  right: 5px;
+  top: 15px;
+}
+
+.contact-letter {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  background-color: #2196f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-right: 15px;
+  font-size: 24px;
+}
+
+.modal-header .material-icons {
+  height: 30px;
+  width: 30px;
+  font-size: 20px;
+  font-weight: 400;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.4) !important;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.modal-header .material-icons:hover {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.contact-avatar {
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.contact-name {
+  font-size: 24px;
+  line-height: 32px;
+  word-wrap: break-word;
+}
+
+.contact-badge {
+  background-color: #dee9ec !important;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 14px;
+}
+
+@include media-breakpoint-down(md) {
+  .modal-header {
+    padding-top: 40px;
+  }
+  .modal-header-actions {
+    position: absolute;
+    right: 5px;
+    top: 10px;
+  }
+  .contact-letter {
+    height: 50px;
+    width: 50px;
+    margin-right: 10px;
+  }
+  .contact-name {
+    font-size: 22px;
+  }
+}
+
+.list-group-item,
+.form-group,
+.form-control {
+  font-size: 13px;
+}
+
+.dropdown:not(.btn-group) .dropdown-toggle::after,
+.dropup:not(.btn-group) .dropdown-toggle::after {
+  display: none;
+}
+
+.dropdown-menu {
+  padding: 0;
+  border-radius: 0;
+}
+
+.dropdown-item {
+  cursor: pointer;
+  padding: 7px 10px;
+  font-size: 13px;
+}
+
+.dropdown-menu-right {
+  right: 0 !important;
+  left: auto !important;
+}

@@ -1,0 +1,30 @@
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~@nebular/theme/styles/global/bootstrap/breakpoints";
+
+.snack-bar-container {
+  transition-timing-function: ease-in;
+  transition: 0.2s;
+  transform: translateY(0);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 4.5rem;
+  min-width: 100vw;
+  z-index: 1050;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+}
+
+.snack-bar {
+  background-color: rgba($color: #000000, $alpha: 0.87) !important;
+  color: white;
+  padding: 1.25rem;
+}
+.snack-bar-shown {
+  transition-timing-function: ease-out;
+  transition: 0.35s;
+  transform: translateY(100%);
+}

@@ -1,0 +1,90 @@
+.mobile-backdrop {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+.mobile-dropdown-menu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  background-color: white;
+  z-index: 1010;
+
+  transition-timing-function: ease-in;
+  transition: 0.2s;
+  transform: translateY(0);
+
+  box-shadow: 0 -8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 -3px 14px 2px rgba(0, 0, 0, 0.12), 0 -5px 5px -3px rgba(0, 0, 0, 0.2);
+
+  .dropdown-menu-right {
+    margin-bottom: 0 !important;
+    padding-left: 0 !important;
+    .dropdown-title {
+      font-size: 12px;
+      padding: 0 6px !important;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      line-height: 25px;
+      height: 25px;
+      text-align: left;
+      text-decoration: none;
+      max-width: 100%;
+      position: relative;
+      cursor: default;
+      outline: 0;
+      display: flex;
+      flex-direction: row;
+      max-width: 100%;
+      box-sizing: border-box;
+      align-items: center;
+      color: rgba(0, 0, 0, 0.6) !important;
+      font-weight: 500 !important;
+    }
+    .dropdown-item {
+      font-size: 13px;
+      padding: 0 15px !important;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      line-height: 45px;
+      height: 45px;
+      text-align: left;
+      text-decoration: none;
+      position: relative;
+      cursor: default;
+      outline: 0;
+      display: flex;
+      flex-direction: row;
+      max-width: 100%;
+      box-sizing: border-box;
+      align-items: center;
+      color: rgba(0, 0, 0, 0.6) !important;
+      font-weight: 500 !important;
+      span {
+        max-width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}
+
+.hide-mobile-dropdown-menu {
+  transition-timing-function: ease-out;
+  transition: 0.35s;
+  transform: translateY(110%);
+
+  box-shadow: none;
+}

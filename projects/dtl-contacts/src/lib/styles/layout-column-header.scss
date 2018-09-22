@@ -1,0 +1,23 @@
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~@nebular/theme/styles/global/bootstrap/breakpoints";
+
+.layout-column-header {
+  position: fixed;
+  top: 4.5rem;
+  left: calc(18rem + 1px);
+  width: calc(100vw - 18rem);
+  height: 50px;
+  background-color: white;
+  z-index: 998;
+}
+
+@include media-breakpoint-down(sm) {
+  .layout-column-header {
+    left: 0;
+    width: 100vw;
+  }
+}
+
+.page-title {
+
+}

@@ -1,0 +1,45 @@
+<div class="nb-menu">
+  <ul class="menu-items">
+    <li class="menu-item">
+      <a href="#" title="groups">
+        <i class="material-icons">file_upload</i>
+        <span *ngIf="displayItemTitle" class="menu-title">Import</span>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a href="#" title="groups">
+        <i class="material-icons">file_download</i>
+        <span *ngIf="displayItemTitle" class="menu-title">Export</span>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a class="d-flex justify-content-between align-items-center" title="Labels">
+        <div class="d-flex justify-content-between align-items-center">
+          <i class="material-icons">label</i>
+          <span *ngIf="displayItemTitle" class="menu-title">Labels</span>
+        </div>
+        <i *ngIf="displayLabels" (click)="displayLabels = false" class="material-icons">expand_less</i>
+        <i *ngIf="!displayLabels" (click)="displayLabels = true" class="material-icons">expand_more</i>
+      </a>
+      <ul *ngIf="displayItemTitle && displayLabels" class="menu-items expanded">
+        <li *ngFor="let label of labels" class="menu-item">
+          <a><span class="menu-title">{{ label.name }}</span></a>
+        </li>
+      </ul>
+    </li>
+    <li class="menu-item">
+      <a *ngIf="displayItemTitle" class="d-flex justify-content-between align-items-center" title="Types">
+        <div class="d-flex justify-content-between align-items-center">
+          <span class="menu-title">Types</span>
+        </div>
+        <i *ngIf="displayTypes" (click)="displayTypes = false" class="material-icons">expand_less</i>
+        <i *ngIf="!displayTypes" (click)="displayTypes = true" class="material-icons">expand_more</i>
+      </a>
+      <ul *ngIf="displayItemTitle && displayTypes" class="menu-items expanded">
+        <li *ngFor="let type of types" class="menu-item">
+          <a><span class="menu-title">{{ type.name }}</span></a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

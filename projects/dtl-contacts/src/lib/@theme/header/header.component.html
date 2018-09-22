@@ -1,0 +1,120 @@
+<div *ngIf="!showMobileSearch" class="header-container">
+  <div class="logo-containter">
+    <a (click)="toggle()" class="navigation"><i class="nb-menu"></i></a>
+    <img class="logo-img" src="assets/images/contacts.svg" />
+    <div class="logo">Contacts</div>
+  </div>
+</div>
+
+<div *ngIf="!showMobileSearch" class="header-container search-container">
+  <div ngbDropdown autoClose="false" class="w-100 d-none d-md-block">
+    <div class="input-group header-search">
+      <div class="input-group-prepend">
+        <span class="input-group-text">
+          <i class="ti ti-search"></i>
+        </span>
+      </div>
+      <input #searchDesktop (keyup)="search(searchDesktop.value)" type="text" class="form-control" placeholder="Search"
+        aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+      <div ngbDropdownToggle class="input-group-append">
+        <span class="input-group-text">
+          <i class="material-icons">
+            arrow_drop_down
+          </i>
+        </span>
+      </div>
+    </div>
+    <ul ngbDropdownMenu class="dropdown-menu header-dropdown dropdown-menu-right">
+      <li class="header-dropdown-item">
+        <div class="form-group d-flex align-items-center row">
+          <label class="form-control-label col-md-3">Organisations</label>
+          <div class="col-md-9 ">
+            <ng-select class="w-100" (change)="filter($event)" [items]="groups" placeholder="Select Type" bindLabel="name"
+              bindValue="id"></ng-select>
+          </div>
+        </div>
+        <div class="form-group d-flex align-items-center row">
+          <label class="form-control-label col-md-3">Prestataires</label>
+          <div class="col-md-9 ">
+            <ng-select class="w-100" (change)="filter($event)" [items]="groups" placeholder="Select Type" bindLabel="name"
+              bindValue="id"></ng-select>
+          </div>
+        </div>
+        <div class="form-group d-flex align-items-center row">
+          <label class="form-control-label col-md-3">Roles</label>
+          <div class="col-md-9 ">
+            <ng-select class="w-100" (change)="filter($event)" [items]="groups" placeholder="Select Type" bindLabel="name"
+              bindValue="id"></ng-select>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div *ngIf="showMobileSearch" class="header-container mobile-search-container">
+  <div ngbDropdown autoClose="false" class="w-100">
+    <div class="input-group header-search">
+      <div class="input-group-prepend">
+        <span class="input-group-text">
+          <i class="material-icons">
+            search
+          </i>
+        </span>
+      </div>
+      <input #searchDesktop (keyup)="search(searchDesktop.value)" type="text" class="form-control" placeholder="Search"
+        aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+      <div ngbDropdownToggle class="input-group-append">
+        <span class="input-group-text">
+          <i class="material-icons">
+            arrow_drop_down
+          </i>
+        </span>
+      </div>
+      <div (click)="showMobileSearch = false;" class="input-group-append">
+        <span class="input-group-text pr-4">
+          <i class="material-icons">
+            clear
+          </i>
+        </span>
+      </div>
+    </div>
+    <ul ngbDropdownMenu class="dropdown-menu header-dropdown dropdown-menu-right">
+      <li class="header-dropdown-item">
+        <div class="form-group d-flex align-items-center row">
+          <label class="form-control-label col-md-3">Organisations</label>
+          <div class="col-md-9 ">
+            <ng-select class="w-100" (change)="filter($event)" [items]="groups" placeholder="Select Type" bindLabel="name"
+              bindValue="id"></ng-select>
+          </div>
+        </div>
+        <div class="form-group d-flex align-items-center row">
+          <label class="form-control-label col-md-3">Prestataires</label>
+          <div class="col-md-9 ">
+            <ng-select class="w-100" (change)="filter($event)" [items]="groups" placeholder="Select Type" bindLabel="name"
+              bindValue="id"></ng-select>
+          </div>
+        </div>
+        <div class="form-group d-flex align-items-center row">
+          <label class="form-control-label col-md-3">Roles</label>
+          <div class="col-md-9 ">
+            <ng-select class="w-100" (change)="filter($event)" [items]="groups" placeholder="Select Type" bindLabel="name"
+              bindValue="id"></ng-select>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div *ngIf="!showMobileSearch" class="header-container">
+  <a class="action-container d-none d-md-flex">
+    <i class="material-icons">settings</i>
+  </a>
+  <a class="action-container d-flex d-md-none d-lg-none d-xl-none">
+    <i (click)="showMobileSearch =  true" class="material-icons">search</i>
+  </a>
+  <a class="action-container" (click)="back()">
+    <i class="material-icons">clear</i>
+  </a>
+</div>

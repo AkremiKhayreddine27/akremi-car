@@ -1,0 +1,50 @@
+<div class="header-container">
+  <div class="logo-containter">
+    <a data-tooltip="Main menu" (click)="toggle()" class="navigation"><i class="nb-menu"></i></a>
+    <div class="logo">Calendar</div>
+  </div>
+</div>
+
+<div class="header-container search-container">
+  <div ngbDropdown autoClose="false" class="w-100 d-none d-md-block">
+    <div class="input-group header-search input-group-lg">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroup-sizing-lg">
+          <i class="ti ti-search"></i>
+        </span>
+      </div>
+      <input #searchDesktop (keyup)="search(searchDesktop.value)" type="text" class="form-control" placeholder="Search"
+        aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+      <div ngbDropdownToggle class="input-group-append">
+        <span class="input-group-text" id="inputGroup-sizing-lg">
+          <i class="material-icons">
+            arrow_drop_down
+          </i>
+        </span>
+      </div>
+    </div>
+    <ul ngbDropdownMenu class="dropdown-menu header-dropdown dropdown-menu-right">
+      <li class="header-dropdown-item">
+        <div class="form-group d-flex align-items-center row">
+          <label class="form-control-label col-md-3">Group</label>
+          <div class="col-md-9 ">
+            <ng-select class="w-100" (change)="filter($event)" [items]="[]" placeholder="Select Type" bindLabel="name"
+              bindValue="id"></ng-select>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="header-container">
+  <a data-tooltip="Applications" class="action-container">
+    <i class="material-icons">apps</i>
+  </a>
+  <a data-tooltip="Settings" class="action-container">
+    <i class="material-icons">settings</i>
+  </a>
+  <a data-tooltip="Close" class="action-container" (click)="back()">
+    <i class="material-icons">clear</i>
+  </a>
+</div>

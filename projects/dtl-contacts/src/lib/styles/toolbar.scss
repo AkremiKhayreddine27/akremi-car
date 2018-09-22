@@ -1,0 +1,123 @@
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~@nebular/theme/styles/global/bootstrap/breakpoints";
+
+.tool-bar {
+  transition-timing-function: ease-in;
+  transition: 0.2s;
+  transform: translateY(0);
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: white !important;
+  height: 4.5rem;
+  width: 100vw;
+  z-index: 1050;
+  padding: 1.25rem;
+}
+.tool-bar-shown {
+  transition-timing-function: ease-out;
+  transition: 0.35s;
+  transform: translateY(-100%);
+}
+
+.keyboard-backspace {
+  width: 16.75rem;
+  .material-icons {
+    color: rgba(0, 0, 0, 0.56) !important;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    margin-left: -1.25rem;
+  }
+  .material-icons:hover {
+    color: black;
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+}
+
+.contacts-select-actions {
+  .action {
+    color: rgba(0, 0, 0, 0.56) !important;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+  .action:hover {
+    color: black;
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+  .dropdown-title {
+    font-size: 12px;
+    padding: 0 6px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    line-height: 25px;
+    height: 25px;
+    text-align: left;
+    text-decoration: none;
+    max-width: 100%;
+    position: relative;
+    cursor: default;
+    outline: 0;
+    display: flex;
+    flex-direction: row;
+    max-width: 100%;
+    box-sizing: border-box;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.6) !important;
+    font-weight: 500 !important;
+  }
+  .dropdown-item {
+    font-size: 13px;
+    padding: 0 15px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    line-height: 40px;
+    height: 40px;
+    text-align: left;
+    text-decoration: none;
+    position: relative;
+    cursor: default;
+    outline: 0;
+    display: flex;
+    flex-direction: row;
+    max-width: 100%;
+    box-sizing: border-box;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.6) !important;
+    font-weight: 500 !important;
+    span {
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+.dropdown-icon {
+  color: rgba(0, 0, 0, 0.56) !important;
+}
+
+.dropdown-icon:hover {
+  color: black;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+@include media-breakpoint-down(sm) {
+  .keyboard-backspace {
+    width: 50px;
+  }
+}

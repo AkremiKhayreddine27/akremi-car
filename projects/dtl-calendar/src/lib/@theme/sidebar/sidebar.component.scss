@@ -1,0 +1,71 @@
+// @nebular theming framework
+@import "~@nebular/theme/styles/theming";
+// @nebular out of the box themes
+@import "~@nebular/theme/styles/themes";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~@nebular/theme/styles/global/bootstrap/breakpoints";
+
+@include nb-install-component() {
+  .datepicker-container {
+    margin: 0 -1.25rem;
+  }
+  .nb-menu::before {
+    content: none;
+  }
+  .nb-menu {
+    background: white !important;
+    color: #707070 !important;
+    margin: 0 -1.25rem -1.25rem;
+    font-family: Exo;
+    font-size: 1rem;
+    font-weight: 500;
+    ul.menu-items {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      overflow: hidden;
+      transition: max-height 0.3s ease-in;
+      .menu-item {
+        cursor: pointer;
+        border-bottom: 1px solid #ebeef2 !important;
+        a {
+          padding: 0.9rem 1.25rem;
+          display: flex;
+          color: inherit;
+          text-decoration: none;
+          align-items: center;
+          background-color: transparent;
+          i {
+            font-size: 24px;
+            margin-right: 15px;
+            margin-left: -5px;
+          }
+        }
+        a:hover {
+          color: black;
+        }
+      }
+      .menu-item:first-child {
+        border-top: none;
+      }
+      .menu-item:last-child {
+        border-bottom: none !important;
+      }
+    }
+  }
+  .nb-menu .menu-items.expanded {
+    .menu-item {
+      border-bottom: none !important;
+      padding-left: 35px;
+    }
+  }
+  /deep/ .scrollable {
+    @include nb-for-theme(corporate) {
+      padding-top: 0 !important;
+
+      .menu-item:first-child {
+        border-top: none !important;
+      }
+    }
+  }
+}

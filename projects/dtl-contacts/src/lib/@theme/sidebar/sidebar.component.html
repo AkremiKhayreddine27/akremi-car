@@ -1,0 +1,73 @@
+<div class="nb-menu">
+  <ul class="menu-items">
+    <li class="menu-item">
+      <a>
+        <i class="material-icons">contacts</i>
+        <span class="menu-title">Contacts</span>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a>
+        <i class="material-icons">stars</i>
+        <span class="menu-title">Contacts suivis</span>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a class="d-flex justify-content-between align-items-center">
+        <div class="d-flex justify-content-between align-items-center">
+          <i class="material-icons">business</i>
+          <span class="menu-title">Organisations</span>
+        </div>
+        <i *ngIf="displayBusiness" (click)="displayBusiness = false" class="material-icons">expand_less</i>
+        <i *ngIf="!displayBusiness" (click)="displayBusiness = true" class="material-icons">expand_more</i>
+      </a>
+      <ul [ngbCollapse]="displayBusiness" class="menu-items expanded">
+        <li class="menu-item">
+          <a><span class="menu-title">Mon Entreprise</span></a>
+        </li>
+      </ul>
+    </li>
+    <li class="menu-item">
+      <a class="d-flex justify-content-between align-items-center" title="groups">
+        <div class="d-flex justify-content-between align-items-center">
+          <i class="material-icons">person_pin_circle</i>
+          <span class="menu-title">Prestataires</span>
+        </div>
+        <i *ngIf="displayProviders" (click)="displayProviders = false" class="material-icons">expand_less</i>
+        <i *ngIf="!displayProviders" (click)="displayProviders = true" class="material-icons">expand_more</i>
+      </a>
+      <ul [ngbCollapse]="displayProviders" class="menu-items expanded">
+        <li *ngFor="let provider of providers" class="menu-item">
+          <a><span class="menu-title">{{ provider.name }}</span></a>
+        </li>
+      </ul>
+    </li>
+    <li class="menu-item">
+      <a class="d-flex justify-content-between align-items-center" title="groups">
+        <div class="d-flex justify-content-between align-items-center">
+          <i class="material-icons">group_work</i>
+          <span class="menu-title">Rôles</span>
+        </div>
+        <i *ngIf="displayRoles" (click)="displayRoles = false" class="material-icons">expand_less</i>
+        <i *ngIf="!displayRoles" (click)="displayRoles = true" class="material-icons">expand_more</i>
+      </a>
+      <ul [ngbCollapse]="displayRoles" class="menu-items expanded">
+        <li *ngFor="let role of roles" class="menu-item">
+          <a><span class="menu-title">{{ role.name }}</span></a>
+        </li>
+      </ul>
+    </li>
+    <li class="menu-item">
+      <a href="#" title="groups">
+        <i class="material-icons">settings</i>
+        <span class="menu-title">Paramètres</span>
+      </a>
+    </li>
+    <li class="menu-item">
+      <a href="#" title="groups">
+        <i class="material-icons">help</i>
+        <span class="menu-title">Aide</span>
+      </a>
+    </li>
+  </ul>
+</div>

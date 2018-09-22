@@ -1,0 +1,158 @@
+<div *ngIf="contact" class="modal-header d-flex justify-content-between">
+  <div class="d-flex">
+    <img *ngIf="contact && contact.photoURL" width="60" height="60" class="contact-avatar" [src]="contact.photoURL" />
+    <div *ngIf="contact && !contact.avatar" class="contact-letter">
+      {{ contact.firstname[0] }}
+    </div>
+    <div class="d-flex flex-column">
+      <span class="contact-name">{{ contact.firstname }} {{ contact.lastname }}</span>
+      <div>
+        <span *ngFor="let group of (contactGroups$ | async)" class="badge contact-badge mr-2">
+          {{ group.name }}
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex modal-header-actions align-items-center">
+    <i (click)="edit = !edit" class="material-icons">edit</i>
+    <div ngbDropdown class="d-inline-block">
+      <i ngbDropdownToggle class="material-icons">more_vert</i>
+      <ul ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
+        <li class="dropdown-item">
+          <i class="material-icons">delete</i> Delete
+        </li>
+      </ul>
+    </div>
+    <i (click)="activeModal.dismiss()" class="material-icons">clear</i>
+  </div>
+</div>
+<div *ngIf="!contact" class="modal-header d-flex justify-content-between">
+  Create contact
+  <div class="d-flex modal-header-actions align-items-center">
+    <i (click)="activeModal.dismiss()" class="material-icons">clear</i>
+  </div>
+</div>
+<div [class.modal-edit]="contact" class="modal-body">
+  <ul *ngIf="!edit" class="list-group w-100 border-0 m-0 p-0">
+    <li class="list-group-item border-0">
+      <a class="contact-link" [href]="'mailto:' + contact.email">
+        <i class="fa fa-envelope mr-2"></i>
+        {{ contact.email }}
+      </a>
+    </li>
+    <li class="list-group-item border-0">
+      <a class="contact-link" [href]="'tel:' + contact.phone">
+        <i class="fa fa-phone mr-2"></i>
+        {{ contact.phone }}
+      </a>
+    </li>
+    <li *ngIf="contact && contact.location" class="list-group-item d-flex border-0">
+      <i *ngIf="contact.location.address || contact.location.postcode || contact.location.city" class="fa fa-map-marker mr-2"></i>
+      <div class="d-flex flex-column">
+        <span *ngIf="contact && contact.location && contact.location.address">{{ contact.location.address }}</span>
+        <span *ngIf="contact && contact.location && contact.location.postcode">{{ contact.location.postcode }} </span>
+        <span *ngIf="contact && contact.location && contact.location.city">{{ contact.location.city }}</span>
+        <span *ngIf="contact && contact.location && contact.location.country">{{ contact.location.country }}</span>
+      </div>
+    </li>
+  </ul>
+  <form [formGroup]="form" *ngIf="edit">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Nom</label>
+          <input formControlName="firstname" type="email" class="form-control form-control-sm">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Prénom</label>
+          <input formControlName="lastname" type="email" class="form-control form-control-sm">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Entreprise</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <i class="material-icons">business</i>
+              </span>
+            </div>
+            <input formControlName="company" type="text" class="form-control form-control-sm">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Fonction</label>
+          <input formControlName="job" type="text" class="form-control form-control-sm">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            <i class="material-icons">email</i>
+          </span>
+        </div>
+        <input formControlName="email" type="email" class="form-control form-control-sm">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Phone</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            <i class="material-icons">phone</i>
+          </span>
+        </div>
+        <input formControlName="phone" type="tel" class="form-control form-control-sm">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Notes</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            <i class="material-icons">note</i>
+          </span>
+        </div>
+        <input formControlName="note" type="text" class="form-control form-control-sm">
+      </div>
+    </div>
+    <div class="form-group">
+      <span (click)="showMore = !showMore" class="more-btn">Plus...</span>
+    </div>
+    <div *ngIf="showMore" [formGroup]="location">
+      <div class="form-group">
+        <label>Address</label>
+        <input formControlName="address" type="text" class="form-control form-control-sm">
+      </div>
+      <div class="form-group">
+        <label>Postal code</label>
+        <input formControlName="postcode" type="text" class="form-control form-control-sm">
+      </div>
+      <div class="form-group">
+        <label>City</label>
+        <input formControlName="city" type="text" class="form-control form-control-sm">
+      </div>
+      <div class="form-group">
+        <label>State</label>
+        <input formControlName="state" type="text" class="form-control form-control-sm">
+      </div>
+      <div class="form-group">
+        <label>Country</label>
+        <input formControlName="country" type="text" class="form-control form-control-sm">
+      </div>
+    </div>
+  </form>
+</div>
+<div *ngIf="edit" class="modal-footer">
+  <a (click)="activeModal.dismiss()" class="btn btn-sm btn-danger">Cancel</a>
+  <a (click)="save()" class="btn btn-sm btn-primary">Save</a>
+</div>

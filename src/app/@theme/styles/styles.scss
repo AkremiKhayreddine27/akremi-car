@@ -1,0 +1,126 @@
+// themes - our custom or/and out of the box themes
+@import "themes";
+
+/**
+*
+*/
+$letter-height: 36px;
+$letter-width: 36px;
+$mobile-letter-height: 36px;
+$mobile-letter-width: 36px;
+$mobile-row-text-size: 13px;
+@import "~distinct-table/styles/styles";
+@import "~@icon/themify-icons/themify-icons.css";
+@import "~linearicons/dist/web-font/style.css";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+/**
+*
+*/
+
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~@nebular/theme/styles/global/bootstrap/breakpoints";
+
+// framework component themes (styles tied to theme variables)
+@import "~@nebular/theme/styles/globals";
+@import "~@nebular/auth/styles/all";
+
+// global app font size
+@import "./font-size";
+
+// loading progress bar theme
+@import "./pace.theme";
+
+@import "./bootstrap-rtl";
+
+// install the framework and custom global styles
+@include nb-install() {
+  // framework global styles
+  @include nb-theme-global();
+  @include nb-auth-global();
+
+  // loading progress bar
+  @include ngx-pace-theme();
+
+  // fixed in rc.9 and can be removed after upgrade
+  .custom-control .custom-control-indicator {
+    border-radius: 50%; // TODO: quickfix for https://github.com/akveo/nebular/issues/275
+  }
+  @include bootstrap-rtl();
+}
+
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/materialicons/v41/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2)
+    format("woff2");
+}
+
+.material-icons {
+  font-family: "Material Icons";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+
+.dropdown-menu {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 1px solid #dddddd !important;
+  border-radius: 0 !important;
+  min-width: 150px !important;
+}
+
+.dropdown-item {
+  color: black !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 7px 10px !important;
+  text-transform: none !important;
+  cursor: pointer !important;
+}
+
+.modal-backdrop.show {
+  opacity: 0.12 !important;
+}
+
+.modal-content {
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24);
+}
+
+.custom-tooltip {
+  position: relative;
+}
+*[data-tooltip] {
+  position: relative !important;
+}
+*[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  min-width: 60px;
+  background-color: rgba($color: #000000, $alpha: 0.55);
+  color: #fff;
+  text-align: center;
+  padding: 5px 5px;
+  position: absolute;
+  z-index: 1;
+  top: 105%;
+  left: 50%;
+  margin-left: -30px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+@include media-breakpoint-down(sm) {
+
+}

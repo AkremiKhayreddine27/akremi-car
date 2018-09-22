@@ -1,0 +1,37 @@
+<nb-layout class="custom-layout">
+  <nb-layout-header fixed>
+    <dtl-header class="w-100"></dtl-header>
+  </nb-layout-header>
+  <nb-sidebar class="custom-sidebar menu-sidebar" state="compacted" responsive>
+    <dtl-sidebar></dtl-sidebar>
+  </nb-sidebar>
+  <nb-layout-column class="p-0 pt-3">
+    <div class="d-flex border-bottom pb-2 justify-content-between row m-0">
+      <div class="col-md-8 col-6">
+        <span *ngIf="selectedData.length > 0" class="d-flex contacts-checkbox align-items-center m-0">
+          <label (click)="$event.stopPropagation();" class="checkbox-container mr-2">
+            <input [(ngModel)]="allSelected.checked" (change)="handleSelectAllChanged($event)" type="checkbox">
+            <span class="checkmark"></span>
+          </label>
+          {{ allSelected.checked ? documents.length : selectedData.length }} sélectionnés
+        </span>
+      </div>
+      <div class="col-md-4 col-6 d-flex justify-content-end">
+        <div *ngIf="selectedData.length > 0" class="contacts-select-actions d-flex pr-3">
+          <i (click)="delete()" class="material-icons mr-3">delete</i>
+          <i class="material-icons">file_download</i>
+        </div>
+        <div class="contacts-select-actions">
+          <i *ngIf="!isGridView" (click)="isGridView = true" class="material-icons">view_module</i>
+          <i *ngIf="isGridView" (click)="isGridView = false" class="material-icons">view_headline</i>
+        </div>
+      </div>
+    </div>
+    <dtc-table class="dt-table" *ngIf="!isGridView" [selectAll]="allSelected" (rowActionClicked)="handleRowActionClicked($event)"
+      (selectRowChanged)="handleSelectRowChanged($event)" [config]="config" [data]="documents"></dtc-table>
+    <app-grid *ngIf="isGridView" [documents]="documents"></app-grid>
+    <a (click)="create()" class="btn-add-contact">
+      <i class="nb-plus"></i>
+    </a>
+  </nb-layout-column>
+</nb-layout>
