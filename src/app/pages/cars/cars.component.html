@@ -1,0 +1,117 @@
+<ngx-top-option-bar [open]="selectedData.length !== 0">
+  <div class="d-flex align-items-center ngx-top-option-bar-left">
+    <i (click)="resetSelected();" class="material-icons top-action-bar-icon">
+      keyboard_backspace
+    </i>
+    <div class="top-bar-selected-data-container">
+      <span class="table-checkbox align-self-center">
+        <label (click)="$event.stopPropagation();" class="ck-container">
+          <input [(ngModel)]="allSelected.checked" (change)="selectAll($event.target.checked);" type="checkbox">
+          <span class="checkmark"></span>
+        </label>
+      </span>
+      <div class="ml-2 top-bar-selected-data-label">
+        {{ selectedData.length }}
+        <div class="d-none d-md-flex ml-2">sélectionnés</div>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex align-items-center ngx-top-option-bar-right">
+    <ngx-smart-select [titleTemplate]="statusTitleTempate" [triggerTemplate]="statusTempate">
+      <ngx-smart-select-option *ngFor="let status of statuses">
+        <div class="d-flex align-items-center">
+          {{ status.value }}
+        </div>
+      </ngx-smart-select-option>
+    </ngx-smart-select>
+    <ngx-smart-select [triggerTemplate]="driverTempate">
+      <ngx-smart-select-option *ngFor="let driver of drivers">
+        <div class="d-flex align-items-center">
+          {{ driver.displayName }}
+        </div>
+      </ngx-smart-select-option>
+    </ngx-smart-select>
+    <ngx-smart-select [triggerTemplate]="topBarMoreTempate">
+      <ngx-smart-select-option>
+        <div class="d-flex align-items-center">
+          <i class="material-icons mr-2">file_download</i>Exporter
+        </div>
+      </ngx-smart-select-option>
+      <ngx-smart-select-option>
+        <div class="d-flex align-items-center">
+          <i class="material-icons mr-2">print</i>Imprimer
+        </div>
+      </ngx-smart-select-option>
+      <ngx-smart-select-option>
+        <div class="d-flex align-items-center">
+          <i class="material-icons mr-2">delete</i>Supprimer
+        </div>
+      </ngx-smart-select-option>
+    </ngx-smart-select>
+  </div>
+</ngx-top-option-bar>
+<ngx-smart-page-header>
+  <ngx-smart-page-header-title>
+    <div class="d-flex align-items-center">
+      Véhicules
+    </div>
+  </ngx-smart-page-header-title>
+  <ngx-smart-page-header-options>
+    <ngx-cars-filter></ngx-cars-filter>
+    <ngx-smart-select [triggerTemplate]="sortTriggerTemplate">
+      <ngx-smart-select-option>
+        <div class="d-flex align-items-center">Dernière modification</div>
+      </ngx-smart-select-option>
+      <ngx-smart-select-option>
+        <div class="d-flex align-items-center">Odomètre</div>
+      </ngx-smart-select-option>
+    </ngx-smart-select>
+    <i *ngIf="!isGridView" (click)="isGridView = true;" class="material-icons action-icon">view_module</i>
+    <i *ngIf="isGridView" (click)="isGridView = false;" class="material-icons action-icon">view_list</i>
+    <ngx-smart-select [triggerTemplate]="triggerTemplate">
+      <ngx-smart-select-option>
+        <div class="d-flex align-items-center"><i class="material-icons mr-2">print</i>Imprimer</div>
+      </ngx-smart-select-option>
+      <ngx-smart-select-option>
+        <div class="d-flex align-items-center"><i class="material-icons mr-2">file_upload</i>Import</div>
+      </ngx-smart-select-option>
+    </ngx-smart-select>
+  </ngx-smart-page-header-options>
+</ngx-smart-page-header>
+<div class="page-container">
+  <ngx-cars-grid [cars]="cars" *ngIf="isGridView"></ngx-cars-grid>
+  <ngx-cars-table class="cars-table-view" [selectAll]="allSelected" [cars]="cars" (rowSelected)="handleSelectRowChanged($event)"
+    (rowClicked)="handleRowClicked($event);" *ngIf="!isGridView"></ngx-cars-table>
+</div>
+
+<div routerLink="create" class="btn btn-add">
+  <i class="material-icons">add</i>
+</div>
+
+
+<!-- Templates -->
+<ng-template #triggerTemplate>
+  <i class="material-icons action-icon">more_vert</i>
+</ng-template>
+
+<ng-template #sortTriggerTemplate>
+  <i class="material-icons action-icon">sort</i>
+</ng-template>
+
+<ng-template #statusTempate>
+  <i class="material-icons top-action-bar-icon">flag</i>
+</ng-template>
+
+<ng-template #driverTempate>
+  <i class="material-icons top-action-bar-icon">person</i>
+</ng-template>
+
+<ng-template #topBarMoreTempate>
+  <i class="material-icons top-action-bar-icon">more_vert</i>
+</ng-template>
+
+<ng-template #statusTitleTempate>
+  <div class="select-title-template d-flex align-items-center w-100">
+    Statut
+  </div>
+</ng-template>

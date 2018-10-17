@@ -1,22 +1,22 @@
 import { NgModule } from "@angular/core";
-import { CommonModule } from '@angular/common';
+import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DtlContactsComponent } from "./dtl-contacts.component";
 import { DistinctTableModule } from "distinct-table";
 
-import { NgSelectModule } from '@ng-select/ng-select';
+import { NgSelectModule } from "@ng-select/ng-select";
 
 import { ThemeModule } from "./@theme/theme.module";
 import { CoreModule } from "./@core/core.module";
 
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap'
+import { NgbDropdownModule } from "@ng-bootstrap/ng-bootstrap";
 
 import { StoreModule, MetaReducer } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 export const metaReducers: MetaReducer<any>[] = [];
 
-import { LayoutModule } from '@angular/cdk/layout';
+import { LayoutModule } from "@angular/cdk/layout";
 
 import {
   NbActionsModule,
@@ -39,7 +39,10 @@ import {
   CreateGroupComponent,
   DeleteComponent,
   DeleteGroupComponent,
-  ShowComponent
+  ShowComponent,
+  TableComponent,
+  RowComponent,
+  DtlTableHeaderComponent
 } from "./components";
 
 @NgModule({
@@ -78,7 +81,10 @@ import {
     CreateGroupComponent,
     DeleteComponent,
     DeleteGroupComponent,
-    ShowComponent
+    ShowComponent,
+    TableComponent,
+    RowComponent,
+    DtlTableHeaderComponent
   ],
   exports: [DtlContactsComponent],
   entryComponents: [

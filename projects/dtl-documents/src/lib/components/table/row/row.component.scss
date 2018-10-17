@@ -1,0 +1,99 @@
+@import "./checkbox.scss";
+@import "./dropdown.scss";
+.table-row {
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  background-color: transparent;
+  width: 100%;
+}
+.contact-img {
+  border-radius: 50%;
+}
+.checkbox-container {
+  height: 70px;
+  width: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .contacts-checkbox {
+    height: 70px;
+    width: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.mobile-checkbox-container {
+  height: 70px;
+  width: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .contacts-checkbox {
+    height: 70px;
+    width: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.table-row:hover {
+  background-color: #f7f7f7;
+}
+.table-col {
+  display: flex;
+  align-items: center;
+}
+.table-col-icon {
+  font-size: 17px !important;
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+.table-text {
+  font-size: 13px;
+  vertical-align: middle;
+  padding: 2px 2px 2px 0;
+  overflow: hidden;
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+.mobile-table-text {
+  font-size: 12px;
+  vertical-align: middle;
+  padding: 2px 2px 2px 0;
+  overflow: hidden;
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+.contact-letter {
+  height: 36px;
+  width: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  color: white;
+  border-radius: 50%;
+}
+.table-row-actions {
+  position: absolute;
+  right: 10px;
+  display: flex;
+  .table-row-action-icon {
+    font-size: 20px;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  .table-row-action-icon:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: black;
+  }
+}
+.flex-1 {
+  flex: 1;
+}

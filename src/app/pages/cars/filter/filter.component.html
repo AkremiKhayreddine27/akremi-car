@@ -1,0 +1,69 @@
+<div class="cars-filter d-none d-md-flex">
+  <i #trigger (click)="open()" class="material-icons action-icon">filter_list</i>
+</div>
+
+<div class="cars-filter d-md-none d-lg-none d-xl-none d-flex">
+  <i (click)="mobileOpen()" class="material-icons action-icon">filter_list</i>
+</div>
+
+<ng-template #desktopContent>
+  <div class="desktop-filters">
+    <div class="filter-group">
+      <div (click)="statusCollapsed = !statusCollapsed; typeCollapsed = true;" class="filter-group-title border-bottom d-flex justify-content-between">
+        Statut
+        <i *ngIf="statusCollapsed" class="material-icons">expand_more</i>
+        <i *ngIf="!statusCollapsed" class="material-icons">expand_less</i>
+      </div>
+      <div *ngIf="!statusCollapsed" [class.border-bottom]="!statusCollapsed" class="filter-group-menu">
+        <div class="filter-group-menu-item">Réservé</div>
+        <div class="filter-group-menu-item">En mission</div>
+        <div class="filter-group-menu-item">En service</div>
+        <div class="filter-group-menu-item">Hors service</div>
+      </div>
+    </div>
+    <div class="filter-group">
+      <div (click)="typeCollapsed = !typeCollapsed; statusCollapsed = true;" class="filter-group-title border-bottom d-flex justify-content-between">
+        Type
+        <i *ngIf="typeCollapsed" class="material-icons">expand_more</i>
+        <i *ngIf="!typeCollapsed" class="material-icons">expand_less</i>
+      </div>
+      <div *ngIf="!typeCollapsed" class="filter-group-menu">
+        <div class="filter-group-menu-item">Car</div>
+        <div class="filter-group-menu-item">Van</div>
+        <div class="filter-group-menu-item">Suv</div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #mobileContent>
+  <div class="mobile-filters">
+    <div class="filter-group">
+      <div (click)="statusCollapsed = !statusCollapsed; typeCollapsed = true;" class="filter-group-title border-bottom d-flex justify-content-between">
+        Statut
+        <i *ngIf="statusCollapsed" class="material-icons">expand_more</i>
+        <i *ngIf="!statusCollapsed" class="material-icons">expand_less</i>
+      </div>
+      <div *ngIf="!statusCollapsed" [class.border-bottom]="!statusCollapsed" class="filter-group-menu">
+        <div class="filter-group-menu-item">Réservé</div>
+        <div class="filter-group-menu-item">En mission</div>
+        <div class="filter-group-menu-item">En service</div>
+        <div class="filter-group-menu-item">Hors service</div>
+      </div>
+    </div>
+    <div class="filter-group">
+      <div (click)="typeCollapsed = !typeCollapsed; statusCollapsed = true;" [class.border-bottom]="!typeCollapsed"
+        class="filter-group-title d-flex justify-content-between">
+        Type
+        <i *ngIf="typeCollapsed" class="material-icons">expand_more</i>
+        <i *ngIf="!typeCollapsed" class="material-icons">expand_less</i>
+      </div>
+      <div *ngIf="!typeCollapsed" class="filter-group-menu">
+        <div class="filter-group-menu-item">Car</div>
+        <div class="filter-group-menu-item">Van</div>
+        <div class="filter-group-menu-item">Suv</div>
+      </div>
+    </div>
+  </div>
+</ng-template>

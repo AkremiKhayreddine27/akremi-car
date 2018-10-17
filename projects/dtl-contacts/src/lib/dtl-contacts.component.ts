@@ -1,15 +1,29 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from "@angular/core";
-import { TableConfig } from "distinct-table";
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  AfterViewInit,
+  ChangeDetectorRef
+} from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { Store } from "@ngrx/store";
 import * as fromStore from "./@core/store";
 import { Pagination } from "./@core/store/helpers";
 import { User, Group } from "./@core/models";
-import { delay, takeWhile } from "rxjs/operators";
+import { delay, takeWhile, mapTo, mergeMap } from "rxjs/operators";
 import { ShowComponent, DeleteComponent } from "./components";
 import { Email } from "./@core/models/email";
 import { PhoneNumber } from "./@core/models/phone";
+import { FilterConf } from "../../../dtl-documents/src/lib/@core/store/helpers";
+import { merge, of, fromEvent, Observable } from "rxjs";
+import { Queue } from "./@core/models/queue";
+import { NbSidebarService } from "@nebular/theme";
+import {
+  BreakpointObserver,
+  BreakpointState,
+  Breakpoints
+} from "@angular/cdk/layout";
 
 @Component({
   selector: "dtl-contacts",
@@ -17,14 +31,17 @@ import { PhoneNumber } from "./@core/models/phone";
   styleUrls: ["./dtl-contacts.component.scss"]
 })
 export class DtlContactsComponent implements OnInit, AfterViewInit, OnDestroy {
+  pageTitle = "Contacts";
+
   users: User[] = [];
+  usersLoaded: Observable<boolean>;
 
   groups: Group[] = [];
 
   config: any;
 
   pagination: Pagination = { page: 1, perPage: 10 };
-  filtersConf = { filters: [], andOperator: true };
+  filtersConf: FilterConf = { filters: [], andOperator: true };
 
   selectedData: any[] = [];
   allSelected: any = { type: "event", checked: false };
@@ -36,301 +53,126 @@ export class DtlContactsComponent implements OnInit, AfterViewInit, OnDestroy {
   hideMobileDropdownMenu = true;
   btnLableClicked = false;
   btnMenuClicked = false;
+  btnSidebarClicked = false;
+
+  isViewInit = false;
+
+  online: boolean;
+
+  isExtended = false;
+
+  mobileView;
 
   constructor(
-    private store: Store<fromStore.LocatusState>,
-    private modalService: NgbModal
+    private store: Store<fromStore.ContactsAppState>,
+    private modalService: NgbModal,
+    private cdr: ChangeDetectorRef,
+    private sidebarService: NbSidebarService,
+    public breakpointObserver: BreakpointObserver
   ) {}
 
   ngOnInit() {
-    this.store
-      .select(fromStore.getAllGroups)
-      .pipe(
-        delay(50),
-        takeWhile(() => this.alive)
-      )
-      .subscribe(groups => {
-        this.groups = groups;
-        this.config = {
-          displayHeader: true,
-          bordred: false,
-          showActionsType: "hover",
-          alignDesktop: "center",
-          alignMobile: "center",
-          selectType: "image",
-          imagePath: "photo",
-          lettersPath: "name.familyName",
-          header: [
-            {
-              width: "col-3",
-              label: "Name",
-              sort: {
-                attributes: [
-                  { name: "First name", path: "firstname", direction: "desc" },
-                  { name: "Last name", path: "lastname", direction: "desc" }
-                ]
-              }
-            },
-            {
-              width: "col-3",
-              label: "E-mail",
-              sort: {
-                attributes: [
-                  { name: "E-mail", path: "email", direction: "desc" }
-                ]
-              }
-            },
-            {
-              width: "col-2",
-              label: "Phone",
-              sort: {
-                attributes: [
-                  { name: "Phone", path: "phone", direction: "desc" }
-                ]
-              }
-            },
-            {
-              width: "col-4",
-              label: "Group",
-              sort: {
-                attributes: [
-                  { name: "Group", path: "groupId", direction: "desc" }
-                ]
-              }
-            }
-          ],
-          mobileHeader: [
-            {
-              width: "col-12",
-              label: "Contacts",
-              sort: {
-                attributes: [
-                  { name: "First name", path: "firstname", direction: "desc" },
-                  { name: "Last name", path: "lastname", direction: "desc" },
-                  { name: "Phone", path: "phone", direction: "desc" },
-                  { name: "E-mail", path: "email", direction: "desc" }
-                ]
-              }
-            }
-          ],
-          cols: [
-            {
-              width: "col-3",
-              data: [
-                {
-                  line: [
-                    {
-                      type: "text",
-                      path: "name.familyName"
-                    },
-                    {
-                      type: "text",
-                      path: "name.givenName"
-                    }
-                  ],
-                  align: true
-                }
-              ]
-            },
-            {
-              width: "col-3",
-              data: [
-                {
-                  line: [
-                    {
-                      type: "materialicon",
-                      icon: "email"
-                    },
-                    {
-                      type: "email",
-                      path: "emails",
-                      getData: (emails: Email[]) => {
-                        return emails.find((email: Email) => email.primary)
-                          .value;
-                      }
-                    }
-                  ],
-                  align: true
-                }
-              ]
-            },
-            {
-              width: "col-2",
-              data: [
-                {
-                  line: [
-                    {
-                      type: "materialicon",
-                      icon: "phone"
-                    },
-                    {
-                      type: "phone",
-                      path: "phoneNumbers",
-                      getData: (phones: PhoneNumber[]) => {
-                        return phones.find(
-                          (phone: PhoneNumber) => phone.primary
-                        ).value;
-                      }
-                    }
-                  ],
-                  align: true
-                }
-              ]
-            },
-            {
-              width: "col-4",
-              data: [
-                {
-                  line: [
-                    {
-                      type: "array",
-                      path: "groups",
-                      getData: (group: Group) => group.display
-                    }
-                  ],
-                  align: true
-                }
-              ]
-            }
-          ],
-          mobileCols: [
-            {
-              width: "col-7",
-              data: [
-                {
-                  line: [
-                    {
-                      type: "text",
-                      path: "name.familyName"
-                    },
-                    {
-                      type: "text",
-                      path: "name.givenName"
-                    }
-                  ],
-                  align: true
-                }
-              ]
-            },
-            {
-              width: "col-5",
-              data: [
-                {
-                  line: [
-                    {
-                      type: "array",
-                      path: "groups",
-                      getData: (group: Group) => group.display
-                    }
-                  ],
-                  align: true
-                }
-              ]
-            }
-          ],
-          desktopActions: [
-            {
-              type: "dropdown",
-              dropdownConfig: {
-                toggle: {
-                  type: "materialicon",
-                  icon: "label"
-                },
-                lists: [
-                  {
-                    title: "Groups",
-                    items: [
-                      ...this.groups.map(group => {
-                        return {
-                          data: [
-                            {
-                              type: "checkbox",
-                              display: group.display,
-                              id: group.value,
-                              path: "groups",
-                              pathId: "value"
-                            }
-                          ],
-                          calback: "assignToGroup"
-                        };
-                      })
-                    ]
-                  },
-                  {
-                    title: "Roles",
-                    items: [
-                      ...this.groups.map(group => {
-                        return {
-                          data: [
-                            {
-                              type: "checkbox",
-                              display: group.display,
-                              id: group.value,
-                              path: "groups",
-                              pathId: "value"
-                            }
-                          ],
-                          calback: "assignToGroup"
-                        };
-                      })
-                    ]
-                  }
-                ]
-              }
-            },
-            {
-              type: "materialicon",
-              icon: "edit",
-              calback: "edit"
-            },
-            {
-              type: "dropdown",
-              dropdownConfig: {
-                toggle: {
-                  type: "materialicon",
-                  icon: "more_vert"
-                },
-                lists: [
-                  {
-                    items: [
-                      {
-                        data: [
-                          {
-                            type: "materialicon",
-                            icon: "delete"
-                          },
-                          {
-                            type: "text",
-                            label: "Delete"
-                          }
-                        ],
-                        calback: "delete"
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          ],
-          mobileActions: []
-        };
+    this.loadContacts();
+    this.loadGroups();
+    this.breakpointObserver
+      .observe(["(orientation: portrait)", "(orientation: landscape)"])
+      .pipe(takeWhile(() => this.alive))
+      .subscribe((state: BreakpointState) => {
+        this.isExtended = false;
       });
+    this.breakpointObserver
+      .observe([Breakpoints.Small, Breakpoints.XSmall])
+      .pipe(takeWhile(() => this.alive))
+      .subscribe((state: BreakpointState) => {
+        if (state.matches) {
+          this.mobileView = true;
+        } else {
+          this.mobileView = false;
+        }
+      });
+    this.sidebarService
+      .onToggle()
+      .pipe(takeWhile(() => this.alive))
+      .subscribe(event => {
+        this.isExtended = !this.isExtended;
+        this.btnSidebarClicked = !this.btnSidebarClicked;
+      });
+    this.sidebarService
+      .onCollapse()
+      .pipe(takeWhile(() => this.alive))
+      .subscribe(event => {
+        this.isExtended = false;
+        this.btnSidebarClicked = false;
+      });
+    merge(
+      of(navigator.onLine),
+      fromEvent(window, "online").pipe(mapTo(true)),
+      fromEvent(window, "offline").pipe(mapTo(false))
+    )
+      .pipe(
+        takeWhile(() => this.alive),
+        mergeMap(isOnline => {
+          if (isOnline) {
+            return this.store.select(fromStore.getAllQueue);
+          }
+          return of([]);
+        })
+      )
+      .subscribe((queue: Queue[]) => {
+        if (queue.length > 0) {
+          //this.store.dispatch(new fromStore.ClearQueue());
+        }
+      });
+    this.store.dispatch(new fromStore.LoadQueue());
     this.store
-      .select<any>(fromStore.getPaginatedSortedFiltredContacts)
+      .select(fromStore.getContactsFilters)
       .pipe(
         delay(50),
         takeWhile(() => this.alive)
       )
+      .subscribe(filtersConf => {
+        this.filtersConf = filtersConf;
+        if (this.filtersConf.filters.length === 0) {
+          this.pageTitle = "Contacts";
+        }
+        this.filtersConf.filters.map(filter => {
+          if (filter.field === "groups") {
+            this.pageTitle = "Contacts";
+          } else if (filter.field === "followed") {
+            this.pageTitle = "Contacts suivis";
+          }
+        });
+      });
+  }
+
+  loadContacts() {
+    this.store
+      .select<User[]>(fromStore.getPaginatedSortedFiltredContacts)
+      .pipe(delay(50))
       .subscribe(users => {
         this.users = users;
+      });
+    this.usersLoaded = this.store
+      .select<boolean>(fromStore.getContactsLoaded)
+      .pipe(delay(50));
+  }
+
+  loadGroups() {
+    this.store
+      .select<Group[]>(fromStore.getAllGroups)
+      .pipe(delay(50))
+      .subscribe(groups => {
+        this.groups = groups;
       });
   }
 
   ngAfterViewInit() {
+    this.isViewInit = true;
+    this.cdr.detectChanges();
     this.store.dispatch(
       new fromStore.LoadContacts(
         this.filtersConf,
-        [{ field: "createdAt", direction: "desc" }],
+        [{ field: "name.familyName", direction: "asc" }],
         {
           page: 1,
           perPage: 10
@@ -341,11 +183,6 @@ export class DtlContactsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.alive = false;
-  }
-
-  handleRowClicked(row) {
-    const modalRef = this.modalService.open(ShowComponent);
-    modalRef.componentInstance.contact = row;
   }
 
   handleSelectRowChanged(event) {
@@ -371,46 +208,18 @@ export class DtlContactsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  handleRowActionClicked(event: { action: string; row: any; item: any }) {
-    this[event.action](event.row, event.item);
-  }
-
-  handleDeleteSelectedItems(items) {
-    console.log(items);
-  }
-
-  assignToGroup(data: User, item) {
-    const partial: User = { ...data };
-    const exist = partial.groups.find(group => {
-      return group.value === item.data[0].id;
-    });
-    if (exist) {
-      partial.groups = partial.groups.filter(group => {
-        return group.value !== item.data[0].id;
-      });
-    } else {
-      partial.groups.push({
-        value: item.data[0].id,
-        display: item.data[0].display
-      });
-    }
-    this.store.dispatch(new fromStore.AssignContactToGroup(data, partial));
-  }
-
   create() {
-    const modalRef = this.modalService.open(ShowComponent);
-    modalRef.componentInstance.edit = true;
-  }
-
-  edit(user) {
-    const modalRef = this.modalService.open(ShowComponent);
-    modalRef.componentInstance.contact = user;
+    const modalRef = this.modalService.open(ShowComponent, {
+      windowClass: "all-height"
+    });
     modalRef.componentInstance.edit = true;
   }
 
   delete(user = null) {
-    const modalRef = this.modalService.open(DeleteComponent);
-    modalRef.componentInstance.contacts = user ? [user] : this.selectedData;
+    const modalRef = this.modalService.open(DeleteComponent, {
+      windowClass: "centred"
+    });
+    modalRef.componentInstance.ids = this.selectedData.map(item => item.id);
     modalRef.result.then(result => {}).catch(reason => {
       this.notification = "Le contact a été supprimé";
       setTimeout(() => {
@@ -426,7 +235,7 @@ export class DtlContactsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   hideLabels(event) {
     if (event && event["value"] === true) {
-      if (!this.btnLableClicked) {
+      if (this.btnLableClicked) {
         this.hideMobileDropdownLabel = true;
       }
       this.btnLableClicked = false;
@@ -435,10 +244,21 @@ export class DtlContactsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   hideMenu(event) {
     if (event && event["value"] === true) {
-      if (!this.btnMenuClicked) {
+      if (this.btnMenuClicked) {
         this.hideMobileDropdownMenu = true;
       }
       this.btnMenuClicked = false;
+    }
+  }
+
+  hideSidebar(event) {
+    if (this.mobileView) {
+      if (event && event["value"] === true) {
+        if (!this.btnSidebarClicked) {
+          this.sidebarService.collapse();
+        }
+        this.btnSidebarClicked = false;
+      }
     }
   }
 }

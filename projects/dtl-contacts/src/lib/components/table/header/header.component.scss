@@ -1,0 +1,51 @@
+@import "../row//dropdown.scss";
+@import "../../../styles/mobile-dropdown-menu.scss";
+.table-header {
+  height: 32px;
+  align-items: center;
+}
+
+.table-text {
+  margin-right: 2px;
+}
+
+.table-col {
+  display: flex;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.table-col-header-icon {
+  font-size: 17px;
+  width: 20px;
+  height: 20px;
+  flex-basis: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.table-col-header-icon:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: black;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.dropdown-toggle {
+  width: auto !important;
+}
+
+.checkbox-place {
+  width: 70px;
+}
+
+.mobile-checkbox-place {
+  width: 70px;
+}

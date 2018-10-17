@@ -20,5 +20,5 @@
       "dtl-documents": ["dist/dtl-documents"],
       "dtl-calendar": ["dist/dtl-calendar"]
     }
-  }
+  },
 }

@@ -1,0 +1,102 @@
+<nb-card>
+  <nb-card-header class="d-flex flex-column">
+    <div class="d-flex card-header-top align-items-center justify-content-between">
+      <div (click)="changeDriver();" class="d-flex car-driver align-items-center justify-content-end">
+        <i class="material-icons mr-1">person</i>
+        <span>{{ car.driver.name.familyName }} {{ car.driver.name.givenName }}</span>
+      </div>
+      <ngx-smart-select [titleTemplate]="statusTitleTempate" [triggerTemplate]="moreTempate">
+        <ngx-smart-select-option>
+          <div class="d-flex align-items-center">
+            <i class="material-icons mr-1">edit</i>
+            Modifier
+          </div>
+        </ngx-smart-select-option>
+        <ngx-smart-select-option [withDevider]="true">
+          <div class="d-flex align-items-center">
+            <i class="material-icons mr-1">delete</i>
+            Supprimer
+          </div>
+        </ngx-smart-select-option>
+        <ngx-smart-select-option>
+          <div class="d-flex align-items-center"><i class="material-icons mr-1">settings</i>Service</div>
+        </ngx-smart-select-option>
+        <ngx-smart-select-option>
+          <div class="d-flex align-items-center"><i class="material-icons mr-1">error_outline</i>Incident - Sinistre</div>
+        </ngx-smart-select-option>
+        <ngx-smart-select-option>
+          <div class="d-flex align-items-center"><i class="material-icons mr-1">notifications</i>Rappel - Alerte</div>
+        </ngx-smart-select-option>
+        <ngx-smart-select-option>
+          <div class="d-flex align-items-center"><i class="material-icons mr-1">local_gas_station</i>Carburant</div>
+        </ngx-smart-select-option>
+        <ngx-smart-select-option>
+          <div class="d-flex align-items-center"><i class="material-icons mr-1">folder</i>Document</div>
+        </ngx-smart-select-option>
+        <ngx-smart-select-option>
+          <div class="d-flex align-items-center"><i class="material-icons mr-1">note</i>Commentaire</div>
+        </ngx-smart-select-option>
+      </ngx-smart-select>
+    </div>
+    <div class="d-flex justify-content-between">
+      <div class="d-flex car-odometer align-items-center justify-content-end">
+        <i class="material-icons mr-1">forward_30</i>
+        <span>{{ car.odometer }} KM</span>
+      </div>
+      <div class="d-flex flex-column">
+        <ngx-smart-select [center]="true" [(ngModel)]="car.status" [titleTemplate]="statusTitleTempate"
+          [triggerTemplate]="statusTempate">
+          <ngx-smart-select-option *ngFor="let status of statuses" [value]="status">
+            <div class="d-flex align-items-center">
+              {{ status.value }}
+            </div>
+          </ngx-smart-select-option>
+        </ngx-smart-select>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="p-0">
+    <img class="car-img" [src]="car.photo" />
+  </nb-card-body>
+  <nb-card-footer class="d-flex flex-column">
+    <div class="d-flex justify-content-between">
+      <span class="car-title"><b class="mr-1">{{ car.model }}</b></span>
+      <span class="car-title"><b class="mr-1">{{ car.title }}</b></span>
+    </div>
+    <div class="d-flex justify-content-between">
+      <div class="d-flex card-footer-left flex-column justify-content-start">
+        <span class="car-vin"><b class="mr-1">VIN/SN:</b> {{ car.vin }}</span>
+        <span class="car-plate"><b class="mr-1">Plaque:</b> {{ car.plate }}</span>
+      </div>
+      <span class="car-type badge nb-badge">{{ car.type.value }}</span>
+    </div>
+  </nb-card-footer>
+</nb-card>
+
+<ng-template #statusTempate>
+  <span [class]="'car-status d-flex align-items-center badge nb-badge nb-badge-' + car.status.cssClass">
+    <i class="material-icons mr-1">flag</i>
+    {{ car.status.value }}
+  </span>
+</ng-template>
+
+<ng-template #statusTitleTempate>
+  <div class="select-title-template d-flex align-items-center w-100">
+    <img class="mr-3 rounded" height="36" width="36" [src]="car.photo" />
+    {{ car.title }} - {{ car.model }}
+  </div>
+</ng-template>
+
+<ng-template #moreTempate>
+  <i class="material-icons icon-more mr-1">more_horiz</i>
+</ng-template>
+
+<ng-template let-item #searchItemTemplate>
+  <img *ngIf="item.photo" class="mr-2" height="36" width="36" [src]="item.photo" />
+  <div *ngIf="!item.photo" class="item-first-letter mr-2">{{ item.name.familyName[0] }}</div>
+  <div>{{ item.name.familyName }} {{ item.name.givenName }}</div>
+</ng-template>
+
+<ng-template let-item #searchFiltersTemplate>
+  {{ item.display }}
+</ng-template>

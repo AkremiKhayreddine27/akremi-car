@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone } from "@angular/core";
+import { Component, OnInit, NgZone, AfterViewInit } from "@angular/core";
 import { NbSidebarService } from "@nebular/theme";
 import { Location } from "@angular/common";
 
@@ -8,12 +8,15 @@ import { Group } from "../../@core/models/group";
 import { delay, takeWhile } from "rxjs/operators";
 import { FilterConf } from "../../@core/store/helpers";
 
+import { Router, RoutesRecognized } from "@angular/router";
+import { filter, pairwise } from "rxjs/operators";
+
 @Component({
   selector: "dtl-header",
   templateUrl: "./header.component.html",
   styleUrls: ["./header.component.scss"]
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, AfterViewInit {
   _timeout: any = null;
 
   groups: Group[] = [];
@@ -21,26 +24,22 @@ export class HeaderComponent implements OnInit {
   filtersConf: FilterConf = { filters: [], andOperator: false };
 
   showMobileSearch: Boolean = false;
+  showMobileSearchDropdown: boolean = true;
 
-  searchFields = [
-    "email",
-    "phone",
-    "firstname",
-    "lastname",
-    "location.address",
-    "location.postcode",
-    "location.city",
-    "location.state",
-    "location.country"
-  ];
+  searchFields = ["name.familyName", "name.givenName"];
 
   alive = true;
 
+  previousUrl: string;
+
+  query;
+
   constructor(
-    private store: Store<fromStore.LocatusState>,
+    private store: Store<fromStore.ContactsAppState>,
     protected location: Location,
     private sidebarService: NbSidebarService,
-    public lc: NgZone
+    public lc: NgZone,
+    public router: Router
   ) {}
 
   ngOnInit() {
@@ -55,9 +54,23 @@ export class HeaderComponent implements OnInit {
       .subscribe(groups => {
         this.groups = groups;
       });
+    this.store
+      .select(fromStore.getContactsFilters)
+      .pipe(
+        delay(50),
+        takeWhile(() => this.alive)
+      )
+      .subscribe(filtersConf => {
+        this.filtersConf = filtersConf;
+      });
   }
 
+  ngAfterViewInit() {}
+
   search(query) {
+    if (query === "Group: ") {
+      query = "";
+    }
     if (this._timeout) {
       window.clearTimeout(this._timeout);
     }
@@ -91,17 +104,25 @@ export class HeaderComponent implements OnInit {
     }, 1000);
   }
 
-  filter($event) {
-    if ($event) {
+  filter(group: Group) {
+    this.query = "Group:" + group.display;
+    if (this.isFilter(group)) {
+      this.store.dispatch(
+        new fromStore.LoadContacts({ filters: [], andOperator: true }, [], {
+          page: 1,
+          perPage: 20
+        })
+      );
+    } else {
       this.filtersConf = {
         filters: [
           {
             field: "groups",
-            search: $event.id.toString(),
+            search: group.value.toString(),
             filter: function(cell: any[], search: any) {
               let exist = false;
               cell.map(item => {
-                if (item.toString() === search) {
+                if (item.value.toString() === search) {
                   exist = true;
                 }
               });
@@ -117,22 +138,46 @@ export class HeaderComponent implements OnInit {
           perPage: 20
         })
       );
-    } else {
-      this.store.dispatch(
-        new fromStore.LoadContacts({ filters: [], andOperator: true }, [], {
-          page: 1,
-          perPage: 20
-        })
-      );
     }
   }
 
   back() {
-    this.location.back();
-    return false;
+    this.router.events
+      .pipe(
+        filter((e: any) => e instanceof RoutesRecognized),
+        pairwise(),
+        takeWhile(() => this.alive)
+      )
+      .subscribe((e: any) => {
+        if (e[0].urlAfterRedirects) {
+          this.previousUrl = e[0].urlAfterRedirects;
+        }
+      });
+    if (this.previousUrl) {
+      this.router.navigateByUrl(this.previousUrl);
+    } else {
+      this.router.navigateByUrl("/pages/cars");
+    }
   }
 
   toggle() {
     this.sidebarService.toggle(true, "left");
+  }
+
+  isFilter(group: Group) {
+    return this.filtersConf.filters.find(filter => {
+      return filter.search === group.value.toString();
+    });
+  }
+
+  clear() {
+    this.query = "";
+    this.filtersConf = { filters: [], andOperator: true };
+    this.store.dispatch(
+      new fromStore.LoadContacts(this.filtersConf, [], {
+        page: 1,
+        perPage: 20
+      })
+    );
   }
 }

@@ -1,5 +1,4 @@
 import { Component, OnInit, AfterViewInit } from "@angular/core";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { Store } from "@ngrx/store";
 import * as fromStore from "../../@core/store";
@@ -20,13 +19,7 @@ import {
 })
 export class SidebarComponent implements OnInit, AfterViewInit {
   groups: Group[] = [];
-  providers: any[] = [
-    { id: 1, name: "Assurances" },
-    { id: 2, name: "Contrôle Technique" },
-    { id: 3, name: "Entretient - Réparation" },
-    { id: 4, name: "Equipements" },
-    { id: 5, name: "Station Services" }
-  ];
+
   roles: any[] = [
     { id: 1, name: "Propriétaire" },
     { id: 2, name: "Manager" },
@@ -44,28 +37,36 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   displayProviders = true;
   displayRoles = true;
 
+  mobileView;
+
   constructor(
     private sidebarService: NbSidebarService,
-    private store: Store<fromStore.LocatusState>,
-    private modalService: NgbModal,
+    private store: Store<fromStore.ContactsAppState>,
     public breakpointObserver: BreakpointObserver
   ) {}
 
   ngOnInit() {
     this.breakpointObserver
       .observe([Breakpoints.Small, Breakpoints.XSmall, Breakpoints.Tablet])
+      .pipe(takeWhile(() => this.alive))
       .subscribe((state: BreakpointState) => {
         if (state.matches) {
           this.displayBusiness = true;
           this.displayProviders = true;
           this.displayRoles = true;
+          this.mobileView = true;
+        } else {
+          this.mobileView = false;
         }
       });
-    this.sidebarService.onToggle().subscribe(event => {
-      this.displayBusiness = true;
-      this.displayProviders = true;
-      this.displayRoles = true;
-    });
+    this.sidebarService
+      .onToggle()
+      .pipe(takeWhile(() => this.alive))
+      .subscribe(event => {
+        this.displayBusiness = true;
+        this.displayProviders = true;
+        this.displayRoles = true;
+      });
     this.store
       .select<any>(fromStore.getAllGroups)
       .pipe(
@@ -74,6 +75,15 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       )
       .subscribe(groups => {
         this.groups = groups;
+      });
+    this.store
+      .select(fromStore.getContactsFilters)
+      .pipe(
+        delay(50),
+        takeWhile(() => this.alive)
+      )
+      .subscribe(filtersConf => {
+        this.filtersConf = filtersConf;
       });
   }
 
@@ -84,5 +94,84 @@ export class SidebarComponent implements OnInit, AfterViewInit {
         perPage: 20
       })
     );
+  }
+
+  filterFollwed() {
+    this.filtersConf = {
+      filters: [
+        {
+          field: "followed",
+          search: "true",
+          filter: function(cell: any[], search: any) {
+            return cell.toString() === search;
+          }
+        }
+      ],
+      andOperator: false
+    };
+    this.store.dispatch(
+      new fromStore.LoadContacts(this.filtersConf, [], {
+        page: 1,
+        perPage: 20
+      })
+    );
+  }
+
+  filter(group: Group = null) {
+    if (group) {
+      this.filtersConf = {
+        filters: [
+          {
+            field: "groups",
+            search: group.value.toString(),
+            filter: function(cell: any[], search: any) {
+              let exist = false;
+              cell.map(item => {
+                if (item.value.toString() === search) {
+                  exist = true;
+                }
+              });
+              return exist;
+            }
+          }
+        ],
+        andOperator: false
+      };
+      this.store.dispatch(
+        new fromStore.LoadContacts(this.filtersConf, [], {
+          page: 1,
+          perPage: 20
+        })
+      );
+    } else {
+      this.store.dispatch(
+        new fromStore.LoadContacts({ filters: [], andOperator: true }, [], {
+          page: 1,
+          perPage: 20
+        })
+      );
+    }
+  }
+
+  isFilter(group: Group) {
+    return this.filtersConf.filters.find(filter => {
+      return filter.search === group.value.toString();
+    });
+  }
+
+  isFollwedFilter() {
+    return this.filtersConf.filters.find(filter => {
+      return filter.field === "followed";
+    });
+  }
+
+  noFilters() {
+    return this.filtersConf.filters.length === 0;
+  }
+
+  closeSidebar() {
+    if (this.mobileView) {
+      this.sidebarService.collapse();
+    }
   }
 }

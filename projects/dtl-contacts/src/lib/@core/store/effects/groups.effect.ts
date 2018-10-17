@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Effect, Actions } from '@ngrx/effects';
+import { Injectable } from "@angular/core";
+import { Effect, Actions } from "@ngrx/effects";
 
-import * as groupsActions from '../actions/groups.action';
-import { switchMap, map, catchError } from 'rxjs/operators';
-import { GroupsService } from '../../services/groups.service';
+import * as groupsActions from "../actions/groups.action";
+import { switchMap, map, catchError } from "rxjs/operators";
+import { GroupsService } from "../../services/groups.service";
 
-import { of } from 'rxjs';
+import { of, from } from "rxjs";
 
 @Injectable()
 export class GroupsEffects {
@@ -26,7 +26,7 @@ export class GroupsEffects {
   @Effect()
   loadGroups$ = this.actions$.ofType(groupsActions.LOAD_GROUPS).pipe(
     switchMap(() => {
-      return of(this.service.all()).pipe(
+      return from(this.service.getAll()).pipe(
         map(groups => new groupsActions.LoadGroupsSuccess(groups)),
         catchError(error => of(new groupsActions.LoadGroupsFail(error)))
       );

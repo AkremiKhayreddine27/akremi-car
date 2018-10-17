@@ -1,0 +1,78 @@
+<div class="page-container">
+  <ngx-smart-page-header [responsive]="true">
+    <ngx-smart-page-header-title>
+      <div class="d-flex align-items-center">
+        <i (click)="back();" class="material-icons keyboard_backspace">
+          arrow_back_ios
+        </i>
+        Ajouter un véhicule
+      </div>
+    </ngx-smart-page-header-title>
+    <ngx-smart-page-header-options>
+      <ngx-smart-select [triggerTemplate]="addDesktoptriggerTemplate">
+        <ngx-smart-select-option>
+          <div class="d-flex align-items-center"><i class="material-icons mr-1">settings</i>Service</div>
+        </ngx-smart-select-option>
+        <ngx-smart-select-option>
+          <div class="d-flex align-items-center"><i class="material-icons mr-1">error_outline</i>Incident - Sinistre</div>
+        </ngx-smart-select-option>
+        <ngx-smart-select-option>
+          <div class="d-flex align-items-center"><i class="material-icons mr-1">notifications</i>Rappel - Alerte</div>
+        </ngx-smart-select-option>
+        <ngx-smart-select-option>
+          <div class="d-flex align-items-center"><i class="material-icons mr-1">local_gas_station</i>Carburant</div>
+        </ngx-smart-select-option>
+        <ngx-smart-select-option>
+          <div class="d-flex align-items-center"><i class="material-icons mr-1">folder</i>Document</div>
+        </ngx-smart-select-option>
+        <ngx-smart-select-option>
+          <div class="d-flex align-items-center"><i class="material-icons mr-1">note</i>Commentaire</div>
+        </ngx-smart-select-option>
+      </ngx-smart-select>
+      <i class="material-icons action-icon">close</i>
+      <i class="material-icons action-icon">save</i>
+      <ngx-smart-select [triggerTemplate]="triggerTemplate">
+        <ngx-smart-select-option>
+          <div class="d-flex align-items-center"><i class="material-icons">file_upload</i>Import</div>
+        </ngx-smart-select-option>
+      </ngx-smart-select>
+    </ngx-smart-page-header-options>
+  </ngx-smart-page-header>
+</div>
+
+<ngx-smart-select [triggerTemplate]="addtriggerTemplate">
+  <ngx-smart-select-option>
+    <div class="d-flex align-items-center"><i class="material-icons mr-1">settings</i>Service</div>
+  </ngx-smart-select-option>
+  <ngx-smart-select-option>
+    <div class="d-flex align-items-center"><i class="material-icons mr-1">error_outline</i>Incident - Sinistre</div>
+  </ngx-smart-select-option>
+  <ngx-smart-select-option>
+    <div class="d-flex align-items-center"><i class="material-icons mr-1">notifications</i>Rappel - Alerte</div>
+  </ngx-smart-select-option>
+  <ngx-smart-select-option>
+    <div class="d-flex align-items-center"><i class="material-icons mr-1">local_gas_station</i>Carburant</div>
+  </ngx-smart-select-option>
+  <ngx-smart-select-option>
+    <div class="d-flex align-items-center"><i class="material-icons mr-1">folder</i>Document</div>
+  </ngx-smart-select-option>
+  <ngx-smart-select-option>
+    <div class="d-flex align-items-center"><i class="material-icons mr-1">note</i>Commentaire</div>
+  </ngx-smart-select-option>
+</ngx-smart-select>
+
+<ng-template #addDesktoptriggerTemplate>
+  <div class="d-none d-md-flex">
+    <i class="material-icons action-icon">add</i>
+  </div>
+</ng-template>
+
+<ng-template #addtriggerTemplate>
+  <div class="btn d-flex d-md-none d-lg-none d-xl-none btn-add">
+    <i class="material-icons">add</i>
+  </div>
+</ng-template>
+
+<ng-template #triggerTemplate>
+  <i class="material-icons action-icon">more_vert</i>
+</ng-template>

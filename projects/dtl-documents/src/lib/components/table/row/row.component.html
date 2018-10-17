@@ -1,0 +1,86 @@
+<div *ngIf="document" (click)="show()" (mouseenter)="showCheckbox = true;" (mouseleave)="showCheckbox = false;" class="table-row d-none d-md-flex">
+  <div class="checkbox-container">
+    <div *ngIf="!showCheckbox && !checked && !document.icon" class="document-letter">
+      {{ document.title[0] }}
+    </div>
+    <span *ngIf="showCheckbox || checked" class="documents-checkbox align-self-center">
+      <label (click)="$event.stopPropagation();" class="ck-container">
+        <input (change)="documentSelected.emit({row: document, checked: $event.target.checked})" [(ngModel)]="checked"
+          type="checkbox">
+        <span class="checkmark"></span>
+      </label>
+    </span>
+    <img class="document-img" *ngIf="document.icon && (!showCheckbox && !checked)" height="48px" width="48px" [src]="document.icon" />
+  </div>
+  <div class="row flex-1 m-0">
+    <div class="col-3 table-col">
+      <span class="table-text">{{ document.title }}</span>
+    </div>
+    <div class="col-3 table-col">
+      <span class="table-text ml-1">
+        {{ document.type.name }}
+      </span>
+    </div>
+    <div class="col-2 table-col">
+      <span class="table-text ml-1">{{ document.createdAt | date: 'dd' }}</span>
+    </div>
+    <div class="col-4 table-col flex-wrap">
+      <span class="mobile-table-text">{{ document.type.name }}</span>
+    </div>
+  </div>
+  <div *ngIf="showCheckbox" class="table-row-actions">
+    <div class="d-flex" ngbDropdown>
+      <i (click)="$event.stopPropagation();" ngbDropdownToggle class="material-icons table-row-action-icon">label</i>
+      <ul class="dropdown-menu-right" ngbDropdownMenu>
+        <li class="dropdown-title">
+          types
+        </li>
+        <li *ngFor="let group of (types$ | async)" (click)="$event.stopPropagation();assignToGroup(group)" class="dropdown-item d-flex justify-content-between">
+          <span>{{ group.name }}</span>
+          <i *ngIf="belongToDocument(group)" class="material-icons dropdown-icon">done</i>
+        </li>
+        <li class="dropdown-item">
+          <i class="material-icons dropdown-icon mr-2">add</i>Ajouter
+        </li>
+      </ul>
+    </div>
+    <i (click)="$event.stopPropagation();edit()" class="material-icons table-row-action-icon">edit</i>
+    <div class="d-flex" ngbDropdown>
+      <i (click)="$event.stopPropagation();" ngbDropdownToggle class="material-icons table-row-action-icon">more_vert</i>
+      <ul class="dropdown-menu-right" ngbDropdownMenu>
+        <li class="dropdown-item">
+          <i class="material-icons dropdown-icon mr-2">event</i>
+          <span>Planifier un evènnement</span>
+        </li>
+        <li (click)="$event.stopPropagation();delete();" class="dropdown-item">
+          <i class="material-icons dropdown-icon mr-2">delete</i>
+          <span>Supprimer</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="document" (click)="show()" (mouseenter)="showCheckbox = true;" (mouseleave)="showCheckbox = false;" class="table-row d-md-none d-xl-none d-lg-none d-flex">
+  <div class="mobile-checkbox-container">
+    <div *ngIf="!showCheckbox && !checked && !document.icon" class="document-letter">
+      {{ document.title[0] }}
+    </div>
+    <span *ngIf="showCheckbox || checked" class="documents-checkbox align-self-center">
+      <label (click)="$event.stopPropagation();" class="ck-container">
+        <input (change)="documentSelected.emit({row: document, checked: $event.target.checked})" [(ngModel)]="checked"
+          type="checkbox">
+        <span class="checkmark"></span>
+      </label>
+    </span>
+    <img class="document-img" *ngIf="document.icon && (!showCheckbox && !checked)" height="48px" width="48px" [src]="document.icon" />
+  </div>
+  <div class="row flex-1 m-0">
+    <div class="col-6 p-0 table-col">
+      <span class="mobile-table-text">{{ document.title }}</span>
+    </div>
+    <div class="col-6 p-0 table-col flex-wrap">
+      <span class="mobile-table-text">{{ document.type.name }}</span>
+    </div>
+  </div>
+</div>

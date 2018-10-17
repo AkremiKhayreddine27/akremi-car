@@ -1,0 +1,63 @@
+/* The ck-container */
+.ck-container {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  height: 20px;
+  width: 20px;
+  margin-bottom: 0 !important;
+}
+
+/* Hide the browser's default checkbox */
+.ck-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.ck-container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.mobile-checkbox-container input:checked ~ .checkmark {
+  background-color: #40a497 !important;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+  background-color: #40a497 !important;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.ck-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.ck-container .checkmark:after {
+  left: 6px;
+  top: 2px;
+  width: 6px;
+  height: 12px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-admin-demo": {
+    "easy-cars": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -25,7 +25,8 @@
                 "glob": "**/*",
                 "input": "node_modules/leaflet/dist/images",
                 "output": "/assets/img/markers"
-              }
+              },
+              "src/manifest.json"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.css",
@@ -69,25 +70,26 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
-              ]
+              ],
+              "serviceWorker": true
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ngx-admin-demo:build"
+            "browserTarget": "easy-cars:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ngx-admin-demo:build:production"
+              "browserTarget": "easy-cars:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngx-admin-demo:build"
+            "browserTarget": "easy-cars:build"
           }
         },
         "test": {
@@ -127,24 +129,38 @@
                 "glob": "**/*",
                 "input": "node_modules/leaflet/dist/images",
                 "output": "/assets/img/markers"
-              }
+              },
+              "src/manifest.json"
             ]
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
+            "tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
             "typeCheck": true,
             "exclude": []
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/easy-cars-server",
+            "main": "src/main.server.ts",
+            "tsConfig": "src/tsconfig.server.json"
+          }
+        },
+        "app-shell": {
+          "builder": "@angular-devkit/build-angular:app-shell",
+          "options": {
+            "browserTarget": "easy-cars:build",
+            "serverTarget": "easy-cars:server",
+            "route": "easy-cars-shell-path"
           }
         }
       }
     },
-    "ngx-admin-demo-e2e": {
+    "easy-cars-e2e": {
       "root": "",
       "sourceRoot": "",
       "projectType": "application",
@@ -153,16 +169,52 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "ngx-admin-demo:serve"
+            "devServerTarget": "easy-cars:serve"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["e2e/tsconfig.e2e.json"],
+            "exclude": []
+          }
+        }
+      }
+    },
+    "distinct-ui": {
+      "root": "projects/distinct-ui",
+      "sourceRoot": "projects/distinct-ui/src",
+      "projectType": "library",
+      "prefix": "dtui",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/distinct-ui/tsconfig.lib.json",
+            "project": "projects/distinct-ui/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/distinct-ui/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/distinct-ui/src/test.ts",
+            "tsConfig": "projects/distinct-ui/tsconfig.spec.json",
+            "karmaConfig": "projects/distinct-ui/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "e2e/tsconfig.e2e.json"
+              "projects/distinct-ui/tsconfig.lib.json",
+              "projects/distinct-ui/tsconfig.spec.json"
             ],
-            "exclude": []
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -200,9 +252,7 @@
               "projects/dtl-contacts/tsconfig.lib.json",
               "projects/dtl-contacts/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -240,9 +290,7 @@
               "projects/dtl-documents/tsconfig.lib.json",
               "projects/dtl-documents/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -280,15 +328,13 @@
               "projects/dtl-calendar/tsconfig.lib.json",
               "projects/dtl-calendar/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
     }
   },
-  "defaultProject": "ngx-admin-demo",
+  "defaultProject": "easy-cars",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "ngx",

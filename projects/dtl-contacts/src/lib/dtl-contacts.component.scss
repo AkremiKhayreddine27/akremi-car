@@ -8,7 +8,7 @@
 
 @import "./styles/toolbar.scss";
 @import "./styles/snackbar.scss";
-@import "./styles//dropdown.scss";
+@import "./components/table/row/dropdown.scss";
 @import "./styles/mobile-dropdown-menu.scss";
 @import "./styles/layout-column-header.scss";
 
@@ -19,6 +19,7 @@
   .contacts-checkbox {
     font-size: 14px;
     padding-left: 2rem;
+    color: white;
   }
 
   .btn-add-contact {
@@ -36,45 +37,10 @@
     justify-content: center;
     font-size: 2rem;
     cursor: pointer;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14),
+      0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
   }
 
-  /deep/ .dt-table {
-    .table-row .material-icons {
-      font-size: 17px !important;
-      color: rgba(0, 0, 0, 0.6) !important;
-      margin-top: 2px;
-    }
-    .mobile-row-actions .material-icons {
-      font-size: 20px !important;
-      color: rgba(0, 0, 0, 0.4) !important;
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .mobile-row-actions .material-icons:hover {
-      color: black !important;
-      background-color: rgba(0, 0, 0, 0.1) !important;
-    }
-    .dropdown-item {
-      align-items: center;
-    }
-    .action-dropdown {
-      max-height: 300px;
-      overflow-y: auto;
-    }
-    .action-dropdown .material-icons {
-      width: 20px;
-      height: 20px;
-    }
-    .action-dropdown .material-icons:hover {
-      color: rgba(0, 0, 0, 0.6) !important;
-      background-color: transparent !important;
-    }
-  }
   nb-sidebar.menu-sidebar {
     margin-top: nb-theme(sidebar-header-gap);
 
@@ -83,7 +49,7 @@
     }
 
     /deep/ .main-container {
-      height: calc(100vh - 4.75rem) !important;
+      //height: calc(100vh - 4.75rem) !important;
     }
 
     /deep/ .scrollable {
@@ -173,7 +139,8 @@
 
 /deep/ .nb-theme-corporate nb-sidebar.custom-sidebar .main-container {
   background: white !important;
-  box-shadow: 0 0 0 1px #dfe3eb !important;
+  z-index: 1052;
+  //box-shadow: 0 0 0 1px #dfe3eb !important;
 }
 
 /deep/
@@ -199,7 +166,7 @@
   nav {
   //background-color: #f7f7f7 !important;
   //color: black !important;
-  box-shadow: 0 1px 0 0 #ebeef2 !important;
+  //box-shadow: 0 1px 0 0 #ebeef2 !important;
   i {
     color: black !important;
   }

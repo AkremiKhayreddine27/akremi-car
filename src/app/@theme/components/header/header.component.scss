@@ -31,6 +31,11 @@
 
   .control-item {
     display: block;
+    cursor: pointer;
+    color: #707070 !important;
+    i {
+      font-size: 1.9rem;
+    }
   }
 
   .header-container {
@@ -226,7 +231,7 @@
   @include media-breakpoint-down(xs) {
     .right /deep/ {
       display: flex;
-      align-items: center
+      align-items: center;
     }
   }
 }

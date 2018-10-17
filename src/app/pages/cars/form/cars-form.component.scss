@@ -1,0 +1,23 @@
+@import "../../../@theme/styles/themes";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~@nebular/theme/styles/global/bootstrap/breakpoints";
+
+@include nb-install-component() {
+  .btn-add {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: nb-theme(color-success);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .btn-add:hover {
+    background-color: darken($color: nb-theme(color-success), $amount: 2%);
+  }
+}

@@ -1,0 +1,33 @@
+.table-row-skeleton {
+  background-color: white;
+  display: flex;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  .checkbox-container {
+    height: 70px;
+    width: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .contact-skeleton-letter {
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+    background-color: #f1f1f1;
+  }
+  .table-col {
+    height: 20px;
+  }
+  .contact-skeleton-text {
+    height: 20px;
+    width: 90%;
+    background-color: #f1f1f1;
+  }
+}
+
+.flex-1 {
+  flex: 1;
+}

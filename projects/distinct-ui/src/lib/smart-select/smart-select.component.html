@@ -1,0 +1,47 @@
+<div class="select-container display-none display-md-flex">
+  <div (click)="open()" #trigger class="select-trigger">
+    <ng-container *ngTemplateOutlet="triggerTemplate ? triggerTemplate : trigger;context: triggerContext;"></ng-container>
+  </div>
+</div>
+
+<div class="select-container display-md-none display-lg-none display-xl-none display-flex">
+  <div (click)="mobileOpen()" class="select-trigger">
+    <ng-container *ngTemplateOutlet="triggerTemplate ? triggerTemplate : trigger;context: triggerContext;"></ng-container>
+  </div>
+</div>
+
+
+<!-- Desktop container template -->
+<ng-template #contentTemplate>
+  <div class="select-content">
+    <ng-container [ngTemplateOutlet]="content"></ng-container>
+  </div>
+</ng-template>
+
+<!-- Mobile container template -->
+<ng-template #mobileContent>
+  <div class="select-content-mobile">
+    <ng-container [ngTemplateOutlet]="content"></ng-container>
+  </div>
+</ng-template>
+
+<!-- Trigger default template -->
+<ng-template #trigger let-selected="selected" let-placeholer="placeholder">
+  <div class="select-value">
+    <span *ngIf="!selected" class="select-placeholder">{{ placeholder }}</span>
+    <label [class.display-flex]="selected" class="select-label">{{ placeholder }}</label>
+    <span *ngIf="selected" class="select-value-text">{{ selected }}</span>
+  </div>
+  <div class="select-arrow-wrapper">
+    <div class="select-arrow"></div>
+  </div>
+</ng-template>
+
+
+<!-- Select container options -->
+<ng-template #content>
+  <div *ngIf="titleTemplate" class="d-flex d-md-none d-lg-none d-xl-none d-xxl-none">
+    <ng-container *ngTemplateOutlet="titleTemplate"></ng-container>
+  </div>
+  <ng-content select="ngx-smart-select-option"></ng-content>
+</ng-template>

@@ -1,18 +1,22 @@
 // themes - our custom or/and out of the box themes
 @import "themes";
-
-/**
-*
-*/
-$letter-height: 36px;
-$letter-width: 36px;
-$mobile-letter-height: 36px;
-$mobile-letter-width: 36px;
-$mobile-row-text-size: 13px;
-@import "~distinct-table/styles/styles";
 @import "~@icon/themify-icons/themify-icons.css";
 @import "~linearicons/dist/web-font/style.css";
 @import "~@ng-select/ng-select/themes/default.theme.css";
+@import "~@angular/cdk/overlay-prebuilt.css";
+
+.cdk-overlay-backdrop {
+  z-index: 1200;
+}
+.cdk-overlay-container {
+  z-index: 1201;
+}
+.cdk-overlay-connected-position-bounding-box {
+  z-index: 1202;
+}
+.cdk-global-overlay-wrapper {
+  z-index: 1202;
+}
 /**
 *
 */
@@ -31,6 +35,8 @@ $mobile-row-text-size: 13px;
 @import "./pace.theme";
 
 @import "./bootstrap-rtl";
+
+@import "./checkbox.scss";
 
 // install the framework and custom global styles
 @include nb-install() {
@@ -70,6 +76,16 @@ $mobile-row-text-size: 13px;
   direction: ltr;
   -webkit-font-feature-settings: "liga";
   -webkit-font-smoothing: antialiased;
+}
+
+.dropdown:not(.btn-group) .dropdown-toggle::after,
+.dropup:not(.btn-group) .dropdown-toggle::after {
+  display: none;
+}
+
+.dropdown-menu-right {
+  right: 0 !important;
+  left: auto !important;
 }
 
 .dropdown-menu {
@@ -120,7 +136,72 @@ $mobile-row-text-size: 13px;
   font-size: 13px;
   white-space: nowrap;
 }
-
-@include media-breakpoint-down(sm) {
-
+.custom-badge {
+  background-color: #dee9ec !important;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+@include media-breakpoint-down(sm) {
+  .all-height {
+    .modal-dialog {
+      margin: 0;
+      width: 100vw;
+      height: 100vh;
+      .modal-content {
+        height: 100vh;
+      }
+    }
+  }
+  .centred {
+    .modal-dialog {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+.material-icons.dashboard::before {
+  content: "dashboard";
+}
+.material-icons.local_gas_station::before {
+  content: "local_gas_station";
+}
+.material-icons.event::before {
+  content: "event";
+}
+.material-icons.contacts::before {
+  content: "contacts";
+}
+.material-icons.drive_eta::before {
+  content: "drive_eta";
+}
+.material-icons.error::before {
+  content: "error";
+}
+.material-icons.departure_board::before {
+  content: "departure_board";
+}
+.material-icons.notifications::before {
+  content: "notifications";
+}
+.material-icons.settings::before {
+  content: "settings";
+}
+.material-icons.category::before {
+  content: "category";
+}
+.material-icons.folder::before {
+  content: "folder";
+}
+
+.menu-icon.material-icons {
+  font-size: 2.15rem !important;
+  color: #707070 !important;
+}
+
+@import "./sidebar.scss";

@@ -1,0 +1,31 @@
+.input-container {
+  width: 100%;
+  position: relative;
+  padding: 0 5px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+.input-control {
+  border: none;
+  width: 100%;
+  outline: none;
+}
+.input-label {
+  position: absolute;
+  left: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  transform: translateY(-1.8em) scale(0.8);
+  display: none;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.input-prefix {
+  padding-right: 10px;
+}
+
+.display-flex {
+  display: flex !important;
+}

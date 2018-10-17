@@ -1,0 +1,12 @@
+<div class="input-container">
+  <label [class.display-flex]="displayLabel || ( controlDir && controlDir.control.value)" class="input-label">{{
+    placeholder }}</label>
+  <div class="input-prefix">
+    <ng-content select="[input-prefix]"></ng-content>
+  </div>
+  <input #input [placeholder]="!displayLabel ? placeholder : ''" (blur)="displayLabel = false;" (click)="displayLabel = true;"
+    class="input-control" (input)="onChange($event.target.value)" (blur)="onTouched()" [disabled]="disabled" />
+  <div class="input-suffix">
+    <ng-content select="[input-suffix]"></ng-content>
+  </div>
+</div>

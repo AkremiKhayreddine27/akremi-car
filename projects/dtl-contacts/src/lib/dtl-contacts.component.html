@@ -2,42 +2,41 @@
   <nb-layout-header fixed>
     <dtl-header class="w-100"></dtl-header>
   </nb-layout-header>
-  <nb-sidebar class="custom-sidebar menu-sidebar" responsive>
+  <nb-sidebar click-outside (clickOutside)="hideSidebar($event)" class="custom-sidebar menu-sidebar" responsive>
     <dtl-sidebar></dtl-sidebar>
   </nb-sidebar>
   <nb-layout-column class="layout-padding p-0">
-    <div class="layout-column-header d-flex align-items-center border-bottom container-fluid">
-      <div class="row w-100">
+    <div [class.extanded]="isExtended" class="layout-column-header d-flex align-items-center border-bottom">
+      <div class="row m-0 w-100">
         <div class="col-12 d-flex justify-content-between align-items-center">
           <div class="page-title d-flex align-items-center">
-            Contacts
+            {{ pageTitle }}
           </div>
-          <div class="d-flex justify-content-end">
+          <div class="d-flex layout-column-header-actions justify-content-end">
             <i class="material-icons action">more_vert</i>
+            <i class="material-icons action">menu</i>
           </div>
         </div>
       </div>
     </div>
     <!-- TABLE -->
-    <dtc-table *ngIf="config" class="dt-table" [selectAll]="allSelected" (rowActionClicked)="handleRowActionClicked($event)"
-      (rowClicked)="handleRowClicked($event)" (selectRowChanged)="handleSelectRowChanged($event)" [config]="config"
-      [data]="users"></dtc-table>
+    <dtl-table [loaded]="usersLoaded | async" [contacts]="users" [allSelected]="allSelected" (contactSelected)="handleSelectRowChanged($event)"></dtl-table>
     <a (click)="create()" class="btn-add-contact">
-      <i class="nb-plus"></i>
+      <i class="material-icons">add</i>
     </a>
   </nb-layout-column>
 </nb-layout>
 
 <!-- TOOLBAR -->
-<div [class.tool-bar-shown]="selectedData.length === 0" class="d-flex tool-bar justify-content-between align-items-center">
+<div *ngIf="isViewInit" [class.tool-bar-shown]="selectedData.length === 0" class="d-flex tool-bar justify-content-between align-items-center">
   <div class="tool-bar-left d-flex">
     <div class="keyboard-backspace">
-      <i (click)="allSelected = { type: 'event', checked: false };selectedData = [];" class="material-icons">
+      <i (click)="$event.stopPropagation();allSelected = { type: 'event', checked: false };selectedData = [];" class="material-icons">
         keyboard_backspace
       </i>
     </div>
     <span class="d-flex contacts-checkbox align-items-center m-0">
-      <label (click)="$event.stopPropagation();" class="checkbox-container mr-2">
+      <label (click)="$event.stopPropagation();" class="ck-container mr-2">
         <input [(ngModel)]="allSelected.checked" (change)="handleSelectAllChanged($event)" type="checkbox">
         <span class="checkmark"></span>
       </label>
@@ -45,13 +44,14 @@
     </span>
   </div>
   <div class="contacts-select-actions d-flex">
+    <i class="material-icons d-none d-md-flex action">star_border</i>
     <div class="d-none d-md-flex" ngbDropdown>
-      <i ngbDropdownToggle class="material-icons action">label</i>
+      <i (click)="$event.stopPropagation();" ngbDropdownToggle class="material-icons action">label</i>
       <ul class="dropdown-menu-right" ngbDropdownMenu>
         <li class="dropdown-title">
           Groups
         </li>
-        <li *ngFor="let group of groups" class="dropdown-item d-flex justify-content-between">
+        <li (click)="$event.stopPropagation();" *ngFor="let group of groups" class="dropdown-item d-flex justify-content-between">
           <span>{{ group.display }}</span>
           <i class="material-icons">done</i>
         </li>
@@ -60,19 +60,20 @@
         </li>
       </ul>
     </div>
-    <i (click)="hideMobileDropdownLabel = !hideMobileDropdownLabel;btnLableClicked = true" class="d-md-none d-lg-none d-xl-none d-flex material-icons action">label</i>
-    <i class="material-icons action">email</i>
-    <i (click)="hideMobileDropdownMenu = !hideMobileDropdownMenu;btnMenuClicked = true" class="d-md-none d-lg-none d-xl-none d-flex material-icons action">more_vert</i>
+    <i (click)="$event.stopPropagation();hideMobileDropdownLabel = !hideMobileDropdownLabel;btnLableClicked = true"
+      class="d-md-none d-lg-none d-xl-none d-flex material-icons action">label</i>
+    <i (click)="$event.stopPropagation();" class="material-icons action">email</i>
+    <i (click)="$event.stopPropagation();hideMobileDropdownMenu = !hideMobileDropdownMenu;btnMenuClicked = true" class="d-md-none d-lg-none d-xl-none d-flex material-icons action">more_vert</i>
     <div class="d-none d-md-flex" ngbDropdown>
-      <i ngbDropdownToggle class="material-icons action">more_vert</i>
+      <i (click)="$event.stopPropagation();" ngbDropdownToggle class="material-icons action">more_vert</i>
       <ul class="dropdown-menu-right" ngbDropdownMenu>
-        <li class="dropdown-item">
+        <li (click)="$event.stopPropagation();" class="dropdown-item">
           <i class="material-icons dropdown-icon mr-2">file_download</i> Exporter
         </li>
         <li class="dropdown-item">
           <i class="material-icons dropdown-icon mr-2">print</i> Imprimer
         </li>
-        <li (click)="delete();" class="dropdown-item">
+        <li (click)="$event.stopPropagation();delete();" class="dropdown-item">
           <i class="material-icons dropdown-icon mr-2">delete</i> Supprimer
         </li>
       </ul>
@@ -80,39 +81,40 @@
   </div>
 </div>
 
-<div *ngIf="!hideMobileDropdownLabel || !hideMobileDropdownMenu" class="mobile-backdrop"></div>
+<div *ngIf="!hideMobileDropdownLabel || !hideMobileDropdownMenu || (isExtended && mobileView)" class="mobile-backdrop"></div>
 
-<div click-outside (clickOutside)="hideLabels($event)" [class.hide-mobile-dropdown-menu]="hideMobileDropdownLabel"
+<div *ngIf="isViewInit" click-outside (clickOutside)="hideLabels($event)" [class.hide-mobile-dropdown-menu]="hideMobileDropdownLabel"
   class="mobile-dropdown-menu">
   <ul class="dropdown-menu-right">
-    <li class="dropdown-title">
+    <li (click)="$event.stopPropagation();" class="dropdown-title">
       Groups
     </li>
-    <li *ngFor="let group of groups" class="dropdown-item d-flex justify-content-between">
+    <li (click)="$event.stopPropagation();" *ngFor="let group of groups" class="dropdown-item d-flex justify-content-between">
       <span>{{ group.display }}</span>
       <i class="material-icons">done</i>
     </li>
-    <li class="dropdown-item">
+    <li (click)="$event.stopPropagation();" class="dropdown-item">
       <i class="material-icons mr-2">add</i>Ajouter
     </li>
   </ul>
 </div>
-<div click-outside (clickOutside)="hideMenu($event)" [class.hide-mobile-dropdown-menu]="hideMobileDropdownMenu" class="mobile-dropdown-menu">
+<div *ngIf="isViewInit" click-outside (clickOutside)="hideMenu($event)" [class.hide-mobile-dropdown-menu]="hideMobileDropdownMenu"
+  class="mobile-dropdown-menu">
   <ul class="dropdown-menu-right">
-    <li class="dropdown-item">
+    <li (click)="$event.stopPropagation();" class="dropdown-item">
       <i class="material-icons dropdown-icon mr-2">file_download</i> Exporter
     </li>
-    <li class="dropdown-item">
+    <li (click)="$event.stopPropagation();" class="dropdown-item">
       <i class="material-icons dropdown-icon mr-2">print</i> Imprimer
     </li>
-    <li (click)="delete();" class="dropdown-item">
+    <li (click)="$event.stopPropagation();delete();" class="dropdown-item">
       <i class="material-icons dropdown-icon mr-2">delete</i> Supprimer
     </li>
   </ul>
 </div>
 
 <!-- SNACKBAR -->
-<div [class.snack-bar-shown]="!notification" class="snack-bar-container">
+<div *ngIf="isViewInit" [class.snack-bar-shown]="!notification" class="snack-bar-container">
   <div class="snack-bar">
     {{ notification }}
   </div>

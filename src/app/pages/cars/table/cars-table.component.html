@@ -1,0 +1,78 @@
+<nb-card>
+  <nb-card-body class="p-0">
+    <div class="d-none d-md-flex border-bottom">
+      <div class="header-checkbox-container">
+      </div>
+      <div class="row cars-header m-0 pb-3">
+        <div class="col-3 d-flex">
+          <ngx-smart-select [triggerTemplate]="tableNameTemplate">
+            <ngx-smart-select-option>
+              <div (click)="setField(titleSort, 'title', 'Nom');" class="d-flex align-items-center">
+                Nom
+              </div>
+            </ngx-smart-select-option>
+            <ngx-smart-select-option>
+              <div (click)="setField(titleSort, 'model', 'Modèle')" class="d-flex align-items-center">
+                Modèle
+              </div>
+            </ngx-smart-select-option>
+          </ngx-smart-select>
+          <div class="flex-1 ml-1">
+            <i (click)="titleSort.direction = 'desc'; sortCars(titleSort);" *ngIf="titleSort.direction === 'asc'" class="material-icons ml-1 sort-icon">arrow_upward</i>
+            <i (click)="titleSort.direction = 'asc'; sortCars(titleSort);" *ngIf="titleSort.direction === 'desc'" class="material-icons ml-1 sort-icon">arrow_downward</i>
+          </div>
+        </div>
+        <div class="col-2 d-flex align-items-center">
+          {{ statusSort.display }}
+          <i (click)="statusSort.direction = 'desc'; sortCars(statusSort);" *ngIf="statusSort.direction === 'asc'"
+            class="material-icons ml-1 sort-icon">arrow_upward</i>
+          <i (click)="statusSort.direction = 'asc'; sortCars(statusSort);" *ngIf="statusSort.direction === 'desc'"
+            class="material-icons ml-1 sort-icon">arrow_downward</i>
+        </div>
+        <div class="col-2">Type</div>
+        <div class="col-2">Conducteur</div>
+        <div class="col-3">Odomètre</div>
+      </div>
+    </div>
+    <div class="d-flex d-md-none d-xl-none d-lg-none border-bottom">
+      <div class="header-checkbox-container">
+      </div>
+      <div class="row cars-header m-0">
+        <div class="col-6 d-flex p-1">
+          <ngx-smart-select [triggerTemplate]="tableNameTemplate">
+            <ngx-smart-select-option>
+              <div (click)="setField(titleSort, 'title', 'Nom');" class="d-flex align-items-center">
+                Nom
+              </div>
+            </ngx-smart-select-option>
+            <ngx-smart-select-option>
+              <div (click)="setField(titleSort, 'model', 'Modèle')" class="d-flex align-items-center">
+                Modèle
+              </div>
+            </ngx-smart-select-option>
+          </ngx-smart-select>
+          <div class="flex-1 ml-1">
+            <i (click)="titleSort.direction = 'desc'; sortCars(titleSort);" *ngIf="titleSort.direction === 'asc'" class="material-icons ml-1 sort-icon">arrow_upward</i>
+            <i (click)="titleSort.direction = 'asc'; sortCars(titleSort);" *ngIf="titleSort.direction === 'desc'" class="material-icons ml-1 sort-icon">arrow_downward</i>
+          </div>
+        </div>
+        <div class="col-6 d-flex align-items-center p-1">
+          {{ statusSort.display }}
+          <i (click)="statusSort.direction = 'desc'; sortCars(statusSort);" *ngIf="statusSort.direction === 'asc'"
+            class="material-icons ml-1 sort-icon">arrow_upward</i>
+          <i (click)="statusSort.direction = 'asc'; sortCars(statusSort);" *ngIf="statusSort.direction === 'desc'"
+            class="material-icons ml-1 sort-icon">arrow_downward</i>
+        </div>
+      </div>
+    </div>
+    <ngx-cars-table-row [selectAll]="selectAll" (rowSelected)="rowSelected.emit($event)" (rowClicked)="rowClicked.emit($event);"
+      *ngFor="let car of cars" [car]="car"></ngx-cars-table-row>
+  </nb-card-body>
+</nb-card>
+
+<ng-template let-title #tableNameTemplate>
+  <div class="d-flex align-items-center">
+    Nom
+    <i class="material-icons ml-1 sort-icon">arrow_drop_down</i>
+  </div>
+</ng-template>

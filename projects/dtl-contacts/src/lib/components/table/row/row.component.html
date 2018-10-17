@@ -1,0 +1,89 @@
+<div *ngIf="contact" (click)="show()" (mouseenter)="showCheckbox = true;" (mouseleave)="showCheckbox = false;" class="table-row d-none d-md-flex">
+  <div class="checkbox-container">
+    <div *ngIf="!showCheckbox && !checked && !contact.photo" class="contact-letter">
+      {{ contact.name.familyName[0] }}
+    </div>
+    <span *ngIf="showCheckbox || checked" class="contacts-checkbox align-self-center">
+      <label (click)="$event.stopPropagation();" class="ck-container">
+        <input (change)="contactSelected.emit({row: contact, checked: $event.target.checked})" [(ngModel)]="checked"
+          type="checkbox">
+        <span class="checkmark"></span>
+      </label>
+    </span>
+    <img class="contact-img" *ngIf="contact.photo && (!showCheckbox && !checked)" height="36px" width="36px" [src]="contact.photo" />
+  </div>
+  <div class="row flex-1 m-0">
+    <div class="col-3 table-col">
+      <span class="table-text">{{ contact.name.familyName }} {{ contact.name.givenName }}</span>
+    </div>
+    <div class="col-3 table-col">
+      <i class="material-icons table-col-icon">email</i>
+      <span class="table-text ml-1">
+        {{ contact.emails[0].value }}
+      </span>
+    </div>
+    <div class="col-2 table-col">
+      <i class="material-icons table-col-icon">phone</i>
+      <span class="table-text ml-1">{{ contact.phoneNumbers[0].value }}</span>
+    </div>
+    <div class="col-4 table-col flex-wrap">
+      <span *ngFor="let group of contact.groups" class="badge custom-badge mr-1 mb-1">{{ group.display }}</span>
+    </div>
+  </div>
+  <div *ngIf="showCheckbox" class="table-row-actions">
+    <i class="material-icons table-row-action-icon">star_border</i>
+    <div class="d-flex" ngbDropdown>
+      <i (click)="$event.stopPropagation();" ngbDropdownToggle class="material-icons table-row-action-icon">label</i>
+      <ul class="dropdown-menu-right" ngbDropdownMenu>
+        <li class="dropdown-title">
+          Groups
+        </li>
+        <li *ngFor="let group of (groups$ | async)" (click)="$event.stopPropagation();assignToGroup(group)" class="dropdown-item d-flex justify-content-between">
+          <span>{{ group.display }}</span>
+          <i *ngIf="belongToContact(group)" class="material-icons dropdown-icon">done</i>
+        </li>
+        <li class="dropdown-item">
+          <i class="material-icons dropdown-icon mr-2">add</i>Ajouter
+        </li>
+      </ul>
+    </div>
+    <i (click)="$event.stopPropagation();edit()" class="material-icons table-row-action-icon">edit</i>
+    <div class="d-flex" ngbDropdown>
+      <i (click)="$event.stopPropagation();" ngbDropdownToggle class="material-icons table-row-action-icon">more_vert</i>
+      <ul class="dropdown-menu-right" ngbDropdownMenu>
+        <li class="dropdown-item">
+          <i class="material-icons dropdown-icon mr-2">event</i>
+          <span>Planifier un evènnement</span>
+        </li>
+        <li (click)="$event.stopPropagation();delete();" class="dropdown-item">
+          <i class="material-icons dropdown-icon mr-2">delete</i>
+          <span>Supprimer</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="contact" (click)="show()" (mouseenter)="showCheckbox = true;" (mouseleave)="showCheckbox = false;" class="table-row d-md-none d-xl-none d-lg-none d-flex">
+  <div class="mobile-checkbox-container">
+    <div *ngIf="!showCheckbox && !checked && !contact.photo" class="contact-letter">
+      {{ contact.name.familyName[0] }}
+    </div>
+    <span *ngIf="showCheckbox || checked" class="contacts-checkbox align-self-center">
+      <label (click)="$event.stopPropagation();" class="ck-container">
+        <input (change)="contactSelected.emit({row: contact, checked: $event.target.checked})" [(ngModel)]="checked"
+          type="checkbox">
+        <span class="checkmark"></span>
+      </label>
+    </span>
+    <img class="contact-img" *ngIf="contact.photo && (!showCheckbox && !checked)" height="36px" width="36px" [src]="contact.photo" />
+  </div>
+  <div class="row flex-1 m-0">
+    <div class="col-6 p-0 table-col">
+      <span class="mobile-table-text">{{ contact.name.familyName }} {{ contact.name.givenName }}</span>
+    </div>
+    <div class="col-6 p-0 table-col flex-wrap">
+      <span *ngFor="let group of contact.groups" class="badge custom-badge m-1">{{ group.display }}</span>
+    </div>
+  </div>
+</div>

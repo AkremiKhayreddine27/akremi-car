@@ -1,0 +1,47 @@
+<div class="container-fluid p-0">
+  <dtl-table-header *ngIf="contacts.length !== 0 && loaded"></dtl-table-header>
+  <dtl-row *ngFor="let contact of contacts" [contact]="contact" [allSelected]="allSelected" (contactSelected)="contactSelected.emit($event)"></dtl-row>
+  <div *ngIf="contacts.length === 0 && !loaded">
+    <div *ngFor="let fake of desktopFake" class="table-row-skeleton d-none d-md-flex">
+      <div class="checkbox-container">
+        <div class="contact-skeleton-letter">
+        </div>
+      </div>
+      <div class="row flex-1 m-0">
+        <div class="col-3 table-col">
+          <div class="contact-skeleton-text"></div>
+        </div>
+        <div class="col-3 table-col">
+          <div class="contact-skeleton-text"></div>
+        </div>
+        <div class="col-2 table-col">
+          <div class="contact-skeleton-text"></div>
+        </div>
+        <div class="col-4 table-col flex-wrap">
+          <div class="contact-skeleton-text"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="contacts.length === 0 && !loaded">
+    <div *ngFor="let fake of mobileFake" class="table-row-skeleton d-md-none d-xl-none d-lg-none d-flex">
+      <div class="checkbox-container">
+        <div class="contact-skeleton-letter">
+        </div>
+      </div>
+      <div class="row flex-1 m-0">
+        <div class="col-6 p-0 table-col">
+          <div class="contact-skeleton-text"></div>
+        </div>
+        <div class="col-6 p-0 table-col">
+          <div class="contact-skeleton-text"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row m-0" *ngIf="contacts.length === 0 && loaded">
+    <div class="flex-centered col-xl-4 col-lg-6 col-md-8 col-sm-12">
+      <h2 class="title">Pas de contact</h2>
+    </div>
+  </div>
+</div>

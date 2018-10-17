@@ -19,7 +19,7 @@ export class CreateGroupComponent implements OnInit {
   form: FormGroup;
 
   constructor(
-    private store: Store<fromStore.LocatusState>,
+    private store: Store<fromStore.ContactsAppState>,
     public activeModal: NgbActiveModal
   ) {}
 

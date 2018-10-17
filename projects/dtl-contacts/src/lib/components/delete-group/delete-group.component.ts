@@ -14,7 +14,7 @@ export class DeleteGroupComponent implements OnInit {
   group: any;
 
   constructor(
-    private store: Store<fromStore.LocatusState>,
+    private store: Store<fromStore.ContactsAppState>,
     public activeModal: NgbActiveModal
   ) {}
 

@@ -3,15 +3,21 @@ import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DtlDocumentsComponent } from "./dtl-documents.component";
 import { DistinctTableModule } from "distinct-table";
-import { NgSelectModule } from '@ng-select/ng-select';
+import { NgSelectModule } from "@ng-select/ng-select";
 
 import { ThemeModule } from "./@theme/theme.module";
 import { CoreModule } from "./@core/core.module";
+
+import { NgbDropdownModule } from "@ng-bootstrap/ng-bootstrap";
 
 import { StoreModule, MetaReducer } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 export const metaReducers: MetaReducer<any>[] = [];
+
+import { TableComponent } from "./components/table/table.component";
+import { RowComponent } from "./components/table/row/row.component";
+import { DtlTableHeaderComponent } from "./components/table/header/header.component";
 
 import {
   NbActionsModule,
@@ -64,6 +70,7 @@ import {
     NbPopoverModule,
     NbContextMenuModule,
     NbProgressBarModule,
+    NgbDropdownModule,
     StoreModule.forRoot({}, { metaReducers }),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
@@ -79,7 +86,10 @@ import {
     DeleteCategoryComponent,
     CreateTypeComponent,
     DeleteTypeComponent,
-    GridComponent
+    GridComponent,
+    TableComponent,
+    RowComponent,
+    DtlTableHeaderComponent
   ],
   exports: [DtlDocumentsComponent],
   entryComponents: [
@@ -89,7 +99,7 @@ import {
     CreateCategoryComponent,
     DeleteCategoryComponent,
     CreateTypeComponent,
-    DeleteTypeComponent,
+    DeleteTypeComponent
   ]
 })
 export class DtlDocumentsModule {}

@@ -1,25 +1,52 @@
-import { NbMenuItem } from '@nebular/theme';
+import { NbMenuItem } from "@nebular/theme";
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
-    title: 'E-commerce',
-    icon: 'nb-e-commerce',
-    link: '/pages/dashboard',
-    home: true,
+    title: "Tableau de bord",
+    icon: "material-icons dashboard"
   },
   {
-    title: 'Calendrier',
-    icon: 'lnr lnr-calendar-full',
-    link: '/calendar',
+    title: "Véhicules",
+    icon: "material-icons drive_eta",
+    link: "/pages/cars"
   },
   {
-    title: 'Contacts',
-    icon: 'lnr lnr-users',
-    link: '/contacts',
+    title: "Incidents",
+    icon: "material-icons error"
   },
   {
-    title: 'Documents',
-    icon: 'ti ti-folder',
-    link: '/documents',
+    title: "Voyages",
+    icon: "material-icons departure_board"
   },
+  {
+    title: "Carburants",
+    icon: "material-icons local_gas_station"
+  },
+  {
+    title: "Alertes et rappels",
+    icon: "material-icons notifications"
+  },
+  {
+    title: "Services",
+    icon: "material-icons settings"
+  },
+  {
+    title: "Stocks",
+    icon: "material-icons category"
+  },
+  {
+    title: "Agenda",
+    icon: "material-icons event",
+    link: "/calendar"
+  },
+  {
+    title: "Contacts",
+    icon: "material-icons contacts",
+    link: "/contacts"
+  },
+  {
+    title: "Documents",
+    icon: "material-icons folder",
+    link: "/documents"
+  }
 ];

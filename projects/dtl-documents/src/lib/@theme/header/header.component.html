@@ -1,13 +1,97 @@
-<div class="header-container">
+<div *ngIf="!showMobileSearch" class="header-container">
   <div class="logo-containter">
     <a (click)="toggle()" class="navigation"><i class="nb-menu"></i></a>
+    <img class="logo-img" src="assets/images/document.svg" />
     <div class="logo">Documents</div>
   </div>
 </div>
 
-<div class="header-container">
-  <a class="action-container">
+<div *ngIf="!showMobileSearch" class="header-container search-container">
+  <div ngbDropdown class="w-100 d-none d-md-block">
+    <div class="input-group header-search">
+      <div class="input-group-prepend">
+        <span class="input-group-text">
+          <i class="material-icons">
+            search
+          </i>
+        </span>
+      </div>
+      <input #searchDesktop [(ngModel)]="query" (keyup)="search(searchDesktop.value)" type="text" class="form-control"
+        placeholder="Search" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+      <div (click)="clear()" *ngIf="filtersConf.filters.length > 0" class="input-group-append">
+        <span class="input-group-text clear-search-desktop">
+          <i class="material-icons">
+            clear
+          </i>
+        </span>
+      </div>
+      <div ngbDropdownToggle class="input-group-append">
+        <span class="input-group-text">
+          <i class="material-icons">
+            arrow_drop_down
+          </i>
+        </span>
+      </div>
+    </div>
+    <div ngbDropdownMenu class="dropdown-menu header-dropdown dropdown-menu-right">
+      <div class="filters-title ml-3 mt-3">Groups</div>
+      <div class="pl-4 pr-4 pb-4 pt-2 d-flex flex-wrap">
+        <span (click)="filter(group)" class="badge m-1 custom-badge" *ngFor="let group of groups">
+          {{ group.display }}
+          <i *ngIf="isFilter(group)" class="material-icons">done</i>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showMobileSearch" class="header-container mobile-search-container">
+  <div class="w-100">
+    <div class="input-group header-search">
+      <div class="input-group-prepend">
+        <span (click)="showMobileSearch = false;" class="input-group-text">
+          <i class="material-icons">
+            keyboard_arrow_left
+          </i>
+        </span>
+      </div>
+      <input #searchDesktop [(ngModel)]="query" (keyup)="search(searchDesktop.value)" type="text" class="form-control"
+        placeholder="Search" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+      <div (click)="clear();showMobileSearch = false;" *ngIf="filtersConf.filters.length > 0" class="input-group-append">
+        <span class="input-group-text">
+          <i class="material-icons">
+            clear
+          </i>
+        </span>
+      </div>
+      <div (click)="showMobileSearchDropdown = !showMobileSearchDropdown" #dropdownToggle class="input-group-append">
+        <span class="input-group-text pr-3">
+          <i class="material-icons">
+            arrow_drop_down
+          </i>
+        </span>
+      </div>
+    </div>
+    <ul *ngIf="showMobileSearchDropdown" class="dropdown-menu header-dropdown header-dropdown-mobile dropdown-menu-right">
+      <div class="p-2">
+        <div class="filters-title ml-3 mt-2">Groups</div>
+        <div *ngFor="let group of groups">
+          <span (click)="filter(group); showMobileSearchDropdown = false;" class="badge m-2 custom-badge">
+            {{ group.display }}
+            <i *ngIf="isFilter(group)" class="material-icons">done</i>
+          </span>
+        </div>
+      </div>
+    </ul>
+  </div>
+</div>
+
+<div *ngIf="!showMobileSearch" class="header-container">
+  <a class="action-container d-none d-md-flex">
     <i class="material-icons">settings</i>
+  </a>
+  <a class="action-container d-flex d-md-none d-lg-none d-xl-none">
+    <i (click)="showMobileSearch =  true;showMobileSearchDropdown = true;" class="material-icons">search</i>
   </a>
   <a class="action-container" (click)="back()">
     <i class="material-icons">clear</i>

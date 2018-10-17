@@ -1,0 +1,59 @@
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~@nebular/theme/styles/global/bootstrap/breakpoints";
+
+.layout-column-header {
+  position: fixed;
+  top: 4.5rem;
+  left: calc(18rem + 1px);
+  width: calc(100vw - 18rem);
+  height: 50px;
+  background-color: white;
+  z-index: 998;
+}
+
+.layout-column-header.extanded {
+  left: calc(3.5rem + 1px);
+  width: calc(100vw - 3.5rem);
+}
+
+@include media-breakpoint-down(sm) {
+  .layout-column-header {
+    width: 100vw !important;
+    left: 0 !important;
+    background-color: #ebeff5 !important;
+    //z-index: 1040;
+  }
+  .layout-column-header-responsive {
+    left: 0 !important;
+    top: 0 !important;
+    height: 4.5rem !important;
+    width: 100vw !important;
+    z-index: 1050 !important;
+    background-color: white !important;
+  }
+}
+/deep/ .layout-column-header-actions {
+  ngx-smart-page-header-options {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .action-icon {
+    height: 40px !important;
+    width: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    border-radius: 50% !important;
+    color: #707070 !important;
+  }
+  .action-icon:hover {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+  }
+}
+.page-title {
+  color: #4b4b4b !important;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: Exo;
+}

@@ -7,8 +7,8 @@ import { Dictionary } from '@ngrx/entity';
 
 
 export const getGroupsState = createSelector(
-    fromFeature.getLocatusState,
-    (state: fromFeature.LocatusState) => state.groups
+    fromFeature.getContactsAppState,
+    (state: fromFeature.ContactsAppState) => state.groups
 );
 
 export const getGroupsEntities = createSelector(

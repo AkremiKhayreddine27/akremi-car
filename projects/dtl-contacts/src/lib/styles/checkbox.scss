@@ -1,0 +1,25 @@
+/deep/ .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: transparent !important;
+  border: 1px solid #dddddd;
+  border-radius: 2px;
+}
+
+/deep/ .checkbox-container input:checked ~ .checkmark {
+  background-color: #40a497 !important;
+}
+
+/deep/ .checkbox-container .checkmark:after {
+  left: 6px;
+  top: 2px;
+  width: 6px;
+  height: 12px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}

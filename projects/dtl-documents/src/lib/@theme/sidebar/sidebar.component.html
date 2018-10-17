@@ -1,45 +1,46 @@
 <div class="nb-menu">
   <ul class="menu-items">
-    <li class="menu-item">
-      <a href="#" title="groups">
-        <i class="material-icons">file_upload</i>
-        <span *ngIf="displayItemTitle" class="menu-title">Import</span>
+    <li class="menu-item mobile-first-item d-flex d-md-none d-lg-none d-xl-none justify-content-end align-items-center">
+      <i class="material-icons mr-2">notifications</i>
+      <i class="material-icons mr-2">apps</i>
+    </li>
+    <li [class.active]="noFilters()" (click)="filter();closeSidebar();" class="menu-item">
+      <a>
+        <i class="material-icons">contacts</i>
+        <span class="menu-title">Documents</span>
+      </a>
+    </li>
+    <li [class.active]="isFollwedFilter()" (click)="filterFollwed();closeSidebar();" class="menu-item">
+      <a>
+        <i class="material-icons">stars</i>
+        <span class="menu-title">Documents récents</span>
       </a>
     </li>
     <li class="menu-item">
-      <a href="#" title="groups">
-        <i class="material-icons">file_download</i>
-        <span *ngIf="displayItemTitle" class="menu-title">Export</span>
-      </a>
-    </li>
-    <li class="menu-item">
-      <a class="d-flex justify-content-between align-items-center" title="Labels">
+      <a (click)="displayProviders = !displayProviders" class="d-flex justify-content-between align-items-center" title="groups">
         <div class="d-flex justify-content-between align-items-center">
           <i class="material-icons">label</i>
-          <span *ngIf="displayItemTitle" class="menu-title">Labels</span>
-        </div>
-        <i *ngIf="displayLabels" (click)="displayLabels = false" class="material-icons">expand_less</i>
-        <i *ngIf="!displayLabels" (click)="displayLabels = true" class="material-icons">expand_more</i>
-      </a>
-      <ul *ngIf="displayItemTitle && displayLabels" class="menu-items expanded">
-        <li *ngFor="let label of labels" class="menu-item">
-          <a><span class="menu-title">{{ label.name }}</span></a>
-        </li>
-      </ul>
-    </li>
-    <li class="menu-item">
-      <a *ngIf="displayItemTitle" class="d-flex justify-content-between align-items-center" title="Types">
-        <div class="d-flex justify-content-between align-items-center">
           <span class="menu-title">Types</span>
         </div>
-        <i *ngIf="displayTypes" (click)="displayTypes = false" class="material-icons">expand_less</i>
-        <i *ngIf="!displayTypes" (click)="displayTypes = true" class="material-icons">expand_more</i>
+        <i class="material-icons">{{ displayProviders ? 'expand_less' : 'expand_more' }}</i>
       </a>
-      <ul *ngIf="displayItemTitle && displayTypes" class="menu-items expanded">
-        <li *ngFor="let type of types" class="menu-item">
+      <ul [ngbCollapse]="displayProviders" class="menu-items expanded">
+        <li *ngFor="let type of types" (click)="filter(type);closeSidebar();" [class.active]="isFilter(type)" class="menu-item">
           <a><span class="menu-title">{{ type.name }}</span></a>
         </li>
       </ul>
+    </li>
+    <li (click)="closeSidebar();" class="menu-item">
+      <a href="#" title="groups">
+        <i class="material-icons">settings</i>
+        <span class="menu-title">Paramètres</span>
+      </a>
+    </li>
+    <li (click)="closeSidebar();" class="menu-item">
+      <a href="#" title="groups">
+        <i class="material-icons">help</i>
+        <span class="menu-title">Aide</span>
+      </a>
     </li>
   </ul>
 </div>

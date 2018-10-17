@@ -1,53 +1,66 @@
-<div *ngIf="contact" class="modal-header d-flex justify-content-between">
+<div *ngIf="contact" class="modal-header modal-header-height d-flex justify-content-between">
   <div class="d-flex">
-    <img *ngIf="contact && contact.photoURL" width="60" height="60" class="contact-avatar" [src]="contact.photoURL" />
-    <div *ngIf="contact && !contact.avatar" class="contact-letter">
-      {{ contact.firstname[0] }}
+    <img *ngIf="contact && contact.photo" width="60" height="60" class="contact-avatar" [src]="contact.photo" />
+    <div *ngIf="contact && !contact.photo" class="contact-letter">
+      {{ contact.name.familyName[0] }}
     </div>
     <div class="d-flex flex-column">
-      <span class="contact-name">{{ contact.firstname }} {{ contact.lastname }}</span>
+      <span class="contact-name">{{ contact.name.familyName }} {{ contact.name.givenName }}</span>
       <div>
-        <span *ngFor="let group of (contactGroups$ | async)" class="badge contact-badge mr-2">
-          {{ group.name }}
+        <span *ngFor="let group of (contactGroups$ | async)" class="badge contact-badge mb-1 mr-2">
+          {{ group.display }}
         </span>
       </div>
     </div>
   </div>
   <div class="d-flex modal-header-actions align-items-center">
-    <i (click)="edit = !edit" class="material-icons">edit</i>
+    <i class="material-icons modal-header-actions-icon">star_border</i>
     <div ngbDropdown class="d-inline-block">
-      <i ngbDropdownToggle class="material-icons">more_vert</i>
+      <i ngbDropdownToggle class="material-icons modal-header-actions-icon">label</i>
       <ul ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
-        <li class="dropdown-item">
-          <i class="material-icons">delete</i> Delete
+        <li *ngFor="let group of (groups$ | async)" class="dropdown-item">
+          <span>{{ group.display }}</span>
         </li>
       </ul>
     </div>
-    <i (click)="activeModal.dismiss()" class="material-icons">clear</i>
+    <i (click)="edit = !edit" class="material-icons modal-header-actions-icon">edit</i>
+    <div ngbDropdown class="d-inline-block">
+      <i ngbDropdownToggle class="material-icons modal-header-actions-icon">more_vert</i>
+      <ul ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
+        <li class="dropdown-item">
+          <i class="material-icons">delete</i> <span>Delete</span>
+        </li>
+        <li class="dropdown-item">
+          <i class="material-icons">event</i> <span>Planifier un evènnement</span>
+        </li>
+      </ul>
+    </div>
+    <i (click)="activeModal.dismiss()" class="material-icons modal-header-actions-icon">clear</i>
   </div>
 </div>
-<div *ngIf="!contact" class="modal-header d-flex justify-content-between">
-  Create contact
+<div *ngIf="!contact" class="modal-header modal-header-create-height d-flex justify-content-between">
+  <span class="contact-name">Create contact</span>
   <div class="d-flex modal-header-actions align-items-center">
-    <i (click)="activeModal.dismiss()" class="material-icons">clear</i>
+    <i (click)="activeModal.dismiss()" class="material-icons modal-header-actions-icon">clear</i>
   </div>
 </div>
-<div [class.modal-edit]="contact" class="modal-body">
+<div [class.modal-edit]="contact" class="modal-body pt-4">
   <ul *ngIf="!edit" class="list-group w-100 border-0 m-0 p-0">
     <li class="list-group-item border-0">
-      <a class="contact-link" [href]="'mailto:' + contact.email">
+      <a class="contact-link" [href]="'mailto:' + contact.emails[0].value">
         <i class="fa fa-envelope mr-2"></i>
-        {{ contact.email }}
+        {{ contact.emails[0].value }}
       </a>
     </li>
     <li class="list-group-item border-0">
-      <a class="contact-link" [href]="'tel:' + contact.phone">
+      <a class="contact-link" [href]="'tel:' + contact.phoneNumbers[0].value">
         <i class="fa fa-phone mr-2"></i>
-        {{ contact.phone }}
+        {{ contact.phoneNumbers[0].value }}
       </a>
     </li>
-    <li *ngIf="contact && contact.location" class="list-group-item d-flex border-0">
-      <i *ngIf="contact.location.address || contact.location.postcode || contact.location.city" class="fa fa-map-marker mr-2"></i>
+    <!--
+    <li *ngIf="contact && contact.addresses &&contact.addresses[0]" class="list-group-item d-flex border-0">
+      <i *ngIf="contact.addresses[0]. || contact.location.postcode || contact.location.city" class="fa fa-map-marker mr-2"></i>
       <div class="d-flex flex-column">
         <span *ngIf="contact && contact.location && contact.location.address">{{ contact.location.address }}</span>
         <span *ngIf="contact && contact.location && contact.location.postcode">{{ contact.location.postcode }} </span>
@@ -55,6 +68,7 @@
         <span *ngIf="contact && contact.location && contact.location.country">{{ contact.location.country }}</span>
       </div>
     </li>
+    -->
   </ul>
   <form [formGroup]="form" *ngIf="edit">
     <div class="row">
@@ -152,7 +166,6 @@
     </div>
   </form>
 </div>
-<div *ngIf="edit" class="modal-footer">
-  <a (click)="activeModal.dismiss()" class="btn btn-sm btn-danger">Cancel</a>
-  <a (click)="save()" class="btn btn-sm btn-primary">Save</a>
+<div *ngIf="edit || !contact" [class.custom-position]="!contact" class="btn-save">
+  <i (click)="save()" class="material-icons">save</i>
 </div>

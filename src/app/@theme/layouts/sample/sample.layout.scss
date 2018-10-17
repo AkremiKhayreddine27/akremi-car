@@ -3,6 +3,34 @@
 @import "~@nebular/theme/styles/global/bootstrap/breakpoints";
 
 @include nb-install-component() {
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.25);
+    z-index: 1040;
+    transform: translate3d(0, 0, 0);
+  }
+  .mobile-sidebar-header {
+    height: 4.5rem;
+    margin: 0 -1.25rem;
+    display: flex;
+    align-items: center;
+    background-color: #ebeff5;
+    i {
+      height: 40px;
+      width: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    i:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
   nb-layout-column.small {
     flex: 0.15 !important;
   }
@@ -51,19 +79,13 @@
     }
 
     /deep/ .main-container {
-      height: calc(
-        #{nb-theme(sidebar-height)} - #{nb-theme(header-height)} - #{nb-theme(
-            sidebar-header-gap
-          )}
-      ) !important;
+      //height: calc(#{nb-theme(sidebar-height)} - #{nb-theme(header-height)} - #{nb-theme(sidebar-header-gap)}) !important;
       @include nb-ltr(border-top-right-radius, nb-theme(radius));
       @include nb-rtl(border-top-left-radius, nb-theme(radius));
 
       @include nb-for-theme(corporate) {
         //border: 1px solid nb-theme(separator);
-        height: calc(
-          #{nb-theme(sidebar-height)} - #{nb-theme(header-height)}
-        ) !important;
+        //height: calc(#{nb-theme(sidebar-height)} - #{nb-theme(header-height)}) !important;
       }
     }
 
@@ -110,22 +132,6 @@
     }
 
     /deep/ nb-menu {
-      & > .menu-items {
-        & > .menu-item:first-child {
-          .menu-title {
-            &::after {
-              content: "new";
-              color: nb-theme(color-white);
-              margin-left: 1rem;
-              background: nb-theme(color-danger);
-              padding: 0 0.5rem;
-              border-radius: nb-theme(radius);
-              font-size: nb-theme(font-size-sm);
-            }
-          }
-        }
-      }
-
       .nb-e-commerce {
         font-size: 2rem;
       }
@@ -161,17 +167,21 @@
     }
   }
 
+  @include media-breakpoint-down(md) {
+    nb-sidebar.menu-sidebar {
+      margin-top: 4.5rem !important;
+      z-index: 998 !important;
+    }
+  }
   @include media-breakpoint-down(sm) {
     nb-sidebar.menu-sidebar {
-      margin-top: 0;
-
+      margin-top: 0 !important;
+      z-index: 1203 !important;
       /deep/ .main-container {
-        height: calc(
-          #{nb-theme(sidebar-height)} - #{nb-theme(header-height)}
-        ) !important;
+        z-index: 1203 !important;
+        //height: calc(#{nb-theme(sidebar-height)} - #{nb-theme(header-height)}) !important;
         @include nb-ltr(border-top-right-radius, 0);
         @include nb-rtl(border-top-left-radius, 0);
-
         .scrollable {
           padding-top: 0;
         }

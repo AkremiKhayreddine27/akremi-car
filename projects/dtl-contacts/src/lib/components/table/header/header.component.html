@@ -1,0 +1,76 @@
+<div class="table-header border-bottom d-none d-md-flex">
+  <div class="checkbox-place"></div>
+  <div class="row flex-1 m-0">
+    <div class="col-3" (mouseenter)="showSortNameIcon = true;" (mouseleave)="showSortNameIcon = false;" ngbDropdown>
+      <div class="table-col">
+        <div class="d-flex align-items-center" ngbDropdownToggle>
+          <span class="table-text">{{ name }}</span>
+          <i class="material-icons">arrow_drop_down</i>
+        </div>
+        <i *ngIf="(isSort(name === 'Nom' ? 'name.familyName' : 'name.givenName') || showSortNameIcon) && sortDirection === 'asc'"
+          (click)="sort(name === 'Nom' ? 'name.familyName' : 'name.givenName', 'desc')" class="material-icons table-col-header-icon">arrow_upward</i>
+        <i *ngIf="(isSort(name === 'Nom' ? 'name.familyName' : 'name.givenName') || showSortNameIcon) && sortDirection === 'desc'"
+          (click)="sort(name === 'Nom' ? 'name.familyName' : 'name.givenName', 'asc')" class="material-icons table-col-header-icon">arrow_downward</i>
+      </div>
+      <ul class="dropdown-menu-right" ngbDropdownMenu>
+        <li (click)="name = 'Nom'" class="dropdown-item">Nom</li>
+        <li (click)="name = 'Prénom'" class="dropdown-item">Prénom</li>
+      </ul>
+    </div>
+    <div (mouseenter)="showSortEmailIcon = true;" (mouseleave)="showSortEmailIcon = false;" class="col-3 table-col">
+      <span class="table-text">
+        Email
+      </span>
+      <i *ngIf="(isSort('emails') || showSortEmailIcon) && sortDirection === 'desc'" (click)="sortEmails('asc');" class="material-icons table-col-header-icon">arrow_upward</i>
+      <i *ngIf="(isSort('emails') || showSortEmailIcon) && sortDirection === 'asc'" (click)="sortEmails('desc');" class="material-icons table-col-header-icon">arrow_downward</i>
+    </div>
+    <div (mouseenter)="showSortPhoneIcon = true;" (mouseleave)="showSortPhoneIcon = false;" class="col-2 table-col">
+      <span class="table-text">Téléphone</span>
+      <i *ngIf="(isSort('phoneNumbers') || showSortPhoneIcon) && sortDirection === 'desc'" (click)="sortPhoneNumbers('asc');"
+        class="material-icons table-col-header-icon">arrow_upward</i>
+      <i *ngIf="(isSort('phoneNumbers') || showSortPhoneIcon) && sortDirection === 'asc'" (click)="sortPhoneNumbers('desc');"
+        class="material-icons table-col-header-icon">arrow_downward</i>
+    </div>
+    <div (mouseenter)="showSortGroupsIcon = true;" (mouseleave)="showSortGroupsIcon = false;" class="col-4 table-col">
+      <span class="table-text">Groups</span>
+      <i *ngIf="(isSort('groups') || showSortGroupsIcon) && sortDirection === 'asc'" (click)="sortGroups('desc')" class="material-icons table-col-header-icon">arrow_upward</i>
+      <i *ngIf="(isSort('groups') || showSortGroupsIcon) && sortDirection === 'desc'" (click)="sortGroups('asc')" class="material-icons table-col-header-icon">arrow_downward</i>
+    </div>
+  </div>
+</div>
+
+<div class="table-header border-bottom d-md-none d-xl-none d-lg-none d-flex">
+  <div class="mobile-checkbox-place"></div>
+  <div class="row flex-1 m-0">
+    <div class="col-6 p-0 table-col">
+      <div (click)="showSortNameIcon = !showSortNameIcon;showSortGroupsIcon = false;" class="d-flex align-items-center">
+        <span class="mobile-table-text">{{ name }}</span>
+        <i class="material-icons" (click)="btnMenuClicked = !btnMenuClicked;hideMobileDropdownMenu = !hideMobileDropdownMenu;">arrow_drop_down</i>
+      </div>
+      <i *ngIf="(isSort(name === 'Nom' ? 'name.familyName' : 'name.givenName') || showSortNameIcon) && sortDirection === 'asc'"
+        (click)="sort(name === 'Nom' ? 'name.familyName' : 'name.givenName', 'desc')" class="material-icons table-col-header-icon">arrow_upward</i>
+      <i *ngIf="(isSort(name === 'Nom' ? 'name.familyName' : 'name.givenName') || showSortNameIcon) && sortDirection === 'desc'"
+        (click)="sort(name === 'Nom' ? 'name.familyName' : 'name.givenName', 'asc')" class="material-icons table-col-header-icon">arrow_downward</i>
+    </div>
+    <div class="col-6 p-0 table-col">
+      <span (click)="showSortGroupsIcon = !showSortNameIcon;showSortNameIcon = false" class="mobile-table-text">groups</span>
+      <i *ngIf="(isSort('groups') || showSortGroupsIcon) && sortDirection === 'asc'" (click)="sortGroups('desc')" class="material-icons table-col-header-icon">arrow_upward</i>
+      <i *ngIf="(isSort('groups') || showSortGroupsIcon) && sortDirection === 'desc'" (click)="sortGroups('asc')" class="material-icons table-col-header-icon">arrow_downward</i>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!hideMobileDropdownMenu" class="mobile-backdrop"></div>
+
+
+<div *ngIf="isViewInit" click-outside (clickOutside)="hideMenu($event)" [class.hide-mobile-dropdown-menu]="hideMobileDropdownMenu"
+  class="mobile-dropdown-menu">
+  <ul class="dropdown-menu-right">
+    <li (click)="name = 'Nom';hideMobileDropdownMenu = true;btnMenuClicked = false;" class="dropdown-item">
+      Nom
+    </li>
+    <li (click)="name = 'Prénom';hideMobileDropdownMenu = true;btnMenuClicked = false;" class="dropdown-item">
+      Prénom
+    </li>
+  </ul>
+</div>

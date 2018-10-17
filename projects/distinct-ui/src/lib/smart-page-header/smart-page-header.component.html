@@ -1,0 +1,12 @@
+<div [class.extanded]="isExtended" [class.layout-column-header-responsive]="responsive" class="layout-column-header d-flex align-items-center border-bottom">
+  <div class="row m-0 w-100">
+    <div class="col-12 d-flex justify-content-between align-items-center">
+      <div class="page-title d-flex align-items-center">
+        <ng-content select="ngx-smart-page-header-title"></ng-content>
+      </div>
+      <div class="layout-column-header-actions">
+        <ng-content select="ngx-smart-page-header-options"></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

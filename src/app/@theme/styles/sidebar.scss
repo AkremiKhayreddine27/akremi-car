@@ -1,0 +1,8 @@
+nb-layout .layout .layout-container nb-sidebar.fixed {
+  top: 0 !important;
+  z-index: 1050 !important;
+  height: 100vh !important;
+  .main-container {
+    height: 100vh !important;
+  }
+}

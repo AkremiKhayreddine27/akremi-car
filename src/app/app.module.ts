@@ -24,11 +24,14 @@ export const metaReducers: MetaReducer<any>[] = [];
 import { ContactsModule } from './pages/contacts/contacts.module';
 import { DocumentsModule } from './pages/documents/documents.module';
 import { CalendarModule } from './pages/calendar/calendar.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
     HttpClientModule,
     HttpModule,
@@ -45,7 +48,9 @@ import { CalendarModule } from './pages/calendar/calendar.module';
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
       maxAge: 35
-    })
+    }),
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    RouterModule
   ],
   bootstrap: [AppComponent],
   providers: [

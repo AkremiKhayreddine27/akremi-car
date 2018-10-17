@@ -1,5 +1,15 @@
 @import "~bootstrap/scss/mixins/breakpoints";
 @import "~@nebular/theme/styles/global/bootstrap/breakpoints";
+@import "../table/row/dropdown.scss";
+.dropdown-menu {
+  min-width: 200px !important;
+}
+.modal-header-height {
+  height: 125px;
+}
+.modal-header-create-height {
+  height: 90px;
+}
 .contact-link {
   color: #4b4b4b;
 }
@@ -17,7 +27,7 @@
 .input-group {
   .input-group-prepend {
     .input-group-text {
-      border: 2px solid #dadfe6;
+      border: 1px solid #dadfe6;
       background-color: transparent !important;
       border-right: none !important;
     }
@@ -31,7 +41,8 @@
   background-color: rgba(0, 0, 0, 0.1);
 }
 .modal-header {
-  background-color: #f7f7f7;
+  //background-color: #f7f7f7;
+  background-color: #40a497;
   position: relative;
 }
 /deep/ .ng-select-container {
@@ -41,12 +52,12 @@
   border: 2px solid #dadfe6 !important;
   font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
 }
-
 .contact-letter {
+  flex: 0 0 60px !important;
   height: 60px;
   width: 60px;
   border-radius: 50%;
-  background-color: #2196f3;
+  background-color: rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -55,21 +66,54 @@
   font-size: 24px;
 }
 
-.modal-header .material-icons {
-  height: 30px;
-  width: 30px;
-  font-size: 20px;
+.modal-header-actions .modal-header-actions-icon {
+  height: 40px;
+  width: 40px;
+  font-size: 24px;
   font-weight: 400;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: rgba(0, 0, 0, 0.4) !important;
+  color: rgba(0, 0, 0, 0.3) !important;
   cursor: pointer;
   border-radius: 50%;
 }
 
-.modal-header .material-icons:hover {
+.modal-header-actions .modal-header-actions-icon:hover {
   background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn-save {
+  position: absolute;
+  top: 96px;
+  right: 20px;
+  .material-icons {
+    height: 40px;
+    width: 40px;
+    font-size: 24px;
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white !important;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: #40a497;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14),
+      0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
+    z-index: 1050;
+  }
+
+  .material-icons:hover {
+    background-color: #40a497;
+    color: rgba(0, 0, 0, 0.7) !important;
+  }
+}
+
+.btn-save.custom-position {
+  position: absolute;
+  top: 63px;
+  right: 20px;
 }
 
 .contact-avatar {
@@ -81,20 +125,22 @@
   font-size: 24px;
   line-height: 32px;
   word-wrap: break-word;
+  color: white;
 }
 
 .contact-badge {
-  background-color: #dee9ec !important;
+  background-color: rgba(0, 0, 0, 0.1) !important;
   font-size: 11px;
   font-weight: 400;
   line-height: 14px;
+  color: white;
 }
 .modal-body {
-  max-height: calc(100vh - 150px);
+  max-height: calc(100vh - 90px);
   overflow-y: auto;
 }
 .modal-body.modal-edit {
-  max-height: calc(100vh - 224.5px);
+  max-height: calc(100vh - 125px);
   overflow-y: auto;
 }
 
@@ -103,22 +149,18 @@
   right: 5px;
   top: 15px;
 }
+
+.modal-header {
+  padding-top: 45px;
+}
+
 @include media-breakpoint-down(md) {
   .modal-body.modal-edit {
-    max-height: calc(100vh - 184.5px);
+    max-height: calc(100vh - 125px);
     overflow-y: auto;
   }
-  .modal-header {
-    padding-top: 40px;
-  }
-  .modal-header-actions {
-    position: absolute;
-    right: 5px;
-    top: 10px;
-  }
   .contact-letter {
-    height: 50px;
-    width: 50px;
+    flex: 0 0 50px;
     margin-right: 10px;
   }
   .contact-name {
@@ -130,6 +172,12 @@
 .form-group,
 .form-control {
   font-size: 13px;
+  border-width: 1px;
+}
+
+.form-control:focus {
+  border-width: 1px;
+  border-color: #40a497;
 }
 
 .dropdown:not(.btn-group) .dropdown-toggle::after,

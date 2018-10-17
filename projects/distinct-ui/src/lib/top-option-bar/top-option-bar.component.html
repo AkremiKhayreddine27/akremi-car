@@ -1,0 +1,17 @@
+<div *ngIf="isViewInit" [class.tool-bar-hidden]="!open" class="d-flex tool-bar justify-content-between align-items-center">
+  <div class="tool-bar-left d-flex align-items-center">
+    <ng-container *ngTemplateOutlet="left"></ng-container>
+  </div>
+  <div class="tool-bar-right d-flex align-items-center">
+    <ng-container *ngTemplateOutlet="right"></ng-container>
+  </div>
+</div>
+
+
+<ng-template #left>
+  <ng-content select=".ngx-top-option-bar-left"></ng-content>
+</ng-template>
+
+<ng-template #right>
+  <ng-content select=".ngx-top-option-bar-right"></ng-content>
+</ng-template>

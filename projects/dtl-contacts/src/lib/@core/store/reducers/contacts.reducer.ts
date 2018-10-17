@@ -181,4 +181,5 @@ export const getContactsLoading = (state: ContactsState) => state.loading;
 export const getContactsLoaded = (state: ContactsState) => state.loaded;
 export const getContactsPagination = (state: ContactsState) => state.pagination;
 export const getContactsFilters = (state: ContactsState) => state.filters;
+export const getContactsSort = (state: ContactsState) => state.sort;
 export const getContactsError = (state: ContactsState) => state.error;

@@ -1,0 +1,75 @@
+<div (click)="rowClicked.emit(car)" (mouseenter)="showCheckbox = true;showActions = true;" (mouseleave)="showCheckbox = false; showActions = false;"
+  class="d-none d-md-flex car-row">
+  <div class="checkbox-container">
+    <span *ngIf="showCheckbox || checked" class="table-checkbox align-self-center">
+      <label (click)="$event.stopPropagation();" class="ck-container">
+        <input (change)="rowSelected.emit({row: car, checked: $event.target.checked})" [(ngModel)]="checked" type="checkbox">
+        <span class="checkmark"></span>
+      </label>
+    </span>
+    <img class="car-img" *ngIf="car.photo && (!showCheckbox && !checked)" height="48px" width="48px" [src]="car.photo" />
+  </div>
+  <div class="row m-0 flex-1">
+    <div class="col-3">
+      <div class="car-name d-flex flex-column">
+        <span class="pb-2">{{ car.title }} - {{ car.model }}</span>
+        <span class="pb-2"><b class="mr-1">VIN/SN:</b>{{ car.vin }}</span>
+      </div>
+    </div>
+    <div class="col-2 d-flex align-items-center">
+      <span [class]="'badge nb-badge nb-badge-' + car.status.cssClass">{{ car.status.value }}</span>
+    </div>
+    <div class="col-2 d-flex align-items-center">{{ car.type.value }}</div>
+    <div class="col-2 d-flex align-items-center">{{ car.driver.name.familyName }} {{ car.driver.name.givenName }}</div>
+    <div class="col-3 d-flex align-items-center">{{ car.odometer }} KM</div>
+  </div>
+  <div *ngIf="showActions" class="car-actions">
+    <ngx-smart-select [triggerTemplate]="statusTempate">
+      <ngx-smart-select-option *ngFor="let status of statuses">
+        <div class="d-flex align-items-center">
+          {{ status.value }}
+        </div>
+      </ngx-smart-select-option>
+    </ngx-smart-select>
+    <ngx-smart-select [triggerTemplate]="driverTempate">
+      <ngx-smart-select-option *ngFor="let driver of drivers">
+        <div class="d-flex align-items-center">
+          {{ driver.displayName }}
+        </div>
+      </ngx-smart-select-option>
+    </ngx-smart-select>
+    <i class="material-icons car-action-icon">edit</i>
+    <i class="material-icons car-action-icon">more_vert</i>
+  </div>
+</div>
+
+<div (click)="rowClicked.emit(car)" (mouseenter)="showCheckbox = true;" (mouseleave)="showCheckbox = false" class="d-xl-none d-md-none d-lg-none d-flex car-row">
+  <div class="mobile-checkbox-container d-flex justify-content-center align-items-center">
+    <span *ngIf="showCheckbox || checked" class="table-checkbox align-self-center">
+      <label (click)="$event.stopPropagation();" class="ck-container">
+        <input (change)="rowSelected.emit({row: car, checked: $event.target.checked})" [(ngModel)]="checked" type="checkbox">
+        <span class="checkmark"></span>
+      </label>
+    </span>
+    <img class="car-img" *ngIf="car.photo && (!showCheckbox && !checked)" height="36px" width="36px" [src]="car.photo" />
+  </div>
+  <div class="row car-row-mobile-container m-0 flex-1">
+    <div class="col-6 d-flex align-items-center pl-3 pr-0">
+      <div class="car-name d-flex flex-column">
+        <span>{{ car.title }}</span>
+        <span>{{ car.model }}</span>
+      </div>
+    </div>
+    <div class="col-6 d-flex align-items-center pl-3 pr-0">
+      <span [class]="'badge nb-badge nb-badge-' + car.status.cssClass">{{ car.status.value }}</span>
+    </div>
+  </div>
+</div>
+
+<ng-template #statusTempate>
+  <i class="material-icons car-action-icon">flag</i>
+</ng-template>
+
+<ng-template #driverTempate>
+  <i class="material-icons car-action-icon">person</i>
+</ng-template>

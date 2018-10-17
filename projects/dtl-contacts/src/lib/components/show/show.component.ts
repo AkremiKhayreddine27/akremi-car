@@ -8,6 +8,7 @@ import { User, Group } from "../../@core/models";
 import { Observable } from "rxjs";
 import { FilterConf } from "../../@core/store/helpers";
 import { delay } from "rxjs/operators";
+
 @Component({
   selector: "app-show",
   templateUrl: "./show.component.html",
@@ -28,11 +29,29 @@ export class ShowComponent implements OnInit, AfterViewInit {
   showMore: Boolean = false;
 
   constructor(
-    private store: Store<fromStore.LocatusState>,
+    private store: Store<fromStore.ContactsAppState>,
     public activeModal: NgbActiveModal
   ) {}
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() {
+    if (this.contact && this.contact.groups) {
+      const filters = [];
+      for (const group of this.contact.groups) {
+        filters.push({
+          field: "value",
+          search: group.value.toString(),
+          filter: (cell: any, search: any) => {
+            return cell.toString() === search;
+          }
+        });
+      }
+      const filterConf: FilterConf = {
+        filters,
+        andOperator: false
+      };
+      this.store.dispatch(new fromStore.LoadGroups(filterConf));
+    }
+  }
 
   ngOnInit() {
     this.groups$ = this.store
@@ -102,6 +121,14 @@ export class ShowComponent implements OnInit, AfterViewInit {
   }
 
   save() {
+    if (!navigator.onLine) {
+      this.store.dispatch(
+        new fromStore.AddToQueue({
+          action: fromStore.CREATE_CONTACT,
+          data: this.form.value
+        })
+      );
+    }
     this.store.dispatch(new fromStore.CreateContact(this.form.value));
     this.activeModal.dismiss();
   }

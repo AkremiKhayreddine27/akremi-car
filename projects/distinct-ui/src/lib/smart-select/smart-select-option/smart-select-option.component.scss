@@ -1,0 +1,31 @@
+.select-option {
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 15px;
+  padding-right: 15px;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #4b4b4b !important;
+  font-size: 14px;
+  font-weight: 400 !important;
+  font-family: Exo !important;
+}
+.select-option:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.selected {
+  background: rgba(0, 0, 0, 0.04);
+  color: rgba(0, 0, 0, 0.87);
+  font-weight: bold;
+  font-weight: 600 !important;
+}
+
+.divider {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}

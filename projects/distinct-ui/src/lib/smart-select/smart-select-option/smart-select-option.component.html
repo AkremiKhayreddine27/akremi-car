@@ -1,0 +1,4 @@
+<div #content (click)="optionClicked()" [class.divider]="withDevider" [class.selected]="isSelected && value" class="select-option">
+  <ng-content></ng-content>
+  <i *ngIf="isSelected && value" class="material-icons">check</i>
+</div>

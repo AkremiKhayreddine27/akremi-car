@@ -1,0 +1,109 @@
+@import "../../../../@theme/styles/themes";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~@nebular/theme/styles/global/bootstrap/breakpoints";
+
+@include nb-install-component() {
+  .p-c {
+    padding: 0.5rem 1.25rem;
+  }
+  .badge {
+    font-weight: 400;
+  }
+  .card-header-top {
+    margin-top: -0.75rem;
+    margin-bottom: 0.25rem;
+    margin-right: -0.75rem;
+  }
+  .car-type {
+    background-color: #dee9ec !important;
+    color: #4b4b4b;
+    display: flex;
+    align-items: center;
+    height: 20px;
+  }
+
+  .icon-more {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .item-first-letter {
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    color: white;
+  }
+
+  .icon-more:hover {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+  }
+
+  .car-status {
+    i {
+      font-size: 22px;
+    }
+  }
+
+  .car-img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .flex-1 {
+    flex: 1;
+  }
+
+  .custom-icon {
+    width: 24px;
+  }
+  .car-title {
+    min-height: 22px;
+  }
+  .car-vin,
+  .car-plate {
+    min-height: 22px;
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    padding: 0.25em 0;
+  }
+  .car-driver,
+  .car-odometer {
+    max-width: 100%;
+    overflow: hidden;
+    //line-height: 1;
+    //padding: 0.5em 1rem;
+    font-size: 1rem;
+    font-weight: 400;
+    cursor: pointer;
+    color: nb-theme(color-primary);
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    span {
+      text-align: end;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+    i {
+      font-size: 22px;
+    }
+  }
+
+  .search-driver-list-item {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+  }
+}

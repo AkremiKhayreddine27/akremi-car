@@ -1,0 +1,57 @@
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~@nebular/theme/styles/global/bootstrap/breakpoints";
+
+.tool-bar {
+  transition-timing-function: ease-in;
+  transition: 0.2s;
+  //transform: translateY(0);
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba($color: #73a1ff, $alpha: 0.98) !important;
+  height: 4.5rem;
+  width: 100vw;
+  z-index: 1051;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+}
+.tool-bar-hidden {
+  transition-timing-function: ease-out;
+  transition: 0.35s;
+  //transform: translateY(-100%);
+  top: -100%;
+}
+
+/deep/ .top-action-bar-icon {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/deep/ .top-action-bar-icon:hover {
+  background-color: rgba($color: white, $alpha: 0.2) !important;
+}
+
+/deep/ .top-bar-selected-data-container {
+  display: flex;
+  align-items: center;
+  margin-left: 16rem;
+}
+
+/deep/ .top-bar-selected-data-label {
+  color: white;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+}
+
+@include media-breakpoint-down(sm) {
+  /deep/ .top-bar-selected-data-container {
+    margin-left: 1rem;
+  }
+}

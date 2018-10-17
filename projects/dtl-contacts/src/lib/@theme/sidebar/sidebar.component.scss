@@ -48,6 +48,25 @@
       .menu-item:last-child {
         border-bottom: none !important;
       }
+      .menu-item.active {
+        background-color: #f7f7f7;
+      }
+      .mobile-first-item {
+        height: 4.5rem;
+        background-color: #f5f5f5;
+        i {
+          height: 35px;
+          width: 35px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+        }
+        i:hover {
+          background-color: #f7f7f7;
+          color: black;
+        }
+      }
     }
   }
   .nb-menu .menu-items.expanded {

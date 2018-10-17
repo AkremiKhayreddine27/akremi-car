@@ -5,13 +5,16 @@ import * as contactsActions from "../actions/contacts.action";
 import { switchMap, map, catchError } from "rxjs/operators";
 import { ContactsService } from "../../services/contacts.service";
 
-import { of } from "rxjs";
+import { of, from } from "rxjs";
+import { QueueService } from "../../services/queue.service";
+import { UpdateContact, UpdateContactSuccess } from '../actions/contacts.action';
 
 @Injectable()
 export class ContactsEffects {
   constructor(
     private actions$: Actions,
-    private contactsService: ContactsService
+    private contactsService: ContactsService,
+    private queueService: QueueService
   ) {}
 
   @Effect()
@@ -19,8 +22,18 @@ export class ContactsEffects {
     .ofType(contactsActions.GENERATE_CONTACTS_DATA)
     .pipe(
       switchMap(() => {
-        return of(this.contactsService.generate(100)).pipe(
-          map(properties => new contactsActions.GenerateContactsDataSuccess()),
+        return from(this.contactsService.generate(50)).pipe(
+          map(
+            () =>
+              new contactsActions.LoadContacts(
+                { filters: [], andOperator: true },
+                [{ field: "name.familyName", direction: "asc" }],
+                {
+                  page: 1,
+                  perPage: 10
+                }
+              )
+          ),
           catchError(error =>
             of(new contactsActions.GenerateContactsDataFail())
           )
@@ -31,7 +44,7 @@ export class ContactsEffects {
   @Effect()
   loadContacts$ = this.actions$.ofType(contactsActions.LOAD_CONTACTS).pipe(
     switchMap(() => {
-      return of(this.contactsService.all()).pipe(
+      return from(this.contactsService.getAll()).pipe(
         map(contacts => new contactsActions.LoadContactsSuccess(contacts)),
         catchError(error => of(new contactsActions.LoadContactsFail(error)))
       );
@@ -49,9 +62,19 @@ export class ContactsEffects {
   );
 
   @Effect()
+  updateContact$ = this.actions$.ofType(contactsActions.UPDATE_CONTACT).pipe(
+    switchMap((action: contactsActions.UpdateContact) => {
+      return from(this.contactsService.update(action.id, action.changes)).pipe(
+        map(() => new contactsActions.UpdateContactSuccess(action.id, action.changes)),
+        catchError(error => of(new contactsActions.CreateContactFail(error)))
+      );
+    })
+  );
+
+  @Effect()
   deleteContact$ = this.actions$.ofType(contactsActions.DELETE_CONTACT).pipe(
     switchMap((action: contactsActions.DeleteContact) => {
-      return of(this.contactsService.delete(action.id)).pipe(
+      return from(this.contactsService.delete(action.id)).pipe(
         map(() => new contactsActions.DeleteContactSuccess(action.id)),
         catchError(error => of(new contactsActions.DeleteContactFail(error)))
       );

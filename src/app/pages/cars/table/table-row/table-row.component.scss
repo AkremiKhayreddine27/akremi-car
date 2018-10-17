@@ -1,0 +1,88 @@
+@import "../../../../@theme/styles/themes";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~@nebular/theme/styles/global/bootstrap/breakpoints";
+
+@include nb-install-component() {
+  .badge {
+    font-weight: 400;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .car-img {
+    border-radius: 8px;
+  }
+  .car-row {
+    display: flex;
+    align-items: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    cursor: pointer;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  .car-row:hover {
+    background-color: #f7f7f7;
+  }
+  .checkbox-container {
+    height: 70px;
+    width: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .table-checkbox {
+      height: 70px;
+      width: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .mobile-checkbox-container {
+    height: 36px;
+    width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .table-checkbox {
+      height: 50px;
+      width: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .flex-1 {
+    flex: 1;
+  }
+
+  .car-row-mobile-container {
+    min-height: 50px;
+  }
+  .car-actions {
+    position: absolute;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    .car-action-icon {
+      font-size: 20px;
+      height: 30px;
+      width: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: rgba(0, 0, 0, 0.6);
+    }
+    .car-action-icon:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+      color: black;
+    }
+  }
+  @include media-breakpoint-down(sm) {
+    .car-row {
+      //font-size: 13px !important;
+    }
+  }
+}

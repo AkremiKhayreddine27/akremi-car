@@ -2,7 +2,7 @@
   <nb-layout-header fixed>
     <dtl-header class="w-100"></dtl-header>
   </nb-layout-header>
-  <nb-sidebar class="custom-sidebar menu-sidebar" state="compacted" responsive>
+  <nb-sidebar class="custom-sidebar menu-sidebar" responsive>
     <dtl-sidebar></dtl-sidebar>
   </nb-sidebar>
   <nb-layout-column class="p-0 pt-3">
@@ -27,8 +27,7 @@
         </div>
       </div>
     </div>
-    <dtc-table class="dt-table" *ngIf="!isGridView" [selectAll]="allSelected" (rowActionClicked)="handleRowActionClicked($event)"
-      (selectRowChanged)="handleSelectRowChanged($event)" [config]="config" [data]="documents"></dtc-table>
+    <dtl-table [documents]="documents"></dtl-table>
     <app-grid *ngIf="isGridView" [documents]="documents"></app-grid>
     <a (click)="create()" class="btn-add-contact">
       <i class="nb-plus"></i>
