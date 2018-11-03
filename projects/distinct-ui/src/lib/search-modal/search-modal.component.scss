@@ -1,6 +1,13 @@
 @import "~bootstrap/scss/mixins/breakpoints";
 @import "~@nebular/theme/styles/global/bootstrap/breakpoints";
-
+.search-container {
+  background-color: white;
+  width: 100%;
+}
+.search-trigger {
+  //padding: 15px;
+  cursor: pointer;
+}
 /deep/ .item-first-letter {
   height: 36px;
   width: 36px;

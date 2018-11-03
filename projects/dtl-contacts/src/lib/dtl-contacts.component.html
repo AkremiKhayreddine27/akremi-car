@@ -6,19 +6,40 @@
     <dtl-sidebar></dtl-sidebar>
   </nb-sidebar>
   <nb-layout-column class="layout-padding p-0">
-    <div [class.extanded]="isExtended" class="layout-column-header d-flex align-items-center border-bottom">
-      <div class="row m-0 w-100">
-        <div class="col-12 d-flex justify-content-between align-items-center">
-          <div class="page-title d-flex align-items-center">
-            {{ pageTitle }}
-          </div>
-          <div class="d-flex layout-column-header-actions justify-content-end">
-            <i class="material-icons action">more_vert</i>
-            <i class="material-icons action">menu</i>
-          </div>
+    <ngx-smart-page-header>
+      <ngx-smart-page-header-title>
+        <div class="d-flex align-items-center">
+          Contacts
         </div>
-      </div>
-    </div>
+      </ngx-smart-page-header-title>
+      <ngx-smart-page-header-options>
+        <ngx-smart-select [right]="true" [titleTemplate]="sortTitleTemplate" [triggerTemplate]="sortTriggerTemplate">
+          <ng-template #sortTitleTemplate>
+            <div class="select-title-template d-flex align-items-center w-100">Trier</div>
+          </ng-template>
+          <ng-template #sortTriggerTemplate>
+            <i class="material-icons action-icon">sort</i>
+          </ng-template>
+          <ngx-smart-select-option>
+            <div class="d-flex align-items-center">Dernière modification</div>
+          </ngx-smart-select-option>
+          <ngx-smart-select-option>
+            <div class="d-flex align-items-center">Nom</div>
+          </ngx-smart-select-option>
+        </ngx-smart-select>
+        <ngx-smart-select [right]="true" [triggerTemplate]="triggerTemplate">
+          <ng-template #triggerTemplate>
+            <i class="material-icons action-icon">more_vert</i>
+          </ng-template>
+          <ngx-smart-select-option>
+            <div class="d-flex align-items-center"><i class="material-icons mr-2">print</i>Imprimer</div>
+          </ngx-smart-select-option>
+          <ngx-smart-select-option>
+            <div class="d-flex align-items-center"><i class="material-icons mr-2">file_upload</i>Importer</div>
+          </ngx-smart-select-option>
+        </ngx-smart-select>
+      </ngx-smart-page-header-options>
+    </ngx-smart-page-header>
     <!-- TABLE -->
     <dtl-table [loaded]="usersLoaded | async" [contacts]="users" [allSelected]="allSelected" (contactSelected)="handleSelectRowChanged($event)"></dtl-table>
     <a (click)="create()" class="btn-add-contact">
@@ -28,94 +49,59 @@
 </nb-layout>
 
 <!-- TOOLBAR -->
-<div *ngIf="isViewInit" [class.tool-bar-shown]="selectedData.length === 0" class="d-flex tool-bar justify-content-between align-items-center">
-  <div class="tool-bar-left d-flex">
-    <div class="keyboard-backspace">
-      <i (click)="$event.stopPropagation();allSelected = { type: 'event', checked: false };selectedData = [];" class="material-icons">
-        keyboard_backspace
-      </i>
-    </div>
-    <span class="d-flex contacts-checkbox align-items-center m-0">
-      <label (click)="$event.stopPropagation();" class="ck-container mr-2">
-        <input [(ngModel)]="allSelected.checked" (change)="handleSelectAllChanged($event)" type="checkbox">
-        <span class="checkmark"></span>
-      </label>
-      {{ allSelected.checked ? users.length : selectedData.length }} <span class="d-none d-md-flex">sélectionnés</span>
-    </span>
-  </div>
-  <div class="contacts-select-actions d-flex">
-    <i class="material-icons d-none d-md-flex action">star_border</i>
-    <div class="d-none d-md-flex" ngbDropdown>
-      <i (click)="$event.stopPropagation();" ngbDropdownToggle class="material-icons action">label</i>
-      <ul class="dropdown-menu-right" ngbDropdownMenu>
-        <li class="dropdown-title">
-          Groups
-        </li>
-        <li (click)="$event.stopPropagation();" *ngFor="let group of groups" class="dropdown-item d-flex justify-content-between">
-          <span>{{ group.display }}</span>
-          <i class="material-icons">done</i>
-        </li>
-        <li class="dropdown-item">
-          <i class="material-icons mr-2">add</i>Ajouter
-        </li>
-      </ul>
-    </div>
-    <i (click)="$event.stopPropagation();hideMobileDropdownLabel = !hideMobileDropdownLabel;btnLableClicked = true"
-      class="d-md-none d-lg-none d-xl-none d-flex material-icons action">label</i>
-    <i (click)="$event.stopPropagation();" class="material-icons action">email</i>
-    <i (click)="$event.stopPropagation();hideMobileDropdownMenu = !hideMobileDropdownMenu;btnMenuClicked = true" class="d-md-none d-lg-none d-xl-none d-flex material-icons action">more_vert</i>
-    <div class="d-none d-md-flex" ngbDropdown>
-      <i (click)="$event.stopPropagation();" ngbDropdownToggle class="material-icons action">more_vert</i>
-      <ul class="dropdown-menu-right" ngbDropdownMenu>
-        <li (click)="$event.stopPropagation();" class="dropdown-item">
-          <i class="material-icons dropdown-icon mr-2">file_download</i> Exporter
-        </li>
-        <li class="dropdown-item">
-          <i class="material-icons dropdown-icon mr-2">print</i> Imprimer
-        </li>
-        <li (click)="$event.stopPropagation();delete();" class="dropdown-item">
-          <i class="material-icons dropdown-icon mr-2">delete</i> Supprimer
-        </li>
-      </ul>
+<ngx-top-option-bar [open]="selectedData.length !== 0">
+  <div class="d-flex align-items-center ngx-top-option-bar-left">
+    <i (click)="resetSelected();" class="material-icons top-action-bar-icon">
+      keyboard_backspace
+    </i>
+    <div class="top-bar-selected-data-container">
+      <span class="table-checkbox align-self-center">
+        <label (click)="$event.stopPropagation();" class="ck-container">
+          <input [(ngModel)]="allSelected.checked" (change)="handleSelectAllChanged($event.target.checked);" type="checkbox">
+          <span class="checkmark"></span>
+        </label>
+      </span>
+      <div class="ml-2 top-bar-selected-data-label">
+        {{ selectedData.length }}
+        <div class="d-none d-md-flex ml-2">sélectionnés</div>
+      </div>
     </div>
   </div>
-</div>
+  <div class="d-flex align-items-center ngx-top-option-bar-right">
+    <i class="material-icons d-none d-md-flex top-action-bar-icon">star_border</i>
+    <i class="material-icons top-action-bar-icon">email</i>
+    <ngx-smart-select [right]="true" [titleTemplate]="groupsTitleTemplate" [triggerTemplate]="groupsTriggerTempate">
+      <ng-template #groupsTitleTemplate>
+        <div class="select-title-template d-flex align-items-center w-100">Groups</div>
+      </ng-template>
+      <ng-template #groupsTriggerTempate>
+        <i class="material-icons top-action-bar-icon">label</i>
+      </ng-template>
+      <ngx-smart-select-option *ngFor="let group of groups">
+        {{ group.display }}
+      </ngx-smart-select-option>
+    </ngx-smart-select>
+    <ngx-smart-select [right]="true" [triggerTemplate]="topBarMoreTempate">
+      <ng-template #topBarMoreTempate>
+        <i class="material-icons top-action-bar-icon">more_vert</i>
+      </ng-template>
+      <ngx-smart-select-option>
+        <div class="d-flex align-items-center">
+          <i class="material-icons mr-2">file_download</i>Exporter
+        </div>
+      </ngx-smart-select-option>
+      <ngx-smart-select-option>
+        <div class="d-flex align-items-center">
+          <i class="material-icons mr-2">print</i>Imprimer
+        </div>
+      </ngx-smart-select-option>
+      <ngx-smart-select-option>
+        <div class="d-flex align-items-center">
+          <i class="material-icons mr-2">delete</i>Supprimer
+        </div>
+      </ngx-smart-select-option>
+    </ngx-smart-select>
+  </div>
+</ngx-top-option-bar>
 
 <div *ngIf="!hideMobileDropdownLabel || !hideMobileDropdownMenu || (isExtended && mobileView)" class="mobile-backdrop"></div>
-
-<div *ngIf="isViewInit" click-outside (clickOutside)="hideLabels($event)" [class.hide-mobile-dropdown-menu]="hideMobileDropdownLabel"
-  class="mobile-dropdown-menu">
-  <ul class="dropdown-menu-right">
-    <li (click)="$event.stopPropagation();" class="dropdown-title">
-      Groups
-    </li>
-    <li (click)="$event.stopPropagation();" *ngFor="let group of groups" class="dropdown-item d-flex justify-content-between">
-      <span>{{ group.display }}</span>
-      <i class="material-icons">done</i>
-    </li>
-    <li (click)="$event.stopPropagation();" class="dropdown-item">
-      <i class="material-icons mr-2">add</i>Ajouter
-    </li>
-  </ul>
-</div>
-<div *ngIf="isViewInit" click-outside (clickOutside)="hideMenu($event)" [class.hide-mobile-dropdown-menu]="hideMobileDropdownMenu"
-  class="mobile-dropdown-menu">
-  <ul class="dropdown-menu-right">
-    <li (click)="$event.stopPropagation();" class="dropdown-item">
-      <i class="material-icons dropdown-icon mr-2">file_download</i> Exporter
-    </li>
-    <li (click)="$event.stopPropagation();" class="dropdown-item">
-      <i class="material-icons dropdown-icon mr-2">print</i> Imprimer
-    </li>
-    <li (click)="$event.stopPropagation();delete();" class="dropdown-item">
-      <i class="material-icons dropdown-icon mr-2">delete</i> Supprimer
-    </li>
-  </ul>
-</div>
-
-<!-- SNACKBAR -->
-<div *ngIf="isViewInit" [class.snack-bar-shown]="!notification" class="snack-bar-container">
-  <div class="snack-bar">
-    {{ notification }}
-  </div>
-</div>

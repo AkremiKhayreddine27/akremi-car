@@ -4,6 +4,7 @@
 @import "~@nebular/theme/styles/themes";
 @import "~bootstrap/scss/mixins/breakpoints";
 @import "~@nebular/theme/styles/global/bootstrap/breakpoints";
+@import "../../styles/variables";
 
 @include nb-install-component() {
   display: flex;
@@ -36,6 +37,12 @@
   .logo-img {
     height: 41px;
     width: 41px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $primary-color;
+    color: white !important;
+    border-radius: 50%;
   }
   .action-container {
     margin-right: 15px;

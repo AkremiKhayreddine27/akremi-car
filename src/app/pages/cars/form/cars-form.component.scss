@@ -3,6 +3,16 @@
 @import "~@nebular/theme/styles/global/bootstrap/breakpoints";
 
 @include nb-install-component() {
+  .keyboard_backspace {
+    height: 40px !important;
+    width: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    color: #707070 !important;
+  }
+
   .btn-add {
     position: fixed;
     bottom: 15px;
@@ -10,7 +20,7 @@
     height: 50px;
     width: 50px;
     border-radius: 50%;
-    background-color: nb-theme(color-success);
+    background-color: nb-theme(color-primary);
     color: white;
     display: flex;
     align-items: center;
@@ -19,5 +29,68 @@
   }
   .btn-add:hover {
     background-color: darken($color: nb-theme(color-success), $amount: 2%);
+  }
+
+  .position-relative {
+    position: relative !important;
+  }
+
+  .service-trigger {
+    padding: 15px;
+    width: 100%;
+  }
+
+  .more-icon {
+    height: 40px;
+    width: 40px;
+    background-color: blue;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+
+  .display-flex {
+    display: flex !important;
+  }
+
+  .list-group-item {
+    padding: 0.5rem 0.75rem;
+  }
+
+  nb-card-body {
+    overflow: visible;
+  }
+
+  .pl-custom {
+    padding-left: 0.75rem !important;
+  }
+
+  .pr-custom {
+    padding-right: 0.75rem !important;
+  }
+
+  .text-ellipsis {
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  @include media-breakpoint-down(sm) {
+    .pl-custom {
+      //padding-left: 0 !important;
+    }
+
+    .pr-custom {
+      //padding-right: 0 !important;
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    .page-container {
+      padding-top: 2.5rem;
+    }
   }
 }

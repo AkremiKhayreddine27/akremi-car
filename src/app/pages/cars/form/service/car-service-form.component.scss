@@ -1,0 +1,33 @@
+.contact-container {
+  padding: 10px 15px;
+  width: 100%;
+}
+.search-trigger-label {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 0.89rem;
+}
+.contact-placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+.contacts-actions {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.05);
+  .btn-tn {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white;
+    font-size: 0.8rem;
+  }
+}
+.border-right-radius-none {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: 1px solid #638adb !important;
+}

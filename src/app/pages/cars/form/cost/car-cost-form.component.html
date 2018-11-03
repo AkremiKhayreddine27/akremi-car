@@ -1,0 +1,34 @@
+<nb-card [formGroup]="form">
+  <nb-card-header class="border-bottom d-flex align-items-center">
+    <i class="material-icons mr-1">credit_card</i>Coûts
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-md-3">
+        <ngx-smart-input [type]="'number'" formControlName="workforce" [placeholder]="'Main oeuvre'">
+          <error-message [control]="workforce"></error-message>
+        </ngx-smart-input>
+      </div>
+      <div class="col-md-3">
+        <ngx-smart-input [type]="'number'" formControlName="products" [placeholder]="'Produits'">
+          <error-message [control]="products"></error-message>
+        </ngx-smart-input>
+      </div>
+      <div class="col-md-3">
+        <ngx-smart-input [type]="'number'" formControlName="discount" [placeholder]="'Remise'">
+          <error-message [control]="discount"></error-message>
+        </ngx-smart-input>
+      </div>
+      <div class="col-md-3">
+        <ngx-smart-input [type]="'number'" formControlName="tva" [placeholder]="'TVA'">
+          <error-message [control]="tva"></error-message>
+        </ngx-smart-input>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <ngx-smart-input formControlName="total" [placeholder]="'Total'"></ngx-smart-input>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

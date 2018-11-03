@@ -11,13 +11,14 @@
 @import "./components/table/row/dropdown.scss";
 @import "./styles/mobile-dropdown-menu.scss";
 @import "./styles/layout-column-header.scss";
+@import "./styles/variables";
 
 @include nb-install-component() {
   .layout-padding {
     padding-top: 68px !important;
   }
   .contacts-checkbox {
-    font-size: 14px;
+    font-size: 1rem;
     padding-left: 2rem;
     color: white;
   }
@@ -27,7 +28,7 @@
     bottom: 15px;
     right: 15px;
     color: white !important;
-    background-color: #40a497;
+    background-color: $primary-color;
     border-radius: 50%;
     height: 50px;
     width: 50px;
@@ -139,7 +140,7 @@
 
 /deep/ .nb-theme-corporate nb-sidebar.custom-sidebar .main-container {
   background: white !important;
-  z-index: 1052;
+  z-index: 1030;
   //box-shadow: 0 0 0 1px #dfe3eb !important;
 }
 

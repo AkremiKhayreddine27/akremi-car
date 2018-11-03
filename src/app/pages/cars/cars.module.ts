@@ -17,8 +17,16 @@ import {
   DistinctUiModule,
   TopOptionBarModule,
   SmartPageHeaderModule,
-  SearchModalModule
+  SearchModalModule,
+  SmartInputModule,
+  SmartDatepickerModule,
+  SmartTimepickerModule
 } from "../../../../projects/distinct-ui/src/public_api";
+import { CarContactsFormComponent } from "./form/contacts/car-contacts-form.component";
+import { CarServiceFormComponent } from "./form/service/car-service-form.component";
+import { CarCostFormComponent } from "./form/cost/car-cost-form.component";
+import { CarDocumentsFormComponent } from "./form/documents/car-documents-form.component";
+import { CarDocumentFormComponent } from "./form/documents/document/car-document-form.component";
 
 @NgModule({
   imports: [
@@ -31,6 +39,9 @@ import {
     TopOptionBarModule,
     SmartSelectModule,
     SearchModalModule,
+    SmartInputModule,
+    SmartDatepickerModule,
+    SmartTimepickerModule,
     CarsRoutingModule
   ],
   declarations: [
@@ -39,7 +50,12 @@ import {
     CarsTableRowComponent,
     CarsGridComponent,
     CarsCardComponent,
-    CarsFilterComponent
+    CarsFilterComponent,
+    CarContactsFormComponent,
+    CarServiceFormComponent,
+    CarCostFormComponent,
+    CarDocumentsFormComponent,
+    CarDocumentFormComponent
   ]
 })
 export class CarsModule {}

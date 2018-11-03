@@ -1,0 +1,14 @@
+<nb-card>
+  <nb-card-header class="border-bottom d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center">
+      <i class="material-icons mr-1">folder</i>Documents
+    </div>
+    <i class="material-icons">add</i>
+  </nb-card-header>
+  <nb-card-body class="p-0">
+    <div class="table-body">
+      <ngx-car-document-form *ngFor="let document of documents" [document]="document"></ngx-car-document-form>
+    </div>
+    <div [routerLink]="['/documents']" class="load-more">Voir tout ...</div>
+  </nb-card-body>
+</nb-card>

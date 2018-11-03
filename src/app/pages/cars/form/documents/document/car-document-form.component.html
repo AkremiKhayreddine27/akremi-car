@@ -1,0 +1,47 @@
+<div class="table-row border-bottom pt-3 pb-3 d-flex d-md-none d-lg-none d-xl-none">
+  <ngx-smart-select class="w-100 h-100" [titleTemplate]="documentTitleTempate" [triggerTemplate]="documentTempate">
+    <ngx-smart-select-option>
+      <i class="material-icons mr-1">visibility</i>Afficher
+    </ngx-smart-select-option>
+    <ngx-smart-select-option>
+      <i class="material-icons mr-1">edit</i>Modifier
+    </ngx-smart-select-option>
+    <ngx-smart-select-option>
+      <i class="material-icons mr-1">delete</i>Supprimer
+    </ngx-smart-select-option>
+  </ngx-smart-select>
+</div>
+<div (mouseenter)="showActions = true;" (mouseleave)="showActions = false;" class="table-row border-bottom pt-3 pb-3 row m-0 d-none d-md-flex">
+  <div class="col-8 d-flex">
+    <img class="document-icon" height="36" width="36" [src]="document.icon" />
+    <div class="document-details ml-2">
+      <div class="document-name">{{ document.name }}</div>
+      <div class="badge nb-badge document-type">{{ document.type }}</div>
+    </div>
+  </div>
+  <div class="col-4">{{ document.lastModified | date:'dd MMM' }}</div>
+  <div *ngIf="showActions" class="document-actions">
+    <i class="material-icons document-action">delete</i>
+    <i class="material-icons document-action">edit</i>
+  </div>
+</div>
+
+<!-- Templates -->
+
+<ng-template #documentTempate>
+  <div class="row w-100 m-0 document">
+    <div class="col-8 document d-flex">
+      <img class="document-icon" height="36" width="36" [src]="document.icon" />
+      <div class="document-details ml-2">
+        <div class="document-name">{{ document.name }}</div>
+        <div class="badge nb-badge document-type">{{ document.type }}</div>
+      </div>
+    </div>
+    <div class="col-4">{{ document.lastModified | date:'dd MMM' }}</div>
+  </div>
+</ng-template>
+<ng-template #documentTitleTempate>
+  <div class="select-title-template d-flex align-items-center w-100">
+    {{ document.name }}
+  </div>
+</ng-template>

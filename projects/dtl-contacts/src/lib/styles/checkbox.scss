@@ -1,3 +1,5 @@
+@import "./variables";
+
 /deep/ .checkmark {
   position: absolute;
   top: 0;
@@ -10,7 +12,7 @@
 }
 
 /deep/ .checkbox-container input:checked ~ .checkmark {
-  background-color: #40a497 !important;
+  background-color: $primary-color !important;
 }
 
 /deep/ .checkbox-container .checkmark:after {

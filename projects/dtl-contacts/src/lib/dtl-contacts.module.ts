@@ -44,6 +44,12 @@ import {
   RowComponent,
   DtlTableHeaderComponent
 } from "./components";
+import {
+  SmartInputModule,
+  TopOptionBarModule
+} from "../../../distinct-ui/src/public_api";
+import { SmartSelectModule } from "../../../distinct-ui/src/lib/smart-select/smart-select.module";
+import { SmartPageHeaderModule } from "../../../distinct-ui/src/lib/smart-page-header/smart-page-header.module";
 
 @NgModule({
   imports: [
@@ -74,7 +80,11 @@ import {
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
       maxAge: 35
-    })
+    }),
+    SmartInputModule,
+    SmartSelectModule,
+    SmartPageHeaderModule,
+    TopOptionBarModule
   ],
   declarations: [
     DtlContactsComponent,

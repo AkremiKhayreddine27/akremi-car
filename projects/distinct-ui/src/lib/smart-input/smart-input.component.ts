@@ -37,13 +37,19 @@ export class SmartInputComponent
   @Input()
   placeholder = "Saisir";
 
+  @Input()
+  type: string = "text";
+
   @ViewChild("input")
   input: ElementRef;
 
   value;
+
   disabled: boolean;
 
   displayLabel = false;
+
+  isFocus: boolean = false;
 
   constructor(
     @Optional()
@@ -86,4 +92,11 @@ export class SmartInputComponent
   onChange(value: any) {}
 
   onTouched() {}
+
+  clear() {
+    this.input.nativeElement.value = "";
+    this.controlDir.reset();
+    this.input.nativeElement.focus();
+    this.displayLabel = true;
+  }
 }

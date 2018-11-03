@@ -11,6 +11,8 @@ export interface User {
   title?: string;
   userType?: string;
   name?: Name;
+  company?: string;
+  job?: string;
   phoneNumbers?: PhoneNumber[];
   emails?: Email[];
   addresses?: Address[];

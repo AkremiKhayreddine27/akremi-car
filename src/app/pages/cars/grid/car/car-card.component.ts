@@ -6,11 +6,10 @@ import {
   ViewChild,
   TemplateRef
 } from "@angular/core";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { SearchModalComponent } from "../../../../../../projects/distinct-ui/src/lib/search-modal/search-modal.component";
 
 import * as fromStore from "../../../../../../projects/dtl-contacts/src/lib/@core/store";
 import { Store } from "@ngrx/store";
+import { of } from "rxjs";
 
 @Component({
   selector: "ngx-car",
@@ -26,12 +25,6 @@ export class CarsCardComponent implements OnInit {
 
   @ViewChild("statusTitleTempate")
   statusTitleTempate: TemplateRef<any>;
-
-  @ViewChild("searchFiltersTemplate")
-  searchFiltersTemplate: TemplateRef<any>;
-
-  @ViewChild("searchItemTemplate")
-  searchItemTemplate: TemplateRef<any>;
 
   statuses = [
     {
@@ -114,48 +107,22 @@ export class CarsCardComponent implements OnInit {
     }
   ];
 
-  constructor(
-    private modalService: NgbModal,
-    private store: Store<fromStore.ContactsAppState>
-  ) {}
+  users$;
+  groups$;
+
+  constructor(private store: Store<fromStore.ContactsAppState>) {}
 
   ngOnInit(): void {
     this.statusTempate.createEmbeddedView({ car: this.car });
     this.statusTitleTempate.createEmbeddedView({ car: this.car });
-  }
-
-  changeDriver() {
-    const modalRef = this.modalService.open(SearchModalComponent, {
-      windowClass: "all-height"
-    });
-    modalRef.componentInstance.store = this.store;
-    modalRef.componentInstance.select =
-      fromStore.getPaginatedSortedFiltredContacts;
-    modalRef.componentInstance.action = fromStore.LoadContacts;
-    modalRef.componentInstance.itemTemplate = this.searchItemTemplate;
-    modalRef.componentInstance.filtersItemTemplate = this.searchFiltersTemplate;
-    let categories = [
+    this.users$ = this.store.select(fromStore.getAllContacts);
+    this.groups$ = of([
       {
-        display: "Groups",
-        items$: this.store.select(fromStore.getAllGroups),
-        field: "groups",
-        filterFn: (cell: any[], search: any) => {
-          let exist = false;
-          cell.map(item => {
-            if (item.value.toString() === search) {
-              exist = true;
-            }
-          });
-          return exist;
-        }
+        name: "Groups",
+        items$: this.store.select(fromStore.getAllGroups)
       }
-    ];
-    modalRef.componentInstance.categories = categories;
+    ]);
+    this.store.dispatch(new fromStore.LoadContacts());
     this.store.dispatch(new fromStore.LoadGroups());
-    modalRef.result.then(result => {
-      this.car.driver = result[0];
-    }).catch(error => {
-
-    });
   }
 }

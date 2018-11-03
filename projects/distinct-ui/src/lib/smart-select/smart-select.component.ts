@@ -64,6 +64,12 @@ export class SmartSelectComponent
   @Input()
   center: boolean = false;
 
+  @Input()
+  right: boolean = false;
+
+  @Input()
+  width: number;
+
   @ContentChildren(SmartSelectOptionComponent, { descendants: true })
   options: QueryList<SmartSelectOptionComponent>;
 
@@ -110,22 +116,35 @@ export class SmartSelectComponent
 
   open() {
     if (!this._overlayRef) {
-      const positionStrategy = this._overlay
+      let positionStrategy = this._overlay
         .position()
         .connectedTo(
           this.trigger,
-          { originX: "end", originY: "bottom" },
-          { overlayX: "end", overlayY: "top" }
+          { originX: "start", originY: "bottom" },
+          { overlayX: "start", overlayY: "top" }
         )
         .withFallbackPosition(
-          { originX: "end", originY: "top" },
-          { overlayX: "end", overlayY: "bottom" }
+          { originX: "start", originY: "top" },
+          { overlayX: "start", overlayY: "bottom" }
         );
-
+      if (this.right) {
+        positionStrategy = this._overlay
+          .position()
+          .connectedTo(
+            this.trigger,
+            { originX: "end", originY: "bottom" },
+            { overlayX: "end", overlayY: "top" }
+          )
+          .withFallbackPosition(
+            { originX: "end", originY: "top" },
+            { overlayX: "end", overlayY: "bottom" }
+          );
+      }
       this._overlayRef = this._overlay.create({
         hasBackdrop: true,
         backdropClass: "cdk-overlay-transparent-backdrop",
         positionStrategy
+        //width: this.trigger.nativeElement.offsetWidth
       });
 
       this._overlayRef
@@ -228,7 +247,11 @@ export class SmartSelectComponent
     this.selectedValue = obj;
     if (this.options) {
       this.options.map(option => {
-        if (option.value.id === this.selectedValue.id) {
+        if (
+          option.value &&
+          this.selectedValue &&
+          option.value.id === this.selectedValue.id
+        ) {
           this.selectedDisplay = option.display;
           option.isSelected = true;
         }

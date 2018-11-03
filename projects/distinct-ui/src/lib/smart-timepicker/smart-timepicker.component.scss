@@ -1,0 +1,99 @@
+.input-control::-webkit-outer-spin-button,
+.input-control::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.input-control::-webkit-clear-button {
+  display: none;
+  -webkit-appearance: none;
+}
+/deep/ #time-picker-wrapper {
+  z-index: 1300 !important;
+}
+.input-container {
+  width: 100%;
+  position: absolute;
+  left: 12px;
+  bottom: 5px;
+  cursor: pointer;
+}
+
+.input-container.active {
+  transform: translateY(6px);
+}
+
+.input-control {
+  border: none;
+  width: 100%;
+  outline: none;
+  height: 24px;
+  background-color: transparent;
+  font-size: 16px;
+}
+
+.smart-input-container {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  position: relative;
+  //background-color: #e8e8e8;
+  padding: 0 15px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.smart-input-container.active {
+  border-bottom: 1px solid #73a1ff;
+}
+
+.input-label {
+  transform-origin: bottom left;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: color, bottom, transform;
+  color: rgba(0, 0, 0, 0.38);
+  font: 400 14px Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  left: 12px;
+  width: 70%;
+}
+.input-label-top {
+  transform: scale(0.89) translateY(-20px);
+}
+
+.input-label.active {
+  color: #73a1ff;
+}
+
+.input-prefix {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: rgba(0, 0, 0, 0.58);
+  /deep/ i {
+    font-size: 20px;
+  }
+}
+
+.input-prefix.active {
+  color: #73a1ff;
+}
+
+.input-suffix {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: rgba(0, 0, 0, 0.58);
+  /deep/ i {
+    font-size: 20px;
+  }
+}
+
+.input-suffix.active {
+  color: #73a1ff;
+}
+
+.display-flex {
+  display: flex !important;
+}

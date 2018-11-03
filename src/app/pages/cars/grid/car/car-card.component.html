@@ -1,24 +1,38 @@
 <nb-card>
   <nb-card-header class="d-flex flex-column">
     <div class="d-flex card-header-top align-items-center justify-content-between">
-      <div (click)="changeDriver();" class="d-flex car-driver align-items-center justify-content-end">
-        <i class="material-icons mr-1">person</i>
-        <span>{{ car.driver.name.familyName }} {{ car.driver.name.givenName }}</span>
-      </div>
-      <ngx-smart-select [titleTemplate]="statusTitleTempate" [triggerTemplate]="moreTempate">
+      <ngx-search-modal [filterAttribute]="'display'" [filtersItemTemplate]="searchFiltersTemplate" [categories$]="groups$"
+        [triggerTemplate]="searchTriggerTemplate" [itemTemplate]="searchItemTemplate" [data$]="users$">
+        <ng-template #searchTriggerTemplate>
+          <div class="d-flex car-driver align-items-center justify-content-end">
+            <i class="material-icons mr-1">person</i>
+            <span>{{ car.driver.name.familyName }} {{ car.driver.name.givenName }}</span>
+          </div>
+        </ng-template>
+        <ng-template let-item #searchItemTemplate>
+          <img *ngIf="item.photo" class="mr-2" height="36" width="36" [src]="item.photo" />
+          <div *ngIf="!item.photo" class="item-first-letter mr-2">{{ item.name.familyName[0] }}</div>
+          <div>{{ item.name.familyName }} {{ item.name.givenName }}</div>
+        </ng-template>
+
+        <ng-template let-item #searchFiltersTemplate>
+          {{ item.display }}
+        </ng-template>
+      </ngx-search-modal>
+      <ngx-smart-select [right]="true" [titleTemplate]="statusTitleTempate" [triggerTemplate]="moreTempate">
         <ngx-smart-select-option>
           <div class="d-flex align-items-center">
             <i class="material-icons mr-1">edit</i>
             Modifier
           </div>
         </ngx-smart-select-option>
-        <ngx-smart-select-option [withDevider]="true">
+        <ngx-smart-select-option>
           <div class="d-flex align-items-center">
             <i class="material-icons mr-1">delete</i>
             Supprimer
           </div>
         </ngx-smart-select-option>
-        <ngx-smart-select-option>
+        <ngx-smart-select-option [withDevider]="true">
           <div class="d-flex align-items-center"><i class="material-icons mr-1">settings</i>Service</div>
         </ngx-smart-select-option>
         <ngx-smart-select-option>
@@ -44,7 +58,7 @@
         <span>{{ car.odometer }} KM</span>
       </div>
       <div class="d-flex flex-column">
-        <ngx-smart-select [center]="true" [(ngModel)]="car.status" [titleTemplate]="statusTitleTempate"
+        <ngx-smart-select [right]="true" [center]="true" [(ngModel)]="car.status" [titleTemplate]="statusTitleTempate"
           [triggerTemplate]="statusTempate">
           <ngx-smart-select-option *ngFor="let status of statuses" [value]="status">
             <div class="d-flex align-items-center">
@@ -89,14 +103,4 @@
 
 <ng-template #moreTempate>
   <i class="material-icons icon-more mr-1">more_horiz</i>
-</ng-template>
-
-<ng-template let-item #searchItemTemplate>
-  <img *ngIf="item.photo" class="mr-2" height="36" width="36" [src]="item.photo" />
-  <div *ngIf="!item.photo" class="item-first-letter mr-2">{{ item.name.familyName[0] }}</div>
-  <div>{{ item.name.familyName }} {{ item.name.givenName }}</div>
-</ng-template>
-
-<ng-template let-item #searchFiltersTemplate>
-  {{ item.display }}
 </ng-template>

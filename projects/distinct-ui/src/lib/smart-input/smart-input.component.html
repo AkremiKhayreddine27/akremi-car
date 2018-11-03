@@ -1,12 +1,25 @@
-<div class="input-container">
-  <label [class.display-flex]="displayLabel || ( controlDir && controlDir.control.value)" class="input-label">{{
-    placeholder }}</label>
-  <div class="input-prefix">
+<div [class.active]="displayLabel" [class.error]="controlDir.control.dirty && !controlDir.valid" class="d-flex smart-input-container align-items-center">
+  <div #prefix [class.active]="displayLabel" class="input-prefix">
     <ng-content select="[input-prefix]"></ng-content>
   </div>
-  <input #input [placeholder]="!displayLabel ? placeholder : ''" (blur)="displayLabel = false;" (click)="displayLabel = true;"
-    class="input-control" (input)="onChange($event.target.value)" (blur)="onTouched()" [disabled]="disabled" />
-  <div class="input-suffix">
+  <label [style.left.px]="prefix.offsetWidth ? (prefix.offsetWidth + 5) : 0" [class.error]="controlDir.control.dirty && !controlDir.valid"
+    [class.active]="displayLabel" [class.input-label-top]="displayLabel || ( controlDir && controlDir.control.value)"
+    class="input-label">
+    {{ placeholder }}
+  </label>
+  <div [style.width]="prefix.offsetWidth ? '70%' : '100%'" [style.left.px]="prefix.offsetWidth ? (prefix.offsetWidth + 5) : 0"
+    [class.active]="displayLabel || ( controlDir && controlDir.control.value) || (controlDir.control.dirty && !controlDir.valid)"
+    class="input-container">
+    <input [type]="type" #input (focus)="isFocus = true;" (blur)="displayLabel = false;" (click)="displayLabel = true;"
+      class="input-control" (input)="onChange($event.target.value);" (blur)="onTouched()" [disabled]="disabled" />
+  </div>
+  <div (click)="$event.stopPropagation(); clear()" *ngIf="controlDir && isFocus && controlDir.control.value" class="input-clear">
+    <i class="material-icons">cancel</i>
+  </div>
+  <div [class.active]="displayLabel" class="input-suffix">
     <ng-content select="[input-suffix]"></ng-content>
   </div>
+</div>
+<div class="mb-4">
+  <ng-content *ngIf="controlDir.control.dirty && !controlDir.valid" select="error-message"></ng-content>
 </div>

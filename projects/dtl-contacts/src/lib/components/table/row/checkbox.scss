@@ -1,3 +1,4 @@
+@import "../../../styles/variables";
 /* The ck-container */
 .ck-container {
   display: block;
@@ -32,11 +33,11 @@
 
 /* When the checkbox is checked, add a blue background */
 .mobile-checkbox-container input:checked ~ .checkmark {
-  background-color: #40a497 !important;
+  background-color: $primary-color !important;
 }
 
 .checkbox-container input:checked ~ .checkmark {
-  background-color: #40a497 !important;
+  background-color: $primary-color !important;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */

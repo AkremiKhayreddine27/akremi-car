@@ -1,0 +1,81 @@
+<nb-card [formGroup]="form">
+  <nb-card-header class="border-bottom d-flex align-items-center">
+    <i class="material-icons mr-1">settings</i>Service
+  </nb-card-header>
+  <nb-card-body class="p-0">
+    <ngx-smart-select formControlName="service" [titleTemplate]="serviceTitleTempate" [triggerTemplate]="serviceTempate">
+      <ng-template #serviceTempate>
+        <div class="contact-container d-flex d-md-none d-lg-none d-xl-none">
+          <div class="d-flex flex-column">
+            <span class="pb-2 search-trigger-label">Nom </span>
+            <div *ngIf="service.value" class="pb-1">
+              {{ service.value.category.name }} / {{ service.value.name }}
+            </div>
+            <div class="contact-placeholder" *ngIf="!service.value">
+              Ajouter un service
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #serviceTitleTempate>
+        <div class="select-title-template d-flex align-items-center w-100">
+          Service
+        </div>
+      </ng-template>
+      <ngx-smart-select-option>
+        <ngx-search-modal (items)="setService($event)" [filtersItemTemplate]="searchFiltersTemplate" [categories$]="categories$"
+          [triggerTemplate]="clientSelectSearchTriggerTemplate" [selectedItem]="service.value" [itemTemplate]="searchItemTemplate"
+          [data$]="services$">
+          <ng-template let-item #searchItemTemplate>
+            <div>{{ item.name }}</div>
+          </ng-template>
+          <ng-template let-item #searchFiltersTemplate>
+            {{ item.name }}
+          </ng-template>
+          <ng-template #clientSelectSearchTriggerTemplate>
+            <div class="w-100">Rechercher</div>
+          </ng-template>
+        </ngx-search-modal>
+      </ngx-smart-select-option>
+      <ngx-smart-select-option>
+        Nouveau
+      </ngx-smart-select-option>
+      <ngx-smart-select-option *ngIf="service.value">
+        Afficher
+      </ngx-smart-select-option>
+      <ngx-smart-select-option [withDevider]="true">
+        Annuler
+      </ngx-smart-select-option>
+    </ngx-smart-select>
+    <div (mouseenter)="serviceHovred = true;" (mouseleave)="serviceHovred = false;" class="position-relative contact-container d-none d-md-flex align-items-center">
+      <div class="d-flex flex-column">
+        <span class="pb-2 search-trigger-label">Nom </span>
+        <div *ngIf="service.value" class="pb-1">
+          {{ service.value.category.name }} / {{ service.value.name }}
+        </div>
+        <div class="contact-placeholder" *ngIf="!service.value">
+          Ajouter un service
+        </div>
+      </div>
+      <div [class.d-flex]="serviceHovred" class="contacts-actions d-none justify-content-center align-items-center flex-wrap">
+        <div class="btn-group">
+          <ngx-search-modal (items)="setService($event)" [filtersItemTemplate]="searchFiltersTemplate" [categories$]="categories$"
+            [triggerTemplate]="searchTriggerTemplate" [selectedItem]="service.value" [itemTemplate]="searchItemTemplate"
+            [data$]="services$">
+            <ng-template let-item #searchItemTemplate>
+              <div>{{ item.name }}</div>
+            </ng-template>
+            <ng-template #searchTriggerTemplate>
+              <a class="btn btn-tn border-right-radius-none btn-primary p-1">Rechercher</a>
+            </ng-template>
+            <ng-template let-item #searchFiltersTemplate>
+              {{ item.name }}
+            </ng-template>
+          </ngx-search-modal>
+          <a class="btn btn-tn btn-primary p-1">Nouveau</a>
+          <a *ngIf="service.value" class="btn btn-tn btn-primary p-1">Afficher</a>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

@@ -28,7 +28,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: "Services",
-    icon: "material-icons settings"
+    icon: "material-icons settings",
+    children: [
+      {
+        title: "Catégories"
+      },
+      {
+        title: "Intervention"
+      }
+    ]
   },
   {
     title: "Stocks",

@@ -51,6 +51,8 @@ export class ContactsService extends DataService {
             userName: faker.internet.userName(),
             title: "",
             userType: "",
+            company: faker.company.companyName(),
+            job: faker.name.jobTitle(),
             name: {
               familyName: faker.name.firstName(),
               givenName: faker.name.lastName()
@@ -71,9 +73,12 @@ export class ContactsService extends DataService {
             ],
             addresses: [
               {
-                country: faker.address.countryCode(),
+                country: faker.address.country(),
                 locality: faker.address.state(),
                 postalCode: faker.address.zipCode(),
+                city: faker.address.city(),
+                address: faker.address.streetAddress(),
+                state: faker.address.state(),
                 primary: true,
                 region: faker.address.stateAbbr(),
                 type: "home"

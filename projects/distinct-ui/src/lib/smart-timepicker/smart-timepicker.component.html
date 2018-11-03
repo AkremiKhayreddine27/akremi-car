@@ -1,0 +1,32 @@
+<div class="d-flex smart-input-container align-items-center mb-4">
+  <div #prefix class="input-prefix">
+    <ng-content select="[timepicker-prefix]"></ng-content>
+  </div>
+  <label [style.left.px]="prefix.offsetWidth ? (prefix.offsetWidth + 5) : 0" [class.input-label-top]="displayLabel || ( controlDir && controlDir.control.value)"
+    class="input-label">
+    {{ placeholder }}
+  </label>
+  <div [style.left.px]="prefix.offsetWidth ? (prefix.offsetWidth + 5) : 0" [class.active]="displayLabel || ( controlDir && controlDir.control.value)"
+    class="input-container">
+    <div [class.d-none]="isMobile">
+      <ngx-smart-select width="70" [center]="true" [right]="true" [titleTemplate]="hourTitleTemplate" [triggerTemplate]="hourTriggerTemplate">
+        <ng-template #hourTriggerTemplate>
+          <input type="time" [value]="value" (blur)="displayLabel = false;" (click)="displayLabel = true;" class="input-control" />
+        </ng-template>
+        <ng-template #hourTitleTemplate>
+          <div class="select-title-template d-flex align-items-center w-100">
+            Heure
+          </div>
+        </ng-template>
+        <ngx-smart-select-option [value]="hour" (click)="setHour(hour);" *ngFor="let hour of hours">
+          {{ hour }}
+        </ngx-smart-select-option>
+      </ngx-smart-select>
+    </div>
+    <input [class.d-none]="!isMobile" #input type="time" (blur)="displayLabel = false;" (click)="displayLabel = true;"
+      class="input-control" (input)="onChange($event.target.value)" (blur)="onTouched()" [disabled]="disabled" />
+  </div>
+  <div class="input-suffix">
+    <ng-content select="[timepicker-suffix]"></ng-content>
+  </div>
+</div>

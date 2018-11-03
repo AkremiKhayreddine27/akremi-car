@@ -1,4 +1,5 @@
-<div class="page-container">
+<div [formGroup]="form" class="page-container">
+
   <ngx-smart-page-header [responsive]="true">
     <ngx-smart-page-header-title>
       <div class="d-flex align-items-center">
@@ -9,7 +10,7 @@
       </div>
     </ngx-smart-page-header-title>
     <ngx-smart-page-header-options>
-      <ngx-smart-select [triggerTemplate]="addDesktoptriggerTemplate">
+      <ngx-smart-select [right]="true" [triggerTemplate]="addDesktoptriggerTemplate">
         <ngx-smart-select-option>
           <div class="d-flex align-items-center"><i class="material-icons mr-1">settings</i>Service</div>
         </ngx-smart-select-option>
@@ -29,15 +30,130 @@
           <div class="d-flex align-items-center"><i class="material-icons mr-1">note</i>Commentaire</div>
         </ngx-smart-select-option>
       </ngx-smart-select>
-      <i class="material-icons action-icon">close</i>
-      <i class="material-icons action-icon">save</i>
-      <ngx-smart-select [triggerTemplate]="triggerTemplate">
+      <i class="material-icons action-icon">cancel</i>
+      <i (click)="save();" class="material-icons action-icon">save</i>
+      <ngx-smart-select [right]="true" [triggerTemplate]="triggerTemplate">
         <ngx-smart-select-option>
-          <div class="d-flex align-items-center"><i class="material-icons">file_upload</i>Import</div>
+          <div class="d-flex align-items-center"><i class="material-icons">file_upload</i>Importer</div>
+        </ngx-smart-select-option>
+        <ngx-smart-select-option>
+          <div class="d-flex align-items-center"><i class="material-icons">print</i>Imprimer</div>
         </ngx-smart-select-option>
       </ngx-smart-select>
     </ngx-smart-page-header-options>
   </ngx-smart-page-header>
+
+  <div class="row">
+    <div class="col-md-4 pl-custom pr-custom">
+      <nb-card>
+        <nb-card-header class="border-bottom d-flex align-items-center">
+          <i class="material-icons mr-1">drive_eta</i>Actif
+        </nb-card-header>
+        <nb-card-body class="p-0">
+          <ngx-smart-select [label]="'Bien'" [triggerTemplate]="propertyTriggerTemplate" [placeholder]="'Choisir un bien'"
+            [center]="true" formControlName="property" [titleTemplate]="propertyTitleTempate">
+            <ngx-smart-select-option [value]="p" *ngFor="let p of properties">
+              <img height="36" width="36" src="assets/images/camera1.jpg" />
+              <div class="ml-1 text-ellipsis">{{ p.name }}</div>
+            </ngx-smart-select-option>
+          </ngx-smart-select>
+          <ng-template #propertyTriggerTemplate>
+            <div class="d-flex service-trigger flex-column">
+              <div [class.display-flex]="property" class="select-label pb-2">Bien</div>
+              <div *ngIf="property" class="d-flex justify-content-between align-items-center">
+                <div class="d-flex text-ellipsis align-items-center">
+                  <img height="36" width="36" src="assets/images/camera1.jpg" />
+                  <span class="ml-1 text-ellipsis">{{ property.value.name }}</span>
+                </div>
+                <div class="select-arrow-wrapper">
+                  <div class="select-arrow"></div>
+                </div>
+              </div>
+              <span *ngIf="!property" class="select-placeholder">Choisir un bien</span>
+            </div>
+          </ng-template>
+
+          <ng-template #propertyTitleTempate>
+            <div class="select-title-template d-flex align-items-center w-100">
+              Bien
+            </div>
+          </ng-template>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-md-4 pl-custom pr-custom">
+      <ngx-car-service-form></ngx-car-service-form>
+    </div>
+    <div class="col-md-4 pl-custom pr-custom">
+      <ngx-car-contacts-form></ngx-car-contacts-form>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 pl-custom pr-custom">
+      <ngx-car-cost-form></ngx-car-cost-form>
+    </div>
+    <div class="col-md-6 pl-custom pr-custom">
+      <nb-card>
+        <nb-card-header class="border-bottom d-flex align-items-center">
+          <i class="material-icons mr-1">event</i>Echéancier
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-md-4 col-8">
+              <ngx-smart-datepicker formControlName="date" [placeholder]="'Date'">
+                <i datepicker-suffix class="material-icons">calendar_today</i>
+              </ngx-smart-datepicker>
+            </div>
+            <div class="col-md-2 col-4 pl-1">
+              <ngx-smart-timepicker formControlName="time" [placeholder]="'Heure'">
+                <i timepicker-suffix class="material-icons">access_time</i>
+              </ngx-smart-timepicker>
+            </div>
+            <div class="col-md-4 col-8">
+              <ngx-smart-datepicker formControlName="startDate" [placeholder]="'Date début'">
+                <i datepicker-suffix class="material-icons">calendar_today</i>
+              </ngx-smart-datepicker>
+            </div>
+            <div class="col-md-2 col-4 pl-1">
+              <ngx-smart-timepicker formControlName="startTime" [placeholder]="'Heure'">
+                <i timepicker-suffix class="material-icons">access_time</i>
+              </ngx-smart-timepicker>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-8">
+              <ngx-smart-datepicker formControlName="endDatePlanned" [placeholder]="'Date fin(planifié)'">
+                <i datepicker-suffix class="material-icons">calendar_today</i>
+              </ngx-smart-datepicker>
+            </div>
+            <div class="col-md-2 col-4 pl-1">
+              <ngx-smart-timepicker formControlName="endTimePlanned" [placeholder]="'Heure'">
+                <i timepicker-suffix class="material-icons">access_time</i>
+              </ngx-smart-timepicker>
+            </div>
+            <div class="col-md-4 col-8">
+              <ngx-smart-datepicker formControlName="endDateReal" [placeholder]="'Date fin(réel)'">
+                <i datepicker-suffix class="material-icons">calendar_today</i>
+              </ngx-smart-datepicker>
+            </div>
+            <div class="col-md-2 col-4 pl-1">
+              <ngx-smart-timepicker formControlName="endTimeReal" [placeholder]="'Heure'">
+                <i timepicker-suffix class="material-icons">access_time</i>
+              </ngx-smart-timepicker>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 pl-custom pr-custom">
+      <ngx-car-documents-form></ngx-car-documents-form>
+    </div>
+  </div>
+
 </div>
 
 <ngx-smart-select [triggerTemplate]="addtriggerTemplate">
@@ -63,7 +179,7 @@
 
 <ng-template #addDesktoptriggerTemplate>
   <div class="d-none d-md-flex">
-    <i class="material-icons action-icon">add</i>
+    <i class="material-icons action-icon">add_circle</i>
   </div>
 </ng-template>
 
@@ -76,3 +192,24 @@
 <ng-template #triggerTemplate>
   <i class="material-icons action-icon">more_vert</i>
 </ng-template>
+
+
+
+<!-- Templates -->
+
+<ng-template let-item #usersSearchItemTemplate>
+  <img *ngIf="item.photo" class="mr-2" height="36" width="36" [src]="item.photo" />
+  <div *ngIf="!item.photo" class="item-first-letter mr-2">{{ item.name.familyName[0] }}</div>
+  <div>{{ item.name.familyName }} {{ item.name.givenName }}</div>
+</ng-template>
+<ng-template let-item #userssearchFiltersTemplate>
+  {{ item.display }}
+</ng-template>
+<ng-template #clientSearchTriggerTemplate>
+  <a class="btn btn-tn border-right-radius-none btn-primary p-1">Rechercher</a>
+</ng-template>
+<ng-template #mobileContactSearchTriggerTemplate>
+  Rechercher
+</ng-template>
+
+<!-- End Templates -->

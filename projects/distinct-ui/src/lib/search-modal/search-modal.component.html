@@ -1,46 +1,67 @@
-<div class="modal-header d-flex flex-column p-0">
-  <div class="d-flex w-100">
-    <i (click)="close();" class="material-icons keyboard_backspace">arrow_back_ios</i>
-    <input [(ngModel)]="query" (keyup)="search($event.target.value)" class="search-input" placeholder="Rechercher" type="text" />
-    <a (click)="query = null;save();" class="keyboard_backspace" *ngIf="selectedItems.length > 0">OK</a>
-  </div>
-  <!--Tags -->
-  <div class="search-active-filters border-top w-100" *ngFor="let filter of filters">
-    <div class="search-active-filter">
-      {{ filter }}
-      <i (click)="clearFilters();" class="material-icons ml-2">cancel</i>
-    </div>
-  </div>
+<!-- Trigger -->
+<div (click)="handleTriggerClicked()" #trigger class="search-trigger w-100 h-100 d-flex align-items-center">
+  <ng-container *ngTemplateOutlet="triggerTemplate ? triggerTemplate : defaultTriggerTemplate;"></ng-container>
 </div>
-<div class="modal-body p-0">
-  <!-- Filters -->
-  <ng-container *ngIf="showFilters && !query && selectedItems.length === 0">
-    <div *ngFor="let category of categories">
-      <div class="search-category-title">{{ category.display }}</div>
-      <div class="d-flex flex-column">
-        <div (click)="filter(category.field, category.filterFn, item);addFilter(item.display);showFilters = false;"
-          class="search-category-item" *ngFor="let item of (category.items$ | async)">
-          <ng-container *ngTemplateOutlet="filtersItemTemplate; context: { $implicit: item }"></ng-container>
+
+<!-- Default Trigger template -->
+<ng-template #defaultTriggerTemplate>
+  {{ selectedItem ? selectedItem : placeholder }}
+</ng-template>
+
+<!-- Content template -->
+<ng-template #contentTemplate>
+  <div class="search-container">
+    <div class="modal-header d-flex flex-column p-0">
+      <div class="d-flex w-100">
+        <i (click)="close();" class="material-icons keyboard_backspace">arrow_back_ios</i>
+        <input [(ngModel)]="query" (keyup)="search($event.target.value)" class="search-input" placeholder="Rechercher"
+          type="text" />
+        <a (click)="query = null;save();" class="keyboard_backspace" *ngIf="selectedItems.length > 0">OK</a>
+      </div>
+      <!--Tags -->
+      <div class="search-active-filters border-top w-100" *ngFor="let filter of filters">
+        <div class="search-active-filter">
+          {{ filter }}
+          <i (click)="clearFilters();" class="material-icons ml-2">cancel</i>
         </div>
       </div>
     </div>
-  </ng-container>
-  <!-- Results -->
-  <ng-container *ngIf="(!showFilters && selectedItems.length === 0) || (query && query.length >= 3)">
-    <div (click)="itemClicked(item);" class="search-list-item d-flex align-items-center" *ngFor="let item of (data$ | async)">
-      <ng-container *ngTemplateOutlet="itemTemplate ? itemTemplate : defaultTemplate; context: { $implicit: item }"></ng-container>
+    <div class="modal-body p-0">
+
+      <!-- Filters -->
+      <ng-container *ngIf="showFilters && !query && selectedItems.length === 0">
+        <div *ngFor="let category of (categories$ | async)">
+          <div class="search-category-title">{{ category.name }}</div>
+          <div class="d-flex flex-column">
+            <div (click)="filter(category.field, category.filterFn, item);addFilter(item[filterAttribute]);showFilters = false;"
+              class="search-category-item" *ngFor="let item of (category.items$ | async)">
+              <ng-container *ngTemplateOutlet="filtersItemTemplate; context: { $implicit: item }"></ng-container>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Results -->
+      <ng-container *ngIf="(!showFilters && selectedItems.length === 0) || (query && query.length >= 3)">
+        <div (click)="itemClicked(item);" class="search-list-item d-flex align-items-center" *ngFor="let item of data">
+          <ng-container *ngTemplateOutlet="itemTemplate ? itemTemplate : defaultTemplate; context: { $implicit: item }"></ng-container>
+        </div>
+      </ng-container>
+
+      <!--Selected Items -->
+      <ng-container *ngIf="selectedItems.length > 0 && !query">
+        <div class="search-list-item d-flex justify-content-between align-items-center" *ngFor="let item of selectedItems">
+          <div class="d-flex align-items-center">
+            <ng-container *ngTemplateOutlet="itemTemplate ? itemTemplate : defaultTemplate; context: { $implicit: item }"></ng-container>
+          </div>
+          <i (click)="removeItem(item);" class="material-icons ml-2">cancel</i>
+        </div>
+      </ng-container>
+
     </div>
-  </ng-container>
-  <!--Selected Items -->
-  <ng-container *ngIf="selectedItems.length > 0 && !query">
-    <div class="search-list-item d-flex justify-content-between align-items-center" *ngFor="let item of selectedItems">
-      <div class="d-flex align-items-center">
-        <ng-container *ngTemplateOutlet="itemTemplate ? itemTemplate : defaultTemplate; context: { $implicit: item }"></ng-container>
-      </div>
-      <i (click)="removeItem(item);" class="material-icons ml-2">cancel</i>
-    </div>
-  </ng-container>
-</div>
+  </div>
+</ng-template>
+
 <ng-template let-item #defaultTemplate>
   <div>{{ item.display }}</div>
 </ng-template>

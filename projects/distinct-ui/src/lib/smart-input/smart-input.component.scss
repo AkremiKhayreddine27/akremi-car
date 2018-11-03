@@ -1,29 +1,114 @@
 .input-container {
   width: 100%;
-  position: relative;
-  padding: 0 5px;
-  height: 60px;
-  display: flex;
-  align-items: center;
+  position: absolute;
+  left: 12px;
+  bottom: 5px;
 }
+
+.input-container.active {
+  transform: translateY(6px);
+}
+
 .input-control {
   border: none;
   width: 100%;
   outline: none;
+  height: 24px;
+  background-color: transparent;
+  font-size: 16px;
 }
-.input-label {
-  position: absolute;
-  left: 0;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  transform: translateY(-1.8em) scale(0.8);
+.input-control::-webkit-outer-spin-button,
+.input-control::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.input-control::-webkit-calendar-picker-indicator {
+  -webkit-appearance: none;
   display: none;
-  color: rgba(0, 0, 0, 0.54);
+}
+.input-control::-webkit-clear-button {
+  display: none;
+  -webkit-appearance: none;
+}
+.smart-input-container {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  position: relative;
+  //background-color: #e8e8e8;
+  padding: 0 15px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.smart-input-container.active {
+  border-bottom: 1px solid #73a1ff;
+}
+
+.smart-input-container.error {
+  border-bottom: 1px solid #ff6b83;
+}
+
+.input-label {
+  transform-origin: bottom left;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: color, bottom, transform;
+  color: rgba(0, 0, 0, 0.38);
+  font: 400 14px Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  left: 12px;
+}
+.input-label-top {
+  transform: scale(0.89) translateY(-20px);
+}
+
+.input-label.active {
+  color: #73a1ff;
+}
+
+.input-label.error {
+  color: #ff6b83;
 }
 
 .input-prefix {
-  padding-right: 10px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: rgba(0, 0, 0, 0.58);
+  /deep/ i {
+    font-size: 20px !important;
+  }
+}
+
+.input-prefix.active {
+  color: #73a1ff;
+}
+
+.input-suffix {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: rgba(0, 0, 0, 0.58);
+  /deep/ i {
+    font-size: 20px !important;
+  }
+}
+
+.input-suffix.active {
+  color: #73a1ff;
+}
+
+.input-clear {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: rgba(0, 0, 0, 0.38);
+  cursor: pointer;
+  /deep/ i {
+    font-size: 22px !important;
+  }
 }
 
 .display-flex {

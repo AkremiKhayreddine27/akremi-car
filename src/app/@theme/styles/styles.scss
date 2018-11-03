@@ -21,6 +21,14 @@
 *
 */
 
+#time-picker-wrapper {
+  top: -10vh !important;
+}
+
+#time-picker-wrapper #time-picker {
+  max-width: 100vw !important;
+}
+
 @import "~bootstrap/scss/mixins/breakpoints";
 @import "~@nebular/theme/styles/global/bootstrap/breakpoints";
 
@@ -113,6 +121,18 @@
   border: none !important;
   border-radius: 0 !important;
   box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-content::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.modal-content::-webkit-scrollbar-thumb {
+  background: #dadada;
+  cursor: pointer;
+  border-radius: 2.5px;
 }
 
 .custom-tooltip {
@@ -153,6 +173,8 @@
       height: 100vh;
       .modal-content {
         height: 100vh;
+        overflow-y: auto;
+        max-height: 100vh;
       }
     }
   }

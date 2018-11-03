@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { ErrorMessageComponent } from "../form-error-message/form-error-message.component";
 import {
   SmartInputComponent,
   SmartInputSuffix,
@@ -8,7 +9,17 @@ import {
 
 @NgModule({
   imports: [CommonModule],
-  declarations: [SmartInputComponent, SmartInputSuffix, SmartInputPrefix],
-  exports: [SmartInputComponent, SmartInputSuffix, SmartInputPrefix]
+  declarations: [
+    SmartInputComponent,
+    SmartInputSuffix,
+    SmartInputPrefix,
+    ErrorMessageComponent
+  ],
+  exports: [
+    SmartInputComponent,
+    SmartInputSuffix,
+    SmartInputPrefix,
+    ErrorMessageComponent
+  ]
 })
 export class SmartInputModule {}

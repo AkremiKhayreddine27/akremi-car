@@ -132,16 +132,18 @@ export class DtlContactsComponent implements OnInit, AfterViewInit, OnDestroy {
       )
       .subscribe(filtersConf => {
         this.filtersConf = filtersConf;
-        if (this.filtersConf.filters.length === 0) {
+        if (this.filtersConf && this.filtersConf.filters.length === 0) {
           this.pageTitle = "Contacts";
         }
-        this.filtersConf.filters.map(filter => {
-          if (filter.field === "groups") {
-            this.pageTitle = "Contacts";
-          } else if (filter.field === "followed") {
-            this.pageTitle = "Contacts suivis";
-          }
-        });
+        if (this.filtersConf) {
+          this.filtersConf.filters.map(filter => {
+            if (filter.field === "groups") {
+              this.pageTitle = "Contacts";
+            } else if (filter.field === "followed") {
+              this.pageTitle = "Contacts suivis";
+            }
+          });
+        }
       });
   }
 
@@ -206,6 +208,11 @@ export class DtlContactsComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.selectedData = [];
     }
+  }
+
+  resetSelected() {
+    this.selectedData = [];
+    this.allSelected = { ...this.allSelected, type: "event", checked: false };
   }
 
   create() {

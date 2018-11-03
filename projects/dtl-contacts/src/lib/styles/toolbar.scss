@@ -1,5 +1,6 @@
 @import "~bootstrap/scss/mixins/breakpoints";
 @import "~@nebular/theme/styles/global/bootstrap/breakpoints";
+@import "../styles//variables";
 
 .tool-bar {
   transition-timing-function: ease-in;
@@ -8,7 +9,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba($color: #40a497, $alpha: 0.98) !important;
+  background-color: rgba($color: $primary-color, $alpha: 0.98) !important;
   height: 4.5rem;
   width: 100vw;
   z-index: 1050;
@@ -55,7 +56,8 @@
     background-color: rgba(0, 0, 0, 0.04);
   }
   .dropdown-title {
-    font-size: 12px;
+    font-size: 1rem;
+    font-family: Exo;
     padding: 0 6px !important;
     white-space: nowrap;
     overflow: hidden;
@@ -78,7 +80,7 @@
     font-weight: 500 !important;
   }
   .dropdown-item {
-    font-size: 13px;
+    font-size: 1rem;
     padding: 0 15px !important;
     white-space: nowrap;
     overflow: hidden;
@@ -98,6 +100,7 @@
     align-items: center;
     color: rgba(0, 0, 0, 0.6) !important;
     font-weight: 500 !important;
+    font-family: Exo;
     span {
       max-width: 100%;
       white-space: nowrap;

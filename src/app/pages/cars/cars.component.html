@@ -17,21 +17,21 @@
     </div>
   </div>
   <div class="d-flex align-items-center ngx-top-option-bar-right">
-    <ngx-smart-select [titleTemplate]="statusTitleTempate" [triggerTemplate]="statusTempate">
+    <ngx-smart-select [right]="true"  [titleTemplate]="statusTitleTempate" [triggerTemplate]="statusTempate">
       <ngx-smart-select-option *ngFor="let status of statuses">
         <div class="d-flex align-items-center">
           {{ status.value }}
         </div>
       </ngx-smart-select-option>
     </ngx-smart-select>
-    <ngx-smart-select [triggerTemplate]="driverTempate">
+    <ngx-smart-select [right]="true"  [triggerTemplate]="driverTempate">
       <ngx-smart-select-option *ngFor="let driver of drivers">
         <div class="d-flex align-items-center">
           {{ driver.displayName }}
         </div>
       </ngx-smart-select-option>
     </ngx-smart-select>
-    <ngx-smart-select [triggerTemplate]="topBarMoreTempate">
+    <ngx-smart-select [right]="true"  [triggerTemplate]="topBarMoreTempate">
       <ngx-smart-select-option>
         <div class="d-flex align-items-center">
           <i class="material-icons mr-2">file_download</i>Exporter
@@ -58,7 +58,7 @@
   </ngx-smart-page-header-title>
   <ngx-smart-page-header-options>
     <ngx-cars-filter></ngx-cars-filter>
-    <ngx-smart-select [triggerTemplate]="sortTriggerTemplate">
+    <ngx-smart-select [right]="true"  [triggerTemplate]="sortTriggerTemplate">
       <ngx-smart-select-option>
         <div class="d-flex align-items-center">Dernière modification</div>
       </ngx-smart-select-option>
@@ -68,7 +68,7 @@
     </ngx-smart-select>
     <i *ngIf="!isGridView" (click)="isGridView = true;" class="material-icons action-icon">view_module</i>
     <i *ngIf="isGridView" (click)="isGridView = false;" class="material-icons action-icon">view_list</i>
-    <ngx-smart-select [triggerTemplate]="triggerTemplate">
+    <ngx-smart-select [right]="true"  [triggerTemplate]="triggerTemplate">
       <ngx-smart-select-option>
         <div class="d-flex align-items-center"><i class="material-icons mr-2">print</i>Imprimer</div>
       </ngx-smart-select-option>

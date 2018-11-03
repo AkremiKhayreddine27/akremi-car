@@ -1,0 +1,221 @@
+<nb-card>
+  <nb-card-header class="border-bottom d-flex align-items-center">
+    <i class="material-icons mr-1">contacts</i>Contacts
+  </nb-card-header>
+  <nb-card-body class="p-0">
+    <!-- Demandé par -->
+    <ngx-smart-select [titleTemplate]="clientTitleTempate" [triggerTemplate]="clientTempate">
+      <ng-template #clientTempate>
+        <div class="border-bottom contact-container d-flex d-md-none d-lg-none d-xl-none">
+          <div class="d-flex flex-column">
+            <span class="pb-2 search-trigger-label">Demandé par </span>
+            <div *ngIf="client.value" class="pb-1 d-flex align-items-center">
+              <img *ngIf="client.value.photo" class="mr-2" height="36" width="36" [src]="client.value.photo" />
+              <div *ngIf="!client.value.photo" class="item-first-letter mr-2">
+                {{ client.value.name.familyName[0] }}
+              </div>
+              {{ client.value.name.familyName }} {{ client.value.name.givenName }}
+            </div>
+            <div class="contact-placeholder" *ngIf="!client.value">
+              Ajouter un contact
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #clientTitleTempate>
+        <div class="select-title-template d-flex align-items-center w-100">
+          Contacts - Demandé par
+        </div>
+      </ng-template>
+      <ngx-smart-select-option>
+        <ngx-search-modal class="w-100 h-100 d-flex align-items-center" (items)="setClient($event)" [filterAttribute]="'display'"
+          [filtersItemTemplate]="userssearchFiltersTemplate" [categories$]="groups$" [triggerTemplate]="mobileContactSearchTriggerTemplate"
+          [itemTemplate]="usersSearchItemTemplate" [data$]="users$">
+        </ngx-search-modal>
+      </ngx-smart-select-option>
+      <ngx-smart-select-option (click)="addContact()">
+        <i class="material-icons mr-1">add</i>Nouveau
+      </ngx-smart-select-option>
+      <ngx-smart-select-option (click)="showContact(client.value)" *ngIf="client.value">
+        <i class="material-icons mr-1">visibility</i>Afficher
+      </ngx-smart-select-option>
+      <ngx-smart-select-option [withDevider]="true">
+        Annuler
+      </ngx-smart-select-option>
+    </ngx-smart-select>
+    <div (mouseenter)="clientHovred = true;" (mouseleave)="clientHovred = false;" class="position-relative border-bottom contact-container d-none d-md-flex align-items-center">
+      <div class="d-flex flex-column">
+        <span class="pb-2 search-trigger-label">Demandé par </span>
+        <div *ngIf="client.value" class="pb-1 d-flex align-items-center">
+          <img *ngIf="client.value.photo" class="mr-2" height="36" width="36" [src]="client.value.photo" />
+          <div *ngIf="!client.value.photo" class="item-first-letter mr-2">
+            {{ client.value.name.familyName[0] }}
+          </div>
+          {{ client.value.name.familyName }} {{ client.value.name.givenName }}
+        </div>
+        <div class="contact-placeholder" *ngIf="!client.value">
+          Ajouter un contact
+        </div>
+      </div>
+      <div [class.d-flex]="clientHovred" class="contacts-actions d-none justify-content-center align-items-center flex-wrap">
+        <div class="btn-group">
+          <ngx-search-modal (items)="setClient($event)" [filterAttribute]="'display'" [filtersItemTemplate]="userssearchFiltersTemplate"
+            [categories$]="groups$" [triggerTemplate]="clientSearchTriggerTemplate" [itemTemplate]="usersSearchItemTemplate"
+            [data$]="users$">
+          </ngx-search-modal>
+          <a (click)="addContact()" class="btn btn-tn btn-primary p-1">Nouveau</a>
+          <a (click)="showContact(client.value)" *ngIf="client.value" class="btn btn-tn btn-primary p-1">Afficher</a>
+        </div>
+      </div>
+    </div>
+    <!-- Assigné à -->
+    <ngx-smart-select [titleTemplate]="assignedToTitleTempate" [triggerTemplate]="assignedToTempate">
+      <ng-template #assignedToTempate>
+        <div class="border-bottom contact-container d-flex d-md-none d-lg-none d-xl-none">
+          <div class="d-flex flex-column">
+            <span class="pb-2 search-trigger-label">Assigné à </span>
+            <div *ngIf="assignedTo.value" class="pb-1 d-flex align-items-center">
+              <img *ngIf="assignedTo.value.photo" class="mr-2" height="36" width="36" [src]="assignedTo.value.photo" />
+              <div *ngIf="!assignedTo.value.photo" class="item-first-letter mr-2">
+                {{ assignedTo.value.name.familyName[0] }}
+              </div>
+              {{ assignedTo.value.name.familyName }} {{ assignedTo.value.name.givenName }}
+            </div>
+            <div class="contact-placeholder" *ngIf="!assignedTo.value">
+              Ajouter un contact
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #assignedToTitleTempate>
+        <div class="select-title-template d-flex align-items-center w-100">
+          Contacts - Assigné à
+        </div>
+      </ng-template>
+      <ngx-smart-select-option>
+        <ngx-search-modal class="w-100 h-100 d-flex align-items-center" (items)="setAssignedTo($event)"
+          [filterAttribute]="'display'" [filtersItemTemplate]="userssearchFiltersTemplate" [categories$]="groups$"
+          [triggerTemplate]="mobileContactSearchTriggerTemplate" [itemTemplate]="usersSearchItemTemplate" [data$]="users$">
+        </ngx-search-modal>
+      </ngx-smart-select-option>
+      <ngx-smart-select-option (click)="addContact()">
+        <i class="material-icons mr-1">add</i>Nouveau
+      </ngx-smart-select-option>
+      <ngx-smart-select-option (click)="showContact(assignedTo.value)" *ngIf="assignedTo.value">
+        <i class="material-icons mr-1">visibility</i>Afficher
+      </ngx-smart-select-option>
+      <ngx-smart-select-option [withDevider]="true">
+        Annuler
+      </ngx-smart-select-option>
+    </ngx-smart-select>
+    <div (mouseenter)="assignedToHovred = true;" (mouseleave)="assignedToHovred = false;" class="position-relative border-bottom contact-container d-none d-md-flex align-items-center">
+      <div class="d-flex flex-column">
+        <span class="pb-2 search-trigger-label">Assigné à </span>
+        <div *ngIf="assignedTo.value" class="pb-1 d-flex align-items-center">
+          <img *ngIf="assignedTo.value.photo" class="mr-2" height="36" width="36" [src]="assignedTo.value.photo" />
+          <div *ngIf="!assignedTo.value.photo" class="item-first-letter mr-2">{{
+            assignedTo.value.name.familyName[0] }}</div>
+          {{ assignedTo.value.name.familyName }} {{ assignedTo.value.name.givenName }}
+        </div>
+        <div class="contact-placeholder" *ngIf="!assignedTo.value">
+          Ajouter un contact
+        </div>
+      </div>
+      <div [class.d-flex]="assignedToHovred" class="contacts-actions d-none justify-content-center align-items-center flex-wrap">
+        <div class="btn-group">
+          <ngx-search-modal (items)="setAssignedTo($event)" [filterAttribute]="'display'" [filtersItemTemplate]="userssearchFiltersTemplate"
+            [categories$]="groups$" [triggerTemplate]="clientSearchTriggerTemplate" [itemTemplate]="usersSearchItemTemplate"
+            [data$]="users$">
+          </ngx-search-modal>
+          <a (click)="addContact()" class="btn btn-tn btn-primary p-1">Nouveau</a>
+          <a (click)="showContact(assignedTo)" *ngIf="assignedTo.value" class="btn btn-tn btn-primary p-1">Afficher</a>
+        </div>
+      </div>
+    </div>
+    <!-- Fournisseur -->
+    <ngx-smart-select [titleTemplate]="providerTitleTempate" [triggerTemplate]="providerTempate">
+      <ng-template #providerTempate>
+        <div class="contact-container d-flex d-md-none d-lg-none d-xl-none">
+          <div class="d-flex flex-column">
+            <span class="pb-2 search-trigger-label">Fournisseur </span>
+            <div *ngIf="provider.value" class="pb-1 d-flex align-items-center">
+              <img *ngIf="provider.value.photo" class="mr-2" height="36" width="36" [src]="provider.value.photo" />
+              <div *ngIf="!provider.value.photo" class="item-first-letter mr-2">
+                {{ provider.value.name.familyName[0] }}
+              </div>
+              {{ provider.value.name.familyName }} {{ provider.value.name.givenName }}
+            </div>
+            <div class="contact-placeholder" *ngIf="!provider.value">
+              Ajouter un contact
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #providerTitleTempate>
+        <div class="select-title-template d-flex align-items-center w-100">
+          Contacts - Fournisseur
+        </div>
+      </ng-template>
+      <ngx-smart-select-option>
+        <ngx-search-modal class="w-100 h-100 d-flex align-items-center" (items)="setProvider($event)" [filterAttribute]="'display'"
+          [filtersItemTemplate]="userssearchFiltersTemplate" [categories$]="groups$" [triggerTemplate]="mobileContactSearchTriggerTemplate"
+          [itemTemplate]="usersSearchItemTemplate" [data$]="users$">
+        </ngx-search-modal>
+      </ngx-smart-select-option>
+      <ngx-smart-select-option (click)="addContact()">
+        <i class="material-icons mr-1">add</i>Nouveau
+      </ngx-smart-select-option>
+      <ngx-smart-select-option (click)="showContact(provider.value)" *ngIf="provider.value">
+        <i class="material-icons mr-1">visibility</i>Afficher
+      </ngx-smart-select-option>
+      <ngx-smart-select-option [withDevider]="true">
+        Annuler
+      </ngx-smart-select-option>
+    </ngx-smart-select>
+    <div (mouseenter)="providerHovred = true;" (mouseleave)="providerHovred = false;" class="position-relative contact-container d-none d-md-flex align-items-center">
+      <div class="d-flex flex-column">
+        <span class="pb-2 search-trigger-label">Fournisseur </span>
+        <div *ngIf="provider.value" class="pb-1 d-flex align-items-center">
+          <img *ngIf="provider.value.photo" class="mr-2" height="36" width="36" [src]="provider.value.photo" />
+          <div *ngIf="!provider.value.photo" class="item-first-letter mr-2">
+            {{ provider.value.name.familyName[0] }}
+          </div>
+          {{ provider.value.name.familyName }} {{ provider.value.name.givenName }}
+        </div>
+        <div class="contact-placeholder" *ngIf="!provider.value">
+          Ajouter un contact
+        </div>
+      </div>
+      <div [class.d-flex]="providerHovred" class="contacts-actions d-none justify-content-center align-items-center flex-wrap">
+        <div class="btn-group">
+          <ngx-search-modal (items)="setProvider($event)" [filterAttribute]="'display'" [filtersItemTemplate]="userssearchFiltersTemplate"
+            [categories$]="groups$" [triggerTemplate]="clientSearchTriggerTemplate" [itemTemplate]="usersSearchItemTemplate"
+            [data$]="users$">
+          </ngx-search-modal>
+          <a (click)="addContact()" class="btn btn-tn btn-primary p-1">Nouveau</a>
+          <a (click)="showContact(provider.value)" *ngIf="provider.value" class="btn btn-tn btn-primary p-1">Afficher</a>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+
+<!-- Templates -->
+
+<ng-template let-item #usersSearchItemTemplate>
+  <img *ngIf="item.photo" class="mr-2" height="36" width="36" [src]="item.photo" />
+  <div *ngIf="!item.photo" class="item-first-letter mr-2">{{ item.name.familyName[0] }}</div>
+  <div>{{ item.name.familyName }} {{ item.name.givenName }}</div>
+</ng-template>
+<ng-template let-item #userssearchFiltersTemplate>
+  {{ item.display }}
+</ng-template>
+<ng-template #clientSearchTriggerTemplate>
+  <a class="btn btn-tn border-right-radius-none btn-primary p-1">Rechercher</a>
+</ng-template>
+<ng-template #mobileContactSearchTriggerTemplate>
+  <i class="material-icons mr-1">search</i>Rechercher
+</ng-template>
+
+<!-- End Templates -->
